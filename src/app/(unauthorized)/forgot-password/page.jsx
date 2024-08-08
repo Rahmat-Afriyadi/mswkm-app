@@ -7,9 +7,9 @@ import { login } from "@/server/auth/signin";
 import OTPInput from "react-otp-input";
 import Swal from "sweetalert2";
 import { useState, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import {  useRouter,useSearchParams } from "next/navigation";
 import { generateNewOtp } from "@/server/auth/generate-new-otp";
-import { checkOtp } from "@/server/auth/otp-check";
+import { checkOtpReset } from "@/server/auth/otp-check";
 
 export default function Page() {
   const { register, handleSubmit } = useForm();
@@ -23,7 +23,7 @@ export default function Page() {
 
 
   const mutCheckOtp = useMutation({
-    mutationFn: checkOtp,
+    mutationFn: checkOtpReset,
   });
   const mutGenerateOtp = useMutation({
     mutationFn: generateNewOtp,
@@ -48,18 +48,8 @@ export default function Page() {
                     { no_hp: noHp, otp: parseInt(e) },
                     {
                       onSuccess: (data) => {
-                        Swal.fire({
-                          title: "Selamat akun anda telah aktif. Silahkan Login!",
-                          icon: "success",
-                          confirmButtonColor: "#0891B2",
-                          confirmButtonText: "Oke",
-                          showLoaderOnConfirm: true,
-                          preConfirm: () => {
-                            setNohp(null)
-                            router.push("/login")
-                          },
-                          allowOutsideClick: () => !Swal.isLoading(),
-                        });
+                        console.log("ini data ", data)
+                       router.push("/reset-password?zxcvb=" + data.data.otp.id )
                       },
                       onError: (e) => {
                         setOtp("");
@@ -123,20 +113,27 @@ export default function Page() {
 
 
   const onSubmit = async (data) => {
-    const result = await signIn("credentials", {
-      redirect: false,
-      username: data.username,
-      password: data.password,
+    Swal.fire({
+      title: "Apakah data yang dimasukan sudah benar",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#0891B2",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Save",
+      showLoaderOnConfirm: true,
+      preConfirm: () => {
+        mutGenerateOtp.mutate(data, {
+          onSuccess: (data) => {
+            setNohp(data.data.user.no_hp);
+          },
+          onError: (e) => {
+            console.log("ini error ", e.response);
+            Swal.fire("Failed!", e.response.data.message, "error");
+          },
+        });
+      },
+      allowOutsideClick: () => !Swal.isLoading(),
     });
-    if (!result?.ok) {
-      if (result?.error == "inactive") {
-        setNohp(data.username)
-      }
-      console.log("Login error", result?.error);
-      setMessage(result?.error);
-      return;
-    }
-    router.push(searchParams.get("callbackUrl") ? searchParams?.get("callbackUrl") : "/");
   };
 
   return (
@@ -144,46 +141,24 @@ export default function Page() {
       <div className="sm:w-full md:w-[500px] mx-auto shadow-lg bg-slate-50 rounded-lg p-4">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h2 className="mt-6 text-2xl font-bold leading-9 tracking-tight text-center text-gray-900">
-            Sign In To Your Account
+            Forgot Password
           </h2>
         </div>
 
-          {message != "" && <div className="text-center bg-red rounded-lg text-red-600 py-1 font-bold">{message}</div>}
         <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-sm">
+          {message != "" && <div className="text-center bg-red rounded-lg text-white py-1 ">{message}</div>}
           <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
-            
             <div>
-              <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
+              <label htmlFor="no_hp" className="block text-sm font-medium leading-6 text-gray-900">
                 Phone Number
               </label>
               <div className="mt-2">
                 <input
-                  id="username"
-                  name="username"
+                  id="no_hp"
+                  name="no_hp"
                   type="text"
-                  autoComplete="username"
-                  {...register("username", {
-                    required: "This field is required",
-                  })}
-                  required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-
-            <div>
-              <div className="flex items-center justify-between">
-                <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
-                  Password
-                </label>
-              </div>
-              <div className="mt-2">
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  autoComplete="current-password"
-                  {...register("password", {
+                  autoComplete="no_hp"
+                  {...register("no_hp", {
                     required: "This field is required",
                   })}
                   required
@@ -197,20 +172,9 @@ export default function Page() {
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Sign in
+                Send
               </button>
               <br />
-              <div className="flex justify-center">
-                <a href="/forgot-password">Forgot Password?</a>
-              </div>
-              <br />
-              <br />
-              <div className="grid grid-cols-12">
-                <div className="col-span-7 flex items-center">
-                  <p className="font-semibold text-lg">Dont Have an Account ?</p>
-                </div>
-                <a href="/signup" className="col-span-5 bg-indigo-600 rounded-lg py-2 text-white text-center cursor-pointer">Sign Up</a>
-              </div>
             </div>
           </form>
         </div>

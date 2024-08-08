@@ -1,7 +1,9 @@
+
 import Image from "next/image";
 import Header from "@/components/organism/header/Header";
 
 export default async function Page() {
+
   return (
     <>
     <div className="w-full relative">
