@@ -17,10 +17,15 @@ export default function Page() {
   const [noHp, setNohp] = useState(null);
   const router = useRouter()
   const [otp, setOtp] = useState("");
-  const {data:session} = useSession()
+  const {data:session, status} = useSession()
   const [counter, setCounter] = useState(0);
   const searchParams = useSearchParams();
 
+  useEffect(()=>{
+    if (status == "authenticated") {
+      router.push("/")
+    }
+  },[status]) // eslint-disable-line
 
   const mutCheckOtp = useMutation({
     mutationFn: checkOtp,

@@ -19,8 +19,6 @@ export default function Header() {
   const [message, setMessage] = useState("");
   const { data: session } = useSession();
 
-  console.log("ini ession yaa ", session);
-
   const handleMessage = () => {
     var today = new Date();
     var hrs = today.getHours();
@@ -51,7 +49,7 @@ export default function Header() {
             />
           </div>
           {session?.user?.name ? <div className="col-span-4 flex items-center justify-end pr-5 text-white">
-            <p className="font-bold mr-5">{message + " " + session?.user?.name} </p>
+            <a href="/profile" className="font-bold mr-5">{message + " " + session?.user?.name} </a>
             <a
               type="button"
               onClick={() => {
@@ -70,6 +68,17 @@ export default function Header() {
               </span>
             </a>
           </div> : <div className="col-span-4 flex items-center justify-center text-white"><a href="/login">Login</a></div>}
+        </div>
+        <div className="grid grid-cols-12 mt-3">
+
+          <div className="col-span-1"></div>
+          <div className="bg-white rounded-xl col-span-10 h-[500px] relative p-3 overflow-y-scroll scrollbar-hide">
+              <div className="bg-slate-300 w-full h-72 rounded-lg mb-5"></div>
+              <div className="bg-slate-300 w-full h-72 rounded-lg mb-5"></div>
+              <div className="bg-slate-300 w-full h-72 rounded-lg mb-5"></div>
+          </div>
+          <div className="col-span-1"></div>
+
         </div>
       </div>
     </>

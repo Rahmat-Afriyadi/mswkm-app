@@ -31,6 +31,7 @@ export default function Page() {
         mutation.mutate(data, {
           onSuccess: (data) => {
             Swal.fire("Info!", data.data.message, "info");
+            router.push("/login")
           },
           onError: (e) => {
             Swal.fire("Failed!", e.response.data.message, "error");
