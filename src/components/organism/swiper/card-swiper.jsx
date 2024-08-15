@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
 
@@ -8,32 +10,50 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 
 import { EffectCoverflow, Pagination, Navigation } from "swiper/modules";
-import dynamic from "next/dynamic";
 import { ArrowLeftCircleIcon, ArrowRightCircleIcon } from "@heroicons/react/20/solid";
+import { MemberCard } from "@/server/member/card";
+import { useQuery } from "@tanstack/react-query";
 
-// import slide_image_1 from '/images/img_1.jpg';
-// import slide_image_2 from '/images/img_2.jpg';
-// import slide_image_3 from '/images/img_3.jpg';
-// import slide_image_4 from '/images/img_4.jpg';
-// import slide_image_5 from '/images/img_5.jpg';
+function CardSwiper() {
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const { data, isPending, isError, error } = useQuery({
+    queryKey: ["member-cards"],
+    queryFn: MemberCard,
+  });
+  console.log("ini lebar awal yaa ", windowWidth)
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
 
-const slide_image_1 = dynamic(() => import("../../../../public/images/img_1.jpg"));
+    window.addEventListener('resize', handleResize);
 
-function App() {
+    // Cleanup event listener on unmount
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  if (isPending) {
+    return <span>Loading...</span>;
+  }
+  if (isError) {
+    return <span>Error: {error.message}</span>;
+  }
+  
+  //   0101 basic
+  // 0102 gold
+  // 0103 platitum
+  // 0123
+
   return (
     <div className="container">
-      <h1 className="heading" style={{ fontStretch: "ultra-expanded" }}>
-        HVC Anda
-      </h1>
       <Swiper
-        effect={"coverflow"}
+      spaceBetween={10}
+        effect={"fade"}
         grabCursor={true}
         loop={true}
-        slidesPerView={"3"}
+        slidesPerView={windowWidth < 835 ? "1" : windowWidth < 1225 ? "2" : "3"}
         coverflowEffect={{
           rotate: 0,
           stretch: 0,
-          depth: 100,
+          depth: 10,
           modifier: 2.5,
         }}
         // pagination={{ el: '.swiper-pagination', clickable: true }}
@@ -45,86 +65,40 @@ function App() {
         modules={[EffectCoverflow, Pagination, Navigation]}
         className="swiper_container"
       >
-        <SwiperSlide>
-          <div style={{ width: "100%", position: "relative" }} className=" min-w-[355px] max-w-[500px]">
-            <Image
-              alt="slide_1"
-              src="/images/master_card/b.png"
-              width={0}
-              height={0}
-              sizes="100vw"
-              style={{ width: "100%", height: "auto" }}
-            />
-            <div className="absolute right-6 xl:right-9 bottom-6 xl:bottom-9 text-white text-right xl:text-xl">
-              <p className="leading-5 xl:leading-8 font-sans font-bold">Wahyu Hidayat</p>
-              <p className="leading-5 xl:leading-6 font-sans xl:text-2xl font-bold">
-                0101 &nbsp;0101 &nbsp;0101 &nbsp;0101
-              </p>
-              <p className="leading-5 xl:leading-6 font-sans font-bold uppercase">jk12341sa</p>
-              <p className="leading-5 xl:leading-6 font-sans">Exp. 02/17</p>
-            </div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div style={{ width: "100%", position: "relative" }} className=" min-w-[355px] max-w-[500px]">
-            <Image
-              alt="slide_1"
-              src="/images/master_card/b.png"
-              width={0}
-              height={0}
-              sizes="100vw"
-              style={{ width: "100%", height: "auto" }}
-            />
-            <div className="absolute right-6 xl:right-9 bottom-6 xl:bottom-9 text-white text-right xl:text-xl">
-              <p className="leading-5 xl:leading-8 font-sans font-bold">Wahyu Hidayat</p>
-              <p className="leading-5 xl:leading-6 font-sans xl:text-2xl font-bold">
-                0101 &nbsp;0101 &nbsp;0101 &nbsp;0101
-              </p>
-              <p className="leading-5 xl:leading-6 font-sans font-bold uppercase">jk12341sa</p>
-              <p className="leading-5 xl:leading-6 font-sans">Exp. 02/17</p>
-            </div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div style={{ width: "100%", position: "relative" }} className=" min-w-[355px] max-w-[500px]">
-            <Image
-              alt="slide_1"
-              src="/images/master_card/b.png"
-              width={0}
-              height={0}
-              sizes="100vw"
-              style={{ width: "100%", height: "auto" }}
-            />
-            <div className="absolute right-6 xl:right-9 bottom-6 xl:bottom-9 text-white text-right xl:text-xl">
-              <p className="leading-5 xl:leading-8 font-sans font-bold">Wahyu Hidayat</p>
-              <p className="leading-5 xl:leading-6 font-sans xl:text-2xl font-bold">
-                0101 &nbsp;0101 &nbsp;0101 &nbsp;0101
-              </p>
-              <p className="leading-5 xl:leading-6 font-sans font-bold uppercase">jk12341sa</p>
-              <p className="leading-5 xl:leading-6 font-sans">Exp. 02/17</p>
-            </div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div style={{ width: "100%", position: "relative" }} className=" min-w-[355px] max-w-[500px]">
-            <Image
-              alt="slide_1"
-              src="/images/master_card/b.png"
-              width={0}
-              height={0}
-              sizes="100vw"
-              style={{ width: "100%", height: "auto" }}
-            />
-            <div className="absolute right-6 xl:right-9 bottom-6 xl:bottom-9 text-white text-right xl:text-xl">
-              <p className="leading-5 xl:leading-8 font-sans font-bold">Wahyu Hidayat</p>
-              <p className="leading-5 xl:leading-6 font-sans xl:text-2xl font-bold">
-                0101 &nbsp;0101 &nbsp;0101 &nbsp;0101
-              </p>
-              <p className="leading-5 xl:leading-6 font-sans font-bold uppercase">jk12341sa</p>
-              <p className="leading-5 xl:leading-6 font-sans">Exp. 02/17</p>
-            </div>
-          </div>
-        </SwiperSlide>
+        {data.data.data.map((e) => {
+          const expiredDate = new Date(e.tgl_expired)
+          let src = "b.png"
+          if (e.no_kartu.slice(2,4) == "02") {
+            src = "g.png"
+          } else if (e.no_kartu.slice(2,4) == "03") {
+            src = "p.png"
+          } else if (e.no_kartu.slice(2,4) == "23") {
+            src = "pp.png"
+          }
+          return (
+            <SwiperSlide key={e.no_msn}>
+              <div style={{ width: "100%", position: "relative" }} className="left-0 right-0 mx-auto min-w-[355px] md:min-w-[400px] max-w-[500px]">
+                <Image
+                  alt="slide_1"
+                  src={`/images/master_card/${src}`}
+                  width={0}
+                  height={0}
+                  sizes="100vw"
+                  style={{ width: "100%", height: "auto" }}
+                />
+                <div className="absolute right-6 xl:right-9 bottom-6 xl:bottom-9 text-white text-right xl:text-xl">
+                  <p className="leading-5 xl:leading-8 font-sans font-bold">{e.nm_customer}</p>
+                  <p
+                    className="leading-5 xl:leading-6 font-sans xl:text-2xl font-bold"
+                    dangerouslySetInnerHTML={{ __html: e.no_kartu.split(" ").join("&nbsp;") }}
+                  ></p>
+                  <p className="leading-5 xl:leading-6 font-sans font-bold uppercase">{e.no_msn}</p>
+                  <p className="leading-5 xl:leading-6 font-sans">Exp. {String(expiredDate.getMonth() + 1).padStart(2, '0') + "/" + String(expiredDate.getFullYear()).slice(2,4)}</p>
+                </div>
+              </div>
+            </SwiperSlide>
+          );
+        })}
 
         <div className="slider-controler">
           <div className="swiper-button-prev slider-arrow">
@@ -137,8 +111,29 @@ function App() {
         </div>
       </Swiper>
 
+      {/* {data.data.data.map((e)=>{
+          return (
+          <div key={e.no_msn} style={{ width: "100%", position: "relative" }} className=" min-w-[470px] max-w-[500px]">
+            <Image
+              alt="slide_1"
+              src="/images/master_card/b.png"
+              width={0}
+              height={0}
+              sizes="100vw"
+              style={{ width: "100%", height: "auto" }}
+            />
+            <div className="absolute right-6 xl:right-9 bottom-6 xl:bottom-9 text-white text-right xl:text-xl">
+              <p className="leading-5 xl:leading-8 font-sans font-bold">{e.nm_customer}</p>
+              <p className="leading-5 xl:leading-6 font-sans xl:text-2xl font-bold" dangerouslySetInnerHTML={{__html: e.no_kartu.split(" ").join("&nbsp;")}}>
+              </p>
+              <p className="leading-5 xl:leading-6 font-sans font-bold uppercase">{e.no_msn}</p>
+              <p className="leading-5 xl:leading-6 font-sans">Exp. 02/17</p>
+            </div>
+          </div>
+          )
+        })} */}
     </div>
   );
 }
 
-export default App;
+export default CardSwiper;

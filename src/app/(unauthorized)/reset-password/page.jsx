@@ -18,7 +18,6 @@ export default function Page() {
 
   const onSubmit = async (data) => {
     data.token = searchParams.get("zxcvb")
-    console.log("ini data yaa ", data)
     Swal.fire({
       title: "Apakah data yang dimasukan sudah benar",
       icon: "question",

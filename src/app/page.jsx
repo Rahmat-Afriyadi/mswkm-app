@@ -1,30 +1,31 @@
 
 import Image from "next/image";
 import Header from "@/components/organism/header/Header";
+import Search from "@/components/organism/search/Search"
 
 export default async function Page() {
 
   return (
     <>
-    <div className="w-full relative">
+    <div className="w-full relative h-screen bg-slate-700">
       <Header/>
       <div id="default-carousel" className="relative w-full z-10" data-carousel="slide">
-          <div className="relative h-56 overflow-hidden md:h-96">
+          <div className="relative h-56 overflow-hidden md:h-80">
               <div className="hidden duration-700 ease-in-out" data-carousel-item>
                   {/* <img src="/images/iori.jpeg" className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="..."/> */}
-                <div className="bg-slate-900 w-full h-full"></div>
+                <div className="bg-red-900 w-full h-full"></div>
               </div>
               <div className="hidden duration-700 ease-in-out" data-carousel-item>
-                <div className="bg-slate-800 w-full h-full"></div>
+                <div className="bg-red-800 w-full h-full"></div>
               </div>
               <div className="hidden duration-700 ease-in-out" data-carousel-item>
-                <div className="bg-slate-700 w-full h-full"></div>
+                <div className="bg-red-700 w-full h-full"></div>
               </div>
               <div className="hidden duration-700 ease-in-out" data-carousel-item>
-                <div className="bg-slate-600 w-full h-full"></div>
+                <div className="bg-red-600 w-full h-full"></div>
               </div>
               <div className="hidden duration-700 ease-in-out" data-carousel-item>
-                <div className="bg-slate-500 w-full h-full"></div>
+                <div className="bg-red-500 w-full h-full"></div>
               </div>
           </div>
           <div className="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
@@ -51,6 +52,8 @@ export default async function Page() {
               </span>
           </button>
       </div>
+      <Search/>
+
     </div>
     </>
   );

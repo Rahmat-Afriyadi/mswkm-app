@@ -1,7 +1,7 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { signIn, useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { useMutation } from "@tanstack/react-query";
 import { login } from "@/server/auth/signin";
 import OTPInput from "react-otp-input";
@@ -23,6 +23,7 @@ export default function Page() {
 
   useEffect(()=>{
     if (status == "authenticated") {
+      // signOut({ redirect: false }).then();
       router.push("/")
     }
   },[status]) // eslint-disable-line

@@ -40,14 +40,8 @@ export default function Header() {
     <>
       <div className="w-full px-10 absolute z-50 top-5">
         <div className="rounded-lg bg-slate-950 bg-opacity-35 grid grid-cols-12">
-          <div className="col-span-4"></div>
-          <div className="col-span-4">
-            <input
-              placeholder="search"
-              type="text"
-              className="text-white text-center max-w-lg pt-3 pb-2 block w-full mt-0 bg-transparent border-0 border-b-2 appearance-none z-1 focus:outline-none focus:ring-0 placeholder-white border-white focus:border-slate-400"
-            />
-          </div>
+          <div className="col-span-8"></div>
+          
           {session?.user?.name ? <div className="col-span-4 flex items-center justify-end pr-5 text-white">
             <a href="/profile" className="font-bold mr-5">{message + " " + session?.user?.name} </a>
             <a
@@ -68,17 +62,6 @@ export default function Header() {
               </span>
             </a>
           </div> : <div className="col-span-4 flex items-center justify-center text-white"><a href="/login">Login</a></div>}
-        </div>
-        <div className="grid grid-cols-12 mt-3">
-
-          <div className="col-span-1"></div>
-          <div className="bg-white rounded-xl col-span-10 h-[500px] relative p-3 overflow-y-scroll scrollbar-hide">
-              <div className="bg-slate-300 w-full h-72 rounded-lg mb-5"></div>
-              <div className="bg-slate-300 w-full h-72 rounded-lg mb-5"></div>
-              <div className="bg-slate-300 w-full h-72 rounded-lg mb-5"></div>
-          </div>
-          <div className="col-span-1"></div>
-
         </div>
       </div>
     </>
