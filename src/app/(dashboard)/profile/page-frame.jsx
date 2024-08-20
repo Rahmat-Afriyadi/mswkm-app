@@ -6,14 +6,46 @@ import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import { useQueryClient } from "@tanstack/react-query";
-
+import { useEffect } from "react";
 
 export default function PageFrame() {
-  const queryCLient = useQueryClient()
+  const queryCLient = useQueryClient();
   const { register, handleSubmit } = useForm();
   const mutTambahKartu = useMutation({
     mutationFn: addCard,
   });
+
+  useEffect(() => {
+
+    const handleKeyDown = (event) => {
+      console.log("ini data kode ", event)
+      console.log("ini data ", event.key)
+      if (event.key === "PrintScreen" || event.keyCode === 44) {
+        event.preventDefault();
+        alert("Print Screen is disabled.");
+      }
+    };
+
+    const handleMouseLeave = (event) => {
+      console.log("leave")
+    };
+    
+    const handleWindowBlur = () => {
+      // navigator.clipboard.writeText("gk bisa copy ya");
+      console.log("blur")
+    }
+    
+    window.addEventListener("keydown", handleKeyDown);
+
+    document.addEventListener('mouseleave', handleMouseLeave);
+    window.addEventListener('blur', handleWindowBlur);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener('mouseleave', handleMouseLeave);
+      window.removeEventListener('blur', handleWindowBlur);
+    };
+  }, []);
 
   const onSubmit = async (values) => {
     Swal.fire({
@@ -27,8 +59,7 @@ export default function PageFrame() {
       preConfirm: () => {
         mutTambahKartu.mutate(values, {
           onSuccess: (data) => {
-            
-            queryCLient.invalidateQueries({ queryKey: ['member-cards'] })
+            queryCLient.invalidateQueries({ queryKey: ["member-cards"] });
             Swal.fire("Success!", "Kartu berhasil ditambahkan", "info");
           },
           onError: (e) => {

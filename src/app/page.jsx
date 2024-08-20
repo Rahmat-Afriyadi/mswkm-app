@@ -7,7 +7,7 @@ export default async function Page() {
 
   return (
     <>
-    <div className="w-full relative h-screen bg-slate-700">
+    <div className="w-full relative h-screen bg-slate-400">
       <Header/>
       <div id="default-carousel" className="relative w-full z-10" data-carousel="slide">
           <div className="relative h-56 overflow-hidden md:h-80">
@@ -53,6 +53,7 @@ export default async function Page() {
           </button>
       </div>
       <Search/>
+      
 
     </div>
     </>

@@ -37,7 +37,6 @@ export const authOptions = {
           }),
         });
         const resResult = await res.json();
-
         if (resResult.status == "inactive") throw new Error("inactive");
         if (resResult.status == "fail") throw new Error(resResult.message);
         return {

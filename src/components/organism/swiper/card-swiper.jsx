@@ -15,12 +15,11 @@ import { MemberCard } from "@/server/member/card";
 import { useQuery } from "@tanstack/react-query";
 
 function CardSwiper() {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [windowWidth, setWindowWidth] = useState(0);
   const { data, isPending, isError, error } = useQuery({
     queryKey: ["member-cards"],
     queryFn: MemberCard,
   });
-  console.log("ini lebar awal yaa ", windowWidth)
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
 

@@ -1,4 +1,5 @@
 // import { Inter } from "next/font/google";
+import { Suspense } from "react";
 import "./globals.css";
 
 // const inter = Inter({ subsets: ["latin"] });
@@ -16,7 +17,9 @@ export default function RootLayout({ children }) {
       <body>
 
         <Providers>
-          {children}
+          <Suspense>
+              {children}
+          </Suspense>
         </Providers>
 
         <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js" async />

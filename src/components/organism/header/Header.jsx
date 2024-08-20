@@ -1,10 +1,9 @@
 "use client";
 
-import React, { useEffect, useState, Fragment } from "react";
+import React, { useEffect, useState } from "react";
 import { signOut } from "next-auth/react";
 import { useSession } from "next-auth/react";
-import { Bars3Icon, BellIcon } from "@heroicons/react/24/outline";
-import { ArrowLeftStartOnRectangleIcon, ChevronDownIcon, MagnifyingGlassIcon } from "@heroicons/react/20/solid";
+import { ArrowLeftStartOnRectangleIcon} from "@heroicons/react/20/solid";
 
 const userNavigation = [
   { name: "Your profile", href: "#" },
@@ -39,7 +38,7 @@ export default function Header() {
   return (
     <>
       <div className="w-full px-10 absolute z-50 top-5">
-        <div className="rounded-lg bg-slate-950 bg-opacity-35 grid grid-cols-12">
+        <div className="rounded-lg bg-slate-950 bg-opacity-35 grid grid-cols-12 h-12">
           <div className="col-span-8"></div>
           
           {session?.user?.name ? <div className="col-span-4 flex items-center justify-end pr-5 text-white">
