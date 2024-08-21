@@ -44,7 +44,7 @@ export default function Search() {
             className="text-white text-center pt-3 pb-2 block w-full mt-0 bg-transparent appearance-none z-1 focus:outline-none focus:ring-0 placeholder-white border-white focus:border-slate-400"
         />
       </div> */}
-      <div class="absolute inset-0 m-auto w-3/4 rounded-xl z-10 h-12">
+      <div className="absolute inset-0 m-auto w-3/4 rounded-xl z-10 h-12">
         <input
           onFocus={(e)=>setSearchBox(true)}
           onChange={(e)=>setSearchInput(e.target.value)}
@@ -56,7 +56,7 @@ export default function Search() {
       </div>
 
       {seearchBox && <div className=" h-auto pt-10">
-        <div class="mx-auto w-3/4 max-h-72 z-0 bg-white rounded-b-xl pt-6 pr-5">
+        <div className="mx-auto w-3/4 max-h-72 z-0 bg-white rounded-b-xl pt-6 pr-5">
           {searchInput.length > 0 && <p className="bg-slate-300 text-lg py-2 px-5 hover:bg-slate-300 rounded-r-full border-l-4 border-l-cyan-400">
             {searchInput}
           </p>}

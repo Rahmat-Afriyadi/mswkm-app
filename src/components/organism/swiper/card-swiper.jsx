@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
 
@@ -20,8 +20,15 @@ function CardSwiper() {
     queryKey: ["member-cards"],
     queryFn: MemberCard,
   });
+
+  useEffect(()=>{
+    setWindowWidth(window.innerWidth)
+  },[])
+
   useEffect(() => {
-    const handleResize = () => setWindowWidth(window.innerWidth);
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth)
+    };
 
     window.addEventListener('resize', handleResize);
 
@@ -74,6 +81,8 @@ function CardSwiper() {
           } else if (e.no_kartu.slice(2,4) == "23") {
             src = "pp.png"
           }
+
+          console.log("ini srcnya yaa ", src)
           return (
             <SwiperSlide key={e.no_msn}>
               <div style={{ width: "100%", position: "relative" }} className="left-0 right-0 mx-auto min-w-[355px] md:min-w-[400px] max-w-[500px]">

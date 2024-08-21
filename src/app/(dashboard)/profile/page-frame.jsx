@@ -26,24 +26,12 @@ export default function PageFrame() {
       }
     };
 
-    const handleMouseLeave = (event) => {
-      console.log("leave")
-    };
-    
-    const handleWindowBlur = () => {
-      // navigator.clipboard.writeText("gk bisa copy ya");
-      console.log("blur")
-    }
     
     window.addEventListener("keydown", handleKeyDown);
 
-    document.addEventListener('mouseleave', handleMouseLeave);
-    window.addEventListener('blur', handleWindowBlur);
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
-      document.removeEventListener('mouseleave', handleMouseLeave);
-      window.removeEventListener('blur', handleWindowBlur);
     };
   }, []);
 
