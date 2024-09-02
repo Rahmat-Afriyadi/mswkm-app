@@ -81,24 +81,7 @@ export default function PageFrame() {
             />
           </div>
         </div>
-        <div className="col-span-12 mb-5 md:col-span-5 md:mb-0 xl:col-span-4 ">
-          <label htmlFor="nama" className="block text-sm font-medium leading-6 text-gray-900">
-            Nama
-          </label>
-          <div className="mt-2">
-            <input
-              id="nama"
-              name="nama"
-              type="text"
-              autoComplete="nama"
-              {...register("nama", {
-                required: "This field is required",
-              })}
-              required
-              className="h-12 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-            />
-          </div>
-        </div>
+        
         <div className="col-span-4 md:col-span-2 xl:col-span-2 flex items-end justify-center">
           <button
             type="submit"

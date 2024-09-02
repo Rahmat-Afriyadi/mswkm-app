@@ -35,7 +35,7 @@ export default function Page() {
       HVC Anda
     </h1>
     <PageFrame/>
-    <CardSwiper/>
+      <CardSwiper/>
   </>
 );
 }
