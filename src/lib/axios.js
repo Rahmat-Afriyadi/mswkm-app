@@ -32,7 +32,6 @@ axiosAuth.interceptors.response.use(
   (res) => res,
   async (error) => {
     const session = await getSession();
-    console.log("refresh kesini gk sih");
     const prevRequest = error.config;
     if (error.response.status == 401 && !prevRequest.sent) {
       prevRequest.sent = true;

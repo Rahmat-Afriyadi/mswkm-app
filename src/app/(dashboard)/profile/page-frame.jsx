@@ -18,8 +18,6 @@ export default function PageFrame() {
   useEffect(() => {
 
     const handleKeyDown = (event) => {
-      console.log("ini data kode ", event)
-      console.log("ini data ", event.key)
       if (event.key === "PrintScreen" || event.keyCode === 44) {
         event.preventDefault();
         alert("Print Screen is disabled.");
@@ -82,7 +80,7 @@ export default function PageFrame() {
           </div>
         </div>
         
-        <div className="col-span-4 md:col-span-2 xl:col-span-2 flex items-end justify-center">
+        <div className="mt-2 md:mt-0 col-span-4 md:col-span-2 xl:col-span-2 flex items-end justify-center">
           <button
             type="submit"
             className="align-middle w-full h-12 flex justify-center rounded-md bg-indigo-600 px-3 text-sm font-semibold  text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 items-center"

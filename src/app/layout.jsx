@@ -10,16 +10,15 @@ export const metadata = {
 };
 
 import Providers from "@/components/providers/providers";
+import Header from "@/components/organism/header/Header";
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-
         <Providers>
-          <Suspense>
-              {children}
-          </Suspense>
+          <Header />
+          <Suspense>{children}</Suspense>
         </Providers>
 
         <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js" async />

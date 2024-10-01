@@ -1,61 +1,107 @@
+"use client";
 
 import Image from "next/image";
 import Header from "@/components/organism/header/Header";
-import Search from "@/components/organism/search/Search"
+import Search from "@/components/organism/search/Search";
+import SwiperComponent from "@/components/swiper/swiper-banner";
+import { useEffect, useState } from "react";
+import SwiperComponent1 from "@/components/swiper/swiper-banner-1";
 
-export default async function Page() {
+export default function Page() {
+  const [windowWidth, setWindowWidth] = useState(0);
 
+  useEffect(() => {
+    setWindowWidth(window.innerWidth);
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+  const listBannerMobile = ["Home Banner.png", "Home Banner.png", "Home Banner.png", "Home Banner.png"];
+  const merchants = ["Merchant.png", "Merchant.png", "Merchant.png"];
+  const news = ["Artikel.png", "Artikel.png", "Artikel.png"];
+  let banners = listBannerMobile;
   return (
     <>
-    <div className="w-full relative h-screen bg-slate-400">
-      <Header/>
-      <div id="default-carousel" className="relative w-full z-10" data-carousel="slide">
-          <div className="relative h-56 overflow-hidden md:h-80">
-              <div className="hidden duration-700 ease-in-out" data-carousel-item>
-                  {/* <img src="/images/iori.jpeg" className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="..."/> */}
-                <div className="bg-red-900 w-full h-full"></div>
-              </div>
-              <div className="hidden duration-700 ease-in-out" data-carousel-item>
-                <div className="bg-red-800 w-full h-full"></div>
-              </div>
-              <div className="hidden duration-700 ease-in-out" data-carousel-item>
-                <div className="bg-red-700 w-full h-full"></div>
-              </div>
-              <div className="hidden duration-700 ease-in-out" data-carousel-item>
-                <div className="bg-red-600 w-full h-full"></div>
-              </div>
-              <div className="hidden duration-700 ease-in-out" data-carousel-item>
-                <div className="bg-red-500 w-full h-full"></div>
-              </div>
+      <div className="w-full">
+        <SwiperComponent sWidth={windowWidth} banners={banners} />
+        <div className="w-full h-auto relative ">
+          <Image
+            src={"/images/content/background/BG (Home).png"}
+            alt="illustrasi-1"
+            width={0}
+            height={0}
+            sizes="100vw"
+            style={{ width: "100%", height: "auto" }}
+          />
+          <div className="w-full h-auto absolute  top-4">
+            <Search />
           </div>
-          <div className="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
-              <button type="button" className="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 1" data-carousel-slide-to="0"></button>
-              <button type="button" className="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 2" data-carousel-slide-to="1"></button>
-              <button type="button" className="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 3" data-carousel-slide-to="2"></button>
-              <button type="button" className="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 4" data-carousel-slide-to="3"></button>
-              <button type="button" className="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 5" data-carousel-slide-to="4"></button>
+          <div className="w-full h-auto absolute bottom-[70px] sm:bottom-28 rounded-t-3xl overflow-hidden">
+            <Image
+              src={"/images/content/background/BG (Home 2).png"}
+              alt="illustrasi-1"
+              width={0}
+              height={0}
+              sizes="100vw"
+              style={{ width: "100%", height: "auto" }}
+            />
+            <div className="absolute z-10 top-0  w-full flex flex-col items-center  pt-4">
+              <div className="w-9/12">
+                <div className="w-full flex justify-between items-end">
+                  <p className="font-bold text-white text-lg underline">Merchant</p>
+                  <div className="w-3/12">
+                    <Image
+                      src={"/images/content/button/Button.png"}
+                      alt="illustrasi-1"
+                      width={0}
+                      height={0}
+                      sizes="100vw"
+                      style={{ width: "100%", height: "auto" }}
+                    />
+                  </div>
+                </div>
+                <div className="w-full mt-2">
+                  <SwiperComponent1 sWidth={windowWidth} banners={merchants} />
+                </div>
+              </div>
+              <div className="w-10/12 bg-white h-[2px] rounded-full my-3"></div>
+              <div className="w-9/12">
+                <div className="w-full flex justify-between items-end">
+                  <p className="font-bold text-white text-lg underline">News</p>
+                  <div className="w-3/12">
+                    <Image
+                      src={"/images/content/button/Button.png"}
+                      alt="illustrasi-1"
+                      width={0}
+                      height={0}
+                      sizes="100vw"
+                      style={{ width: "100%", height: "auto" }}
+                    />
+                  </div>
+                </div>
+                <div className="w-full mt-2">
+                  <SwiperComponent1 sWidth={windowWidth} banners={news} />
+                </div>
+              </div>
+            </div>
           </div>
-          <button type="button" className="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
-              <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                  <svg className="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                      <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 1 1 5l4 4"/>
-                  </svg>
-                  <span className="sr-only">Previous</span>
-              </span>
-          </button>
-          <button type="button" className="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
-              <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                  <svg className="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                      <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 9 4-4-4-4"/>
-                  </svg>
-                  <span className="sr-only">Next</span>
-              </span>
-          </button>
+          <div className="w-full h-auto absolute bottom-0">
+            <Image
+              src={"/images/content/footer/Footer.png"}
+              alt="illustrasi-1"
+              width={0}
+              height={0}
+              sizes="100vw"
+              style={{ width: "100%", height: "auto" }}
+            />
+          </div>
+        </div>
       </div>
-      <Search/>
-      
-
-    </div>
     </>
   );
 }

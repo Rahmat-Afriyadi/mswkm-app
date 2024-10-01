@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { signOut } from "next-auth/react";
 import { useSession } from "next-auth/react";
-import { ArrowLeftStartOnRectangleIcon} from "@heroicons/react/20/solid";
+import Image from "next/image";
+import Navbar from "./Navbar";
 
 const userNavigation = [
   { name: "Your profile", href: "#" },
@@ -15,6 +15,7 @@ function classNames(...classes) {
 }
 
 export default function Header() {
+  const [windowWidth, setWindowWidth] = useState(0);
   const [message, setMessage] = useState("");
   const { data: session } = useSession();
 
@@ -32,37 +33,40 @@ export default function Header() {
   };
 
   useEffect(() => {
+    setWindowWidth(window.innerWidth);
     handleMessage();
   }, []);
 
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  let header;
+  if (windowWidth > 1023) {
+    header = "Header.png";
+  } else if (windowWidth > 768) {
+    header = "Header.png";
+  } else {
+    header = "Header.png";
+  }
+
   return (
-    <>
-      <div className="w-full px-10 absolute z-50 top-5">
-        <div className="rounded-lg bg-slate-950 bg-opacity-35 grid grid-cols-12 h-12">
-          <div className="col-span-8"></div>
-          
-          {session?.user?.name ? <div className="col-span-4 flex items-center justify-end pr-5 text-white">
-            <a href="/profile" className="font-bold mr-5">{message + " " + session?.user?.name} </a>
-            <a
-              type="button"
-              onClick={() => {
-                signOut({ redirect: false }).then();
-              }}
-              className="text-white hover:text-yellow hover:bg-cyan-700 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold cursor-pointer"
-            >
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg">
-                <ArrowLeftStartOnRectangleIcon
-                  style={{
-                    transition: "transform 0.5s ease-in-out",
-                  }}
-                  className={`text-white group-hover:text-yellow h-6 w-6 shrink-0 `}
-                  aria-hidden="true"
-                />
-              </span>
-            </a>
-          </div> : <div className="col-span-4 flex items-center justify-center text-white"><a href="/login">Login</a></div>}
-        </div>
+    <header className="w-full h-auto relative">
+      <Image
+        src={"/images/content/header/" + header}
+        alt="illustrasi-1"
+        width={0}
+        height={0}
+        sizes="100vw"
+        style={{ width: "100%", height: "auto" }}
+      />
+      <div className="absolute w-5/12  h-6 top-0 bottom-0  my-auto right-4">
+        <Navbar />
       </div>
-    </>
+    </header>
   );
 }

@@ -48,7 +48,6 @@ export default function Page() {
                     { no_hp: noHp, otp: parseInt(e) },
                     {
                       onSuccess: (data) => {
-                        console.log("ini data ", data)
                        router.push("/reset-password?zxcvb=" + data.data.otp.id )
                       },
                       onError: (e) => {
@@ -113,7 +112,6 @@ export default function Page() {
 
 
   const onSubmit = async (data) => {
-    console.log("ini data yaa ", data)
     Swal.fire({
       title: "Apakah data yang dimasukan sudah benar",
       icon: "question",
