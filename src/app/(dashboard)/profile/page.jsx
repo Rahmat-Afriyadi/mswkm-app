@@ -11,7 +11,18 @@ export default function Page() {
 
   return (
     <>
-      <div className="w-full h-[320px] md:h-[450px] bg-yellow-400 flex justify-center items-center">
+      <div className="w-full bg-[#54565a]">
+        <div className="w-full flex flex-col items-center">
+          <div className="w-9/12 h-3 mt-2">
+            <div className="w-full text-center text-white font-bold text-xl">Profile</div>
+          </div>
+          <br />
+          <div className="w-10/12 bg-white h-[2px] rounded-lg"></div>
+          <br />
+        </div>
+      </div>
+
+      {/* <div className="w-full h-[320px] md:h-[450px] bg-yellow-400 flex justify-center items-center">
         <div className=" w-10/12 xl:w-1/2 h-72 md:h-96 shadow-lg rounded-lg grid grid-cols-12 relative">
           <div className="absolute w-11/12 z-10 rounded-md left-0 right-0 top-0 bottom-0 m-auto grid grid-cols-12 items-center">
             <div className="col-span-4 h-60 bg-green-300"></div>
@@ -57,12 +68,7 @@ export default function Page() {
             </div>
           </div>
         </div>
-      </div>
-      <h1 className="heading" style={{ fontStretch: "ultra-expanded" }}>
-        HVC Anda
-      </h1>
-      <PageFrame />
-      <CardSwiper />
+      </div> */}
     </>
   );
 }
