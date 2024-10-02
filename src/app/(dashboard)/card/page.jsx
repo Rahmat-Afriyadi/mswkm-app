@@ -6,7 +6,7 @@ import Image from "next/image";
 import React from "react";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
-import bgImage from "../../../../public/images/content/background/BG.png/";
+import bgImage from "../../../../public/images/content/background/BG.png";
 
 export default function Page() {
   const queryCLient = useQueryClient();
