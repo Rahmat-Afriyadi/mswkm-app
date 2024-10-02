@@ -6,6 +6,7 @@ import Image from "next/image";
 import React from "react";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
+import bgImage from "../../../../public/images/content/background/BG.png/";
 
 export default function Page() {
   const queryCLient = useQueryClient();
@@ -79,7 +80,7 @@ export default function Page() {
       </div>
       <div className="w-full h-auto relative ">
         <Image
-          src={"/images/content/background/BG.png"}
+          src={bgImage}
           alt="illustrasi-1"
           width={0}
           height={0}

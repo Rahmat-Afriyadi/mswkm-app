@@ -13,10 +13,10 @@ import "swiper/css/navigation";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 
-export default function SwiperComponent({sWidth, banners }) {
-    if (!banners) {
-        return "loading..."
-    }
+export default function SwiperComponent({ sWidth, banners }) {
+  if (!banners) {
+    return "loading...";
+  }
   return (
     <Swiper
       slidesPerView={1}
@@ -33,20 +33,20 @@ export default function SwiperComponent({sWidth, banners }) {
       }}
       className="bg-slate-700"
     >
-      {banners.map((e,i) => {
+      {banners.map((e, i) => {
         const expiredDate = new Date(e.tgl_expired);
-          let src = "b.png";
-          let benefit = "Basic"
-          if (e.no_kartu.slice(2, 4) == "02") {
-            src = "g.png";
-            benefit = "Benefit Gold";
-          } else if (e.no_kartu.slice(2, 4) == "03") {
-            src = "p.png";
-            benefit = "Benefit Platinum";
-          } else if (e.no_kartu.slice(2, 4) == "23") {
-            src = "pp.png";
-            benefit = "Benefit Platinum Plus";
-          }
+        let src = "b.png";
+        let benefit = "Basic";
+        if (e.no_kartu.slice(2, 4) == "02") {
+          src = "g.png";
+          benefit = "Benefit Gold";
+        } else if (e.no_kartu.slice(2, 4) == "03") {
+          src = "p.png";
+          benefit = "Benefit Platinum";
+        } else if (e.no_kartu.slice(2, 4) == "23") {
+          src = "pp.png";
+          benefit = "Benefit Platinum Plus";
+        }
         return (
           <SwiperSlide key={e + i}>
             <div className={`${sWidth > 1023 ? "w-11/12" : "w-full"} h-auto mx-auto`}>
