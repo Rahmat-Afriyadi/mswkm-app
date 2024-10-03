@@ -6,6 +6,7 @@ import Search from "@/components/organism/search/Search";
 import SwiperComponent from "@/components/swiper/swiper-banner";
 import { useEffect, useState } from "react";
 import SwiperComponent1 from "@/components/swiper/swiper-banner-1";
+import bgHome1 from "../../public/images/content/background/BG (Home).png";
 
 export default function Page() {
   const [windowWidth, setWindowWidth] = useState(0);
@@ -31,7 +32,7 @@ export default function Page() {
         <SwiperComponent sWidth={windowWidth} banners={banners} />
         <div className="w-full h-auto relative ">
           <Image
-            src={"/images/content/background/BG (Home).png"}
+            src={bgHome1}
             alt="illustrasi-1"
             width={0}
             height={0}
