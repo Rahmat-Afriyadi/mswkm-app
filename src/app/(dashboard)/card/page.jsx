@@ -41,7 +41,7 @@ export default function Page() {
   };
 
   return (
-    <div className="w-full bg-[#54565a]">
+    <div className="w-full bg-[#54565a] h-au">
       <div className="w-full flex flex-col items-center">
         <div className="w-9/12 h-3 mt-2">
           <div className="w-full text-center text-white font-bold text-xl">My Card</div>
@@ -78,31 +78,24 @@ export default function Page() {
           </form>
         </div>
       </div>
-      <div className="w-full h-auto relative ">
+
+      <div
+        className="w-full flex flex-col items-center bg-cover bg-center h-auto bg-red-400"
+        style={{ backgroundImage: "url('/images/content/background/BG.png')" }}
+      >
+        <div className="w-full h-auto">
+          <CardSwiper />
+        </div>
+      </div>
+      <div className="w-full h-auto -bottom-16">
         <Image
-          src={bgImage}
+          src={"/images/content/footer/Footer.png"}
           alt="illustrasi-1"
           width={0}
           height={0}
           sizes="100vw"
           style={{ width: "100%", height: "auto" }}
         />
-
-        <div className="absolute z-10 top-0  w-full flex flex-col items-center ">
-          <div className="w-full">
-            <CardSwiper />
-          </div>
-        </div>
-        <div className="w-full h-auto absolute -bottom-16">
-          <Image
-            src={"/images/content/footer/Footer.png"}
-            alt="illustrasi-1"
-            width={0}
-            height={0}
-            sizes="100vw"
-            style={{ width: "100%", height: "auto" }}
-          />
-        </div>
       </div>
     </div>
   );
