@@ -1,39 +1,60 @@
 "use client";
 
-import axios from "@/lib/axios";
-import { addCard } from "@/server/member/add-card";
-import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
+import InputGroup from "@/components/organism/input/input-group";
+import Datepicker from "react-tailwindcss-datepicker";
+import Image from "next/image";
+import { UploadImageProfile } from "@/server/profile/upload-image-profile";
+import { updateProfile } from "@/server/profile/update-profile";
 import Swal from "sweetalert2";
-import { useQueryClient } from "@tanstack/react-query";
-import { useEffect } from "react";
 
-export default function PageFrame() {
+export default function PageFrame({ defaultValues }) {
+  const [valueTglLhr, setValueTglLhr] = useState({
+    startDate: defaultValues.tgl_lahir.substring(0, 10),
+    endDate: defaultValues.tgl_lahir.substring(0, 10),
+  });
+  const [imageProfile, setImageProfile] = useState(defaultValues.img_profile);
+
+  const {
+    setValue,
+    watch,
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      ...defaultValues,
+      laki_laki: defaultValues.jns_kelamin == "Laki-laki",
+      perempuan: defaultValues.jns_kelamin == "Perempuan",
+    },
+  });
   const queryCLient = useQueryClient();
-  const { register, handleSubmit } = useForm();
-  const mutTambahKartu = useMutation({
-    mutationFn: addCard,
+  const imageProfileMut = useMutation({
+    mutationFn: UploadImageProfile,
+  });
+  const updateProfileMut = useMutation({
+    mutationFn: updateProfile,
   });
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   const handleKeyDown = (event) => {
+  //     if (event.key === "PrintScreen" || event.keyCode === 44) {
+  //       event.preventDefault();
+  //       alert("Print Screen is disabled.");
+  //     }
+  //   };
+  //   window.addEventListener("keydown", handleKeyDown);
+  //   return () => {
+  //     window.removeEventListener("keydown", handleKeyDown);
+  //   };
+  // }, []);
 
-    const handleKeyDown = (event) => {
-      if (event.key === "PrintScreen" || event.keyCode === 44) {
-        event.preventDefault();
-        alert("Print Screen is disabled.");
-      }
-    };
-
-    
-    window.addEventListener("keydown", handleKeyDown);
-
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, []);
-
-  const onSubmit = async (values) => {
+  const onSubmit = (data) => {
+    data.tgl_lahir = new Date(valueTglLhr.startDate);
+    data.img_profile = imageProfile;
+    console.log("ini tgl_lahir ", data.tgl_lahir);
     Swal.fire({
       title: "Apakah data yang dimasukan sudah benar",
       icon: "question",
@@ -43,10 +64,10 @@ export default function PageFrame() {
       confirmButtonText: "Save",
       showLoaderOnConfirm: true,
       preConfirm: () => {
-        mutTambahKartu.mutate(values, {
+        updateProfileMut.mutate(data, {
           onSuccess: (data) => {
-            queryCLient.invalidateQueries({ queryKey: ["member-cards"] });
-            Swal.fire("Success!", "Kartu berhasil ditambahkan", "info");
+            queryCLient.invalidateQueries({ queryKey: ["profile-me"] });
+            Swal.fire("Success!", "Profile berhasil diupdate", "info");
           },
           onError: (e) => {
             console.log("ini error ", e);
@@ -59,36 +80,154 @@ export default function PageFrame() {
   };
 
   return (
-    <form className="space-y-6 px-9" onSubmit={handleSubmit(onSubmit)}>
-      <div className="w-full grid grid-cols-12 gap-x-4">
-        <div className="col-span-12 md:col-span-5 xl:col-span-4">
-          <label htmlFor="kode" className="block text-sm font-medium leading-6 text-gray-900">
-            Nomor Kartu / Nomor Mesin
+    <div className="h-screen w-8/12">
+      <form action="" onSubmit={handleSubmit(onSubmit)}>
+        <div className="w-full flex justify-center">
+          <label
+            htmlFor="profile_image"
+            className="w-20 h-20 bg-cover bg-center rounded-full"
+            style={{
+              backgroundImage: `url('${
+                imageProfile == "" ? "/images/content/profile/Photo.png" : "http://localhost:3003" + imageProfile
+              }')`,
+            }}
+          ></label>
+          <input
+            type="file"
+            id="profile_image"
+            className="hidden"
+            onChange={(e) => {
+              const formData = new FormData();
+              formData.append("file", e.target.files[0]);
+              imageProfileMut.mutate(formData, {
+                onSuccess: (data) => {
+                  queryCLient.invalidateQueries({ queryKey: ["profile-me"] });
+                  console.log("berhasil kok ", data.data.data);
+                  setImageProfile(data.data.data);
+                },
+                onError: (e) => {
+                  console.log("ini error ", e);
+                },
+              });
+            }}
+          />
+        </div>
+        <div className="w-full mt-3">
+          <InputGroup
+            label="Nama"
+            id="full-name"
+            name="name"
+            type="text"
+            register={register}
+            validation={{ required: "This field is required" }}
+            errors={errors}
+          />
+        </div>
+        <div className="w-full mt-3">
+          <label htmlFor={"jenis_kelamin"} className="block text-sm leading-6 text-white font-bold">
+            Jenis Kelamin
           </label>
-          <div className="mt-2">
-            <input
-              id="kode"
-              name="kode"
-              type="text"
-              autoComplete="kode"
-              {...register("kode", {
-                required: "This field is required",
-              })}
-              required
-              className="h-12 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-            />
+          {/* <input type="checkbox" {...register("laki_laki")} className="hidden" /> */}
+          {/* <input type="checkbox" {...register("perempuan")} className="hidden" /> */}
+          <div className="w-full flex mt-1">
+            <div
+              className="w-6/12"
+              onClick={() => {
+                setValue("laki_laki", true);
+                setValue("perempuan", false);
+              }}
+            >
+              <div className="w-full flex">
+                <div
+                  className={`mt-1 h-4 w-4 rounded-full border-[3px] border-[#af282f] ${
+                    watch("laki_laki") ? "bg-black" : ""
+                  }`}
+                ></div>
+                <p className="ml-1 text-white">Laki Laki</p>
+              </div>
+            </div>
+            <div
+              className="w-6/12"
+              onClick={() => {
+                setValue("perempuan", true);
+                setValue("laki_laki", false);
+              }}
+            >
+              <div className="w-full flex">
+                <div
+                  className={`mt-1 h-4 w-4 rounded-full border-[3px] border-[#af282f] ${
+                    watch("perempuan") ? "bg-black" : ""
+                  } `}
+                ></div>
+                <p className="ml-1 text-white">Perempuan</p>
+              </div>
+            </div>
           </div>
         </div>
-        
-        <div className="mt-2 md:mt-0 col-span-4 md:col-span-2 xl:col-span-2 flex items-end justify-center">
-          <button
-            type="submit"
-            className="align-middle w-full h-12 flex justify-center rounded-md bg-indigo-600 px-3 text-sm font-semibold  text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 items-center"
-          >
-            Tambah
+        <div className="w-full mt-3">
+          <InputGroup
+            label="Email"
+            id="email"
+            name="email"
+            type="text"
+            register={register}
+            validation={{ required: "This field is required" }}
+            errors={errors}
+          />
+        </div>
+        <div className="w-full mt-3">
+          <InputGroup
+            label="Phone"
+            id="phone"
+            name="no_hp"
+            type="text"
+            register={register}
+            validation={{ required: "This field is required" }}
+            errors={errors}
+          />
+        </div>
+        <div className="w-full mt-3">
+          <label htmlFor={"tgl_lahir"} className="block text-sm leading-6 text-white font-bold">
+            Tanggal Lahir
+          </label>
+          <Datepicker
+            popoverDirection="up"
+            primaryColor={"emerald"}
+            displayFormat="DD/MM/YYYY"
+            placeholder="_ _ /_ _ /_ _ _ _"
+            inputClassName="pl-12 mt-1 block w-full rounded-md border-0 py-2 text-white shadow-sm ring-1 ring-inset bg-slate-800 ring-white placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            toggleClassName="absolute rounded-r-lg -top-0  left-0 h-full px-3 text-black focus:outline-none disabled:opacity-40 disabled:cursor-not-allowed text-white"
+            useRange={false}
+            asSingle={true}
+            value={valueTglLhr}
+            onChange={(newValue) => setValueTglLhr(newValue)}
+            singleDatePicker={true}
+          />
+        </div>
+        <div className="w-full mt-3">
+          <InputGroup
+            label="Alamat"
+            id="alamat"
+            name="alamat"
+            type="text"
+            register={register}
+            validation={{ required: "This field is required" }}
+            errors={errors}
+          />
+        </div>
+        <div className="w-full mt-4 flex justify-center">
+          <button className="w-7/12 md:w-4/12" type="submit">
+            <Image
+              alt="slide_1"
+              src={`/images/content/button/Button 2.png`}
+              width={0}
+              height={0}
+              sizes="100vw"
+              style={{ width: "100%", height: "auto" }}
+            />
           </button>
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
   );
 }

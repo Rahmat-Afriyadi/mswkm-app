@@ -10,6 +10,13 @@ const nextConfig = {
         port: "3002",
         pathname: "/images/**", // Match any path under /images/
       },
+      {
+        // Matches any image hosted on localhost:3002
+        protocol: "http",
+        hostname: "localhost",
+        port: "3003",
+        pathname: "/uploads/**", // Match any path under /images/
+      },
     ],
   },
 };
