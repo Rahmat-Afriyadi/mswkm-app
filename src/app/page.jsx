@@ -70,7 +70,9 @@ export default function Page() {
                   <SwiperComponent1 sWidth={windowWidth} banners={merchants} />
                 </div>
               </div>
+
               <div className="w-10/12 bg-white h-[2px] rounded-full my-3"></div>
+
               <div className="w-9/12">
                 <div className="w-full flex justify-between items-end">
                   <p className="font-bold text-white text-lg underline">News</p>
@@ -91,6 +93,7 @@ export default function Page() {
               </div>
             </div>
           </div>
+
           <div className="w-full h-auto absolute bottom-0">
             <Image
               src={"/images/content/footer/Footer.png"}

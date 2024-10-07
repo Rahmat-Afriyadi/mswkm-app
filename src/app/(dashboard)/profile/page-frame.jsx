@@ -80,7 +80,7 @@ export default function PageFrame({ defaultValues }) {
   };
 
   return (
-    <div className="h-screen w-8/12">
+    <div className="h-screen w-8/12 md:w-11/12">
       <form action="" onSubmit={handleSubmit(onSubmit)}>
         <div className="w-full flex justify-center">
           <label
@@ -112,120 +112,136 @@ export default function PageFrame({ defaultValues }) {
             }}
           />
         </div>
-        <div className="w-full mt-3">
-          <InputGroup
-            label="Nama"
-            id="full-name"
-            name="name"
-            type="text"
-            register={register}
-            validation={{ required: "This field is required" }}
-            errors={errors}
-          />
-        </div>
-        <div className="w-full mt-3">
-          <label htmlFor={"jenis_kelamin"} className="block text-sm leading-6 text-white font-bold">
-            Jenis Kelamin
-          </label>
-          {/* <input type="checkbox" {...register("laki_laki")} className="hidden" /> */}
-          {/* <input type="checkbox" {...register("perempuan")} className="hidden" /> */}
-          <div className="w-full flex mt-1">
-            <div
-              className="w-6/12"
-              onClick={() => {
-                setValue("laki_laki", true);
-                setValue("perempuan", false);
-              }}
-            >
-              <div className="w-full flex">
-                <div
-                  className={`mt-1 h-4 w-4 rounded-full border-[3px] border-[#af282f] ${
-                    watch("laki_laki") ? "bg-black" : ""
-                  }`}
-                ></div>
-                <p className="ml-1 text-white">Laki Laki</p>
-              </div>
+        <div className="grid grid-cols-12 gap-x-7">
+          <div className="col-span-12 md:col-span-4">
+            <div className="w-full mt-3 md:mt-9">
+              <InputGroup
+                label="Nama"
+                id="full-name"
+                name="name"
+                type="text"
+                register={register}
+                validation={{ required: "This field is required" }}
+                errors={errors}
+              />
             </div>
-            <div
-              className="w-6/12"
-              onClick={() => {
-                setValue("perempuan", true);
-                setValue("laki_laki", false);
-              }}
-            >
-              <div className="w-full flex">
+          </div>
+          <div className="col-span-12 md:col-span-4">
+            <div className="w-full mt-3 md:mt-9">
+              <InputGroup
+                label="Email"
+                id="email"
+                name="email"
+                type="text"
+                register={register}
+                validation={{ required: "This field is required" }}
+                errors={errors}
+              />
+            </div>
+          </div>
+          <div className="col-span-12 md:col-span-4">
+            <div className="w-full mt-3 md:mt-9">
+              <InputGroup
+                label="Phone"
+                id="phone"
+                name="no_hp"
+                type="text"
+                register={register}
+                validation={{ required: "This field is required" }}
+                errors={errors}
+              />
+            </div>
+          </div>
+          <div className="col-span-12 md:col-span-4">
+            <div className="w-full mt-3 md:mt-9">
+              <label htmlFor={"jenis_kelamin"} className="block text-sm leading-6 text-white font-bold">
+                Jenis Kelamin
+              </label>
+              {/* <input type="checkbox" {...register("laki_laki")} className="hidden" /> */}
+              {/* <input type="checkbox" {...register("perempuan")} className="hidden" /> */}
+              <div className="w-full flex mt-1">
                 <div
-                  className={`mt-1 h-4 w-4 rounded-full border-[3px] border-[#af282f] ${
-                    watch("perempuan") ? "bg-black" : ""
-                  } `}
-                ></div>
-                <p className="ml-1 text-white">Perempuan</p>
+                  className="w-6/12"
+                  onClick={() => {
+                    setValue("laki_laki", true);
+                    setValue("perempuan", false);
+                  }}
+                >
+                  <div className="w-full flex">
+                    <div
+                      className={`mt-1 h-4 w-4 rounded-full border-[3px] border-[#af282f] ${
+                        watch("laki_laki") ? "bg-black" : ""
+                      }`}
+                    ></div>
+                    <p className="ml-1 text-white">Laki Laki</p>
+                  </div>
+                </div>
+                <div
+                  className="w-6/12"
+                  onClick={() => {
+                    setValue("perempuan", true);
+                    setValue("laki_laki", false);
+                  }}
+                >
+                  <div className="w-full flex">
+                    <div
+                      className={`mt-1 h-4 w-4 rounded-full border-[3px] border-[#af282f] ${
+                        watch("perempuan") ? "bg-black" : ""
+                      } `}
+                    ></div>
+                    <p className="ml-1 text-white">Perempuan</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className="w-full mt-3">
-          <InputGroup
-            label="Email"
-            id="email"
-            name="email"
-            type="text"
-            register={register}
-            validation={{ required: "This field is required" }}
-            errors={errors}
-          />
-        </div>
-        <div className="w-full mt-3">
-          <InputGroup
-            label="Phone"
-            id="phone"
-            name="no_hp"
-            type="text"
-            register={register}
-            validation={{ required: "This field is required" }}
-            errors={errors}
-          />
-        </div>
-        <div className="w-full mt-3">
-          <label htmlFor={"tgl_lahir"} className="block text-sm leading-6 text-white font-bold">
-            Tanggal Lahir
-          </label>
-          <Datepicker
-            popoverDirection="up"
-            primaryColor={"emerald"}
-            displayFormat="DD/MM/YYYY"
-            placeholder="_ _ /_ _ /_ _ _ _"
-            inputClassName="pl-12 mt-1 block w-full rounded-md border-0 py-2 text-white shadow-sm ring-1 ring-inset bg-slate-800 ring-white placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-            toggleClassName="absolute rounded-r-lg -top-0  left-0 h-full px-3 text-black focus:outline-none disabled:opacity-40 disabled:cursor-not-allowed text-white"
-            useRange={false}
-            asSingle={true}
-            value={valueTglLhr}
-            onChange={(newValue) => setValueTglLhr(newValue)}
-            singleDatePicker={true}
-          />
-        </div>
-        <div className="w-full mt-3">
-          <InputGroup
-            label="Alamat"
-            id="alamat"
-            name="alamat"
-            type="text"
-            register={register}
-            validation={{ required: "This field is required" }}
-            errors={errors}
-          />
-        </div>
-        <div className="w-full mt-4 flex justify-center">
-          <button className="w-7/12 md:w-4/12" type="submit">
-            <Image
-              alt="slide_1"
-              src={`/images/content/button/Button 2.png`}
-              width={0}
-              height={0}
-              sizes="100vw"
-              style={{ width: "100%", height: "auto" }}
-            />
-          </button>
+          <div className="col-span-12 md:col-span-4">
+            <div className="w-full mt-3 md:mt-9">
+              <label htmlFor={"tgl_lahir"} className="block text-sm leading-6 text-white font-bold">
+                Tanggal Lahir
+              </label>
+              <Datepicker
+                popoverDirection="up"
+                primaryColor={"emerald"}
+                displayFormat="DD/MM/YYYY"
+                placeholder="_ _ /_ _ /_ _ _ _"
+                inputClassName="pl-12 mt-1 block w-full rounded-md border-0 py-2 text-white shadow-sm ring-1 ring-inset bg-slate-800 ring-white placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                toggleClassName="absolute rounded-r-lg -top-0  left-0 h-full px-3 text-black focus:outline-none disabled:opacity-40 disabled:cursor-not-allowed text-white"
+                useRange={false}
+                asSingle={true}
+                value={valueTglLhr}
+                onChange={(newValue) => setValueTglLhr(newValue)}
+                singleDatePicker={true}
+              />
+            </div>
+          </div>
+          <div className="col-span-12 md:col-span-4">
+            <div className="w-full mt-3 md:mt-9">
+              <InputGroup
+                label="Alamat"
+                id="alamat"
+                name="alamat"
+                type="text"
+                register={register}
+                validation={{ required: "This field is required" }}
+                errors={errors}
+              />
+            </div>
+          </div>
+          <div className="col-span-12">
+            <div className="w-full mt-4 md:mt-16 flex justify-center">
+              <button className="w-7/12 md:w-2/12" type="submit">
+                <Image
+                  alt="slide_1"
+                  src={`/images/content/button/Button 2.png`}
+                  width={0}
+                  height={0}
+                  sizes="100vw"
+                  style={{ width: "100%", height: "auto" }}
+                />
+              </button>
+            </div>
+          </div>
         </div>
       </form>
     </div>
