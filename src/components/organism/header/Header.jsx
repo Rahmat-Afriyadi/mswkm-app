@@ -47,15 +47,15 @@ export default function Header() {
 
   let header;
   if (windowWidth > 1023) {
-    header = "Header.png";
+    header = "Header-lg.png";
   } else if (windowWidth > 768) {
-    header = "Header.png";
+    header = "Header-lg.png";
   } else {
     header = "Header.png";
   }
 
   return (
-    <header className="w-full h-auto relative">
+    <header className="w-full h-auto relative py-2">
       <Image
         src={"/images/content/header/" + header}
         alt="illustrasi-1"

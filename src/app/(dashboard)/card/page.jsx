@@ -7,6 +7,8 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import bgImage from "../../../../public/images/content/background/BG.png";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
+import CardSwiperLg from "@/components/organism/swiper/card-swiper-lg";
 
 export default function Page() {
   const queryCLient = useQueryClient();
@@ -84,7 +86,8 @@ export default function Page() {
         style={{ backgroundImage: "url('/images/content/background/BG.png')" }}
       >
         <div className="w-full h-auto">
-          <CardSwiper />
+          <CardSwiperLg />
+          {/* <CardSwiper /> */}
         </div>
       </div>
       <div className="w-full h-auto -bottom-16">

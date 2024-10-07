@@ -11,6 +11,7 @@ export const metadata = {
 
 import Providers from "@/components/providers/providers";
 import Header from "@/components/organism/header/Header";
+import Image from "next/image";
 
 export default function RootLayout({ children }) {
   return (

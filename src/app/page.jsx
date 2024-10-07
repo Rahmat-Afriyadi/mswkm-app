@@ -51,9 +51,10 @@ export default function Page() {
               sizes="100vw"
               style={{ width: "100%", height: "auto" }}
             />
-            <div className="absolute z-10 top-0  w-full flex flex-col items-center  pt-4">
-              <div className="w-9/12">
-                <div className="w-full flex justify-between items-end">
+            {/* <div className="absolute z-10 top-0  w-full flex flex-col items-center  pt-4"> */}
+            <div className="absolute z-10 top-0  w-full grid grid-cols-12 pt-4 md:px-12">
+              <div className="col-span-12 md:col-span-5 flex flex-col items-center md:-mr-8">
+                <div className="w-9/12 md:w-full flex justify-between items-end">
                   <p className="font-bold text-white text-lg underline">Merchant</p>
                   <div className="w-3/12">
                     <Image
@@ -66,15 +67,25 @@ export default function Page() {
                     />
                   </div>
                 </div>
-                <div className="w-full mt-2">
+                <div className="w-9/12 md:w-full mt-2 md:mt-7">
                   <SwiperComponent1 sWidth={windowWidth} banners={merchants} />
                 </div>
               </div>
 
-              <div className="w-10/12 bg-white h-[2px] rounded-full my-3"></div>
+              {windowWidth > 767 && (
+                <div className="md:col-span-2 flex justify-center">
+                  <div className="w-[2px] rounded-lg h-full bg-red-600"></div>
+                </div>
+              )}
 
-              <div className="w-9/12">
-                <div className="w-full flex justify-between items-end">
+              {windowWidth < 768 && (
+                <div className="col-span-12 flex justify-center">
+                  <div className="w-9/12 bg-white h-[2px] rounded-full my-3"></div>
+                </div>
+              )}
+
+              <div className="col-span-12 md:col-span-5 flex flex-col items-center md:-ml-8">
+                <div className="w-9/12 md:w-full flex justify-between items-end">
                   <p className="font-bold text-white text-lg underline">News</p>
                   <div className="w-3/12">
                     <Image
@@ -87,7 +98,7 @@ export default function Page() {
                     />
                   </div>
                 </div>
-                <div className="w-full mt-2">
+                <div className="w-9/12 md:w-full mt-2 md:mt-7">
                   <SwiperComponent1 sWidth={windowWidth} banners={news} />
                 </div>
               </div>
@@ -95,14 +106,26 @@ export default function Page() {
           </div>
 
           <div className="w-full h-auto absolute bottom-0">
-            <Image
-              src={"/images/content/footer/Footer.png"}
-              alt="illustrasi-1"
-              width={0}
-              height={0}
-              sizes="100vw"
-              style={{ width: "100%", height: "auto" }}
-            />
+            {windowWidth < 641 && (
+              <Image
+                src={"/images/content/footer/Footer.png"}
+                alt="illustrasi-1"
+                width={0}
+                height={0}
+                sizes="100vw"
+                style={{ width: "100%", height: "auto" }}
+              />
+            )}
+            {windowWidth > 640 && (
+              <Image
+                src={"/images/content/footer/Footer-lg.png"}
+                alt="illustrasi-1"
+                width={0}
+                height={0}
+                sizes="100vw"
+                style={{ width: "100%", height: "auto" }}
+              />
+            )}
           </div>
         </div>
       </div>

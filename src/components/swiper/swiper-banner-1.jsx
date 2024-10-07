@@ -33,7 +33,7 @@ export default function SwiperComponent1({ sWidth, banners }) {
       {banners.map((e, i) => {
         return (
           <SwiperSlide key={e + i}>
-            <div className={`${sWidth > 1023 ? "w-11/12" : "w-full"} h-auto mx-auto`}>
+            <div className={`${sWidth > 1023 ? "w-full" : "w-full"} h-auto mx-auto`}>
               <Image
                 src={"/images/content/banner/" + e}
                 alt="illustrasi-1"

@@ -19,7 +19,7 @@ import BenefitPlatinum from "./card-benefit/platinum";
 import BenefitPlatinumPlus from "./card-benefit/platinum-plus";
 import BenefitBasicLg from "./card-benefit/basic-lg";
 
-function CardSwiper() {
+function CardSwiperLg() {
   const swiperRef = useRef(null);
 
   const [windowWidth, setWindowWidth] = useState(0);
@@ -66,7 +66,7 @@ function CardSwiper() {
 
   return (
     <>
-      <div className="w-full">
+      {/* <div className="w-full">
         <div className="slider-controler mt-11 sm:mt-0">
           <div className="swiper-button-prev slider-arrow">
             <ChevronLeftIcon className="h-6 w-6 text-white" />
@@ -75,8 +75,9 @@ function CardSwiper() {
             <ChevronRightIcon className="h-6 2-6 text-white" />
           </div>
         </div>
-      </div>
-      <div className="container relative ">
+      </div> */}
+      <div className="w-full h-5 bg-red-500"></div>
+      <div className="container">
         <Swiper
           // spaceBetween={windowWidth < 835 ? 6 : windowWidth < 1225 ? 8 : 10}
           // onSlideChange={(e) => goToSlide(e.activeIndex)}
@@ -122,36 +123,45 @@ function CardSwiper() {
 
             return (
               <SwiperSlide key={e.no_msn} className="rounded-lg">
-                <div className="w-full relative">
-                  <div style={{ width: "80%", position: "relative" }} className=" max-w-[500px] left-0 right-0 mx-auto">
-                    <Image
-                      alt="slide_1"
-                      src={`/images/master_card/${src}`}
-                      width={0}
-                      height={0}
-                      sizes="100vw"
-                      style={{ width: "100%", height: "auto" }}
-                    />
-                    <div className="absolute right-6 xl:right-9 bottom-4 xl:bottom-9 text-white text-right text-[12px] xl:text-xl">
-                      <p className="leading-4 xl:leading-8 font-sans font-bold">{e.nm_customer}</p>
-                      <p
-                        className="leading-4 xl:leading-6 font-sans xl:text-2xl font-bold"
-                        dangerouslySetInnerHTML={{ __html: e.no_kartu.split(" ").join("&nbsp;") }}
-                      ></p>
-                      <p className="leading-4 xl:leading-6 font-sans font-bold uppercase">{e.no_msn}</p>
-                      <p className="leading-4 xl:leading-6 font-sans">
-                        Exp.{" "}
-                        {String(expiredDate.getMonth() + 1).padStart(2, "0") +
-                          "/" +
-                          String(expiredDate.getFullYear()).slice(2, 4)}
-                      </p>
+                <div className="w-full grid grid-cols-12">
+                  <div className="col-span-3 relative">
+                    <div
+                      style={{ width: "100%", position: "relative" }}
+                      className=" max-w-[500px] left-0 right-0 mx-auto"
+                    >
+                      <Image
+                        alt="slide_1"
+                        src={`/images/master_card/${src}`}
+                        width={0}
+                        height={0}
+                        sizes="100vw"
+                        style={{ width: "100%", height: "auto" }}
+                      />
+                      <div className="absolute right-6 xl:right-9 bottom-4 xl:bottom-6 text-white text-right text-[12px] xl:text-[16px]">
+                        <p className="leading-4 xl:leading-5 font-sans font-bold">{e.nm_customer}</p>
+                        <p
+                          className="leading-4 xl:leading-5 font-sans xl:text-[16px] font-bold"
+                          dangerouslySetInnerHTML={{ __html: e.no_kartu.split(" ").join("&nbsp;") }}
+                        ></p>
+                        <p className="leading-4 xl:leading-5 font-sans font-bold uppercase">{e.no_msn}</p>
+                        <p className="leading-4 xl:leading-5 font-sans">
+                          Exp.{" "}
+                          {String(expiredDate.getMonth() + 1).padStart(2, "0") +
+                            "/" +
+                            String(expiredDate.getFullYear()).slice(2, 4)}
+                        </p>
+                      </div>
                     </div>
                   </div>
+                  <div className="col-span-9">
+                    <BenefitBasicLg />
+                  </div>
                 </div>
-                {benefitDesc == "Basic" && <BenefitBasic />}
+
+                {/* {benefitDesc == "Basic" && <BenefitBasic />}
                 {benefitDesc == "Gold" && <BenefitGold />}
                 {benefitDesc == "Platinum" && <BenefitPlatinum />}
-                {benefitDesc == "Platinum Plus" && <BenefitPlatinumPlus />}
+                {benefitDesc == "Platinum Plus" && <BenefitPlatinumPlus />} */}
               </SwiperSlide>
             );
           })}
@@ -203,4 +213,4 @@ function CardSwiper() {
   );
 }
 
-export default CardSwiper;
+export default CardSwiperLg;

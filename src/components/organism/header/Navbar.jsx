@@ -19,7 +19,7 @@ export default function Navbar() {
     <div className=" h-6 w-full">
       <div className="grid grid-cols-12 gap-x-1">
         <div className="col-span-3  flex justify-center">
-          <a href="/" className="h-5 w-5 sm:h-8 sm:w-8 md:h-10 md:w-10 cursor-pointer">
+          <a href="/" className="h-5 w-5 sm:h-8 sm:w-8 cursor-pointer">
             <Image
               src={pathname == "/" ? iconActive : icon}
               alt="illustrasi-1"
@@ -34,7 +34,7 @@ export default function Navbar() {
           <>
             {" "}
             <div className="col-span-3  flex justify-center">
-              <a href="/profile" className="h-5 w-5 sm:h-8 sm:w-8 md:h-10 md:w-10 cursor-pointer ">
+              <a href="/profile" className="h-5 w-5 sm:h-8 sm:w-8 md:h-8 md:w-8 cursor-pointer ">
                 <Image
                   src={pathname == "/profile" ? icon2Active : icon2}
                   alt="illustrasi-1"
@@ -46,7 +46,7 @@ export default function Navbar() {
               </a>
             </div>
             <div className="col-span-3  flex justify-center">
-              <a href="/card" className="h-5 w-5 sm:h-8 sm:w-8 md:h-10 md:w-10 cursor-pointer ">
+              <a href="/card" className="h-5 w-5 sm:h-8 sm:w-8 md:h-8 md:w-8 cursor-pointer ">
                 <Image
                   src={pathname == "/card" ? icon3Active : icon3}
                   alt="illustrasi-1"
@@ -60,7 +60,7 @@ export default function Navbar() {
           </>
         )}
         <div className="col-span-3  flex justify-center">
-          <a href="/faq" className="h-5 w-5 sm:h-8 sm:w-8 md:h-10 md:w-10 cursor-pointer mt-1">
+          <a href="/faq" className="h-5 w-5 sm:h-8 sm:w-8 md:h-8 md:w-8 cursor-pointer mt-1">
             <Image
               src={pathname == "/faq" ? icon4Active : icon4}
               alt="illustrasi-1"
