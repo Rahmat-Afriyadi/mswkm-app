@@ -1,4 +1,5 @@
 "use client";
+import CardLg from "@/components/organism/swiper/card-lg";
 import CardSwiper from "@/components/organism/swiper/card-swiper";
 import CardSwiperLg from "@/components/organism/swiper/card-swiper-lg";
 import { addCard } from "@/server/member/add-card";
@@ -7,6 +8,7 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 
 export default function Page() {
   const queryCLient = useQueryClient();
@@ -92,11 +94,22 @@ export default function Page() {
       </div>
 
       <div
-        className="w-full flex flex-col items-center bg-cover bg-center h-auto bg-red-400"
+        className={`w-full flex flex-col items-center bg-cover bg-center h-auto ${windowWidth > 767 ? "relative" : ""}`}
         style={{ backgroundImage: "url('/images/content/background/BG.png')" }}
       >
-        <div className="w-full h-auto">
-          {/* <CardSwiperLg /> */}
+        {windowWidth > 767 && (
+          <div className="w-full h-auto relative">
+            <div className="w-8 h-8 lg:w-12 lg:h-12 xl:w-16 xl:h-16 2xl:w-20 2xl:h-20 z-50 absolute md:left-[10px] lg:left-[25px] xl:left-[31px] 2xl:left-[37px] cursor-pointer md:top-3 inset-0 my-auto">
+              <ChevronLeftIcon className="h-full w-full text-white kiri-in" />
+            </div>
+            <div className="w-8 h-8 lg:w-12 lg:h-12 xl:w-16 xl:h-16 2xl:w-20 2xl:h-20 z-50  absolute md:left-[290px] lg:left-[377.5px] xl:left-[478px] 2xl:left-[564px] cursor-pointer md:top-3 inset-0 my-auto">
+              <ChevronRightIcon className="h-full w-full text-white kanan-in" />
+            </div>
+            <CardLg />
+          </div>
+        )}
+
+        <div className={`w-full h-auto top-0 ${windowWidth > 767 ? "absolute" : ""}`}>
           {windowWidth > 767 && <CardSwiperLg />}
           {windowWidth < 768 && <CardSwiper />}
         </div>

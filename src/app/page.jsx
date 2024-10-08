@@ -49,10 +49,10 @@ export default function Page() {
                 windowWidth > 1279 ? "700px" : windowWidth > 1023 ? "600px" : windowWidth > 767 ? "500px" : "auto",
             }}
           />
-          <div className="w-full h-auto absolute top-4">
+          <div className="w-full h-auto absolute top-4 z-20">
             <Search />
           </div>
-          <div className="w-full md:h-[300px] lg:h-[400px] xl:h-[500px] absolute md:top-[100px] sm:bottom-28 rounded-t-3xl overflow-hidden">
+          <div className=" absolute w-full md:h-[300px] lg:h-[400px] xl:h-[500px] md:top-[100px] sm:bottom-28 rounded-t-3xl overflow-hidden">
             <Image
               src={"/images/content/background/BG (Home 2).png"}
               alt="illustrasi-1"

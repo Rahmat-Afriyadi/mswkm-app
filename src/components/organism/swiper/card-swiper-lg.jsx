@@ -13,10 +13,6 @@ import { EffectCoverflow, Pagination, Navigation } from "swiper/modules";
 import { MemberCard } from "@/server/member/card";
 import { useQuery } from "@tanstack/react-query";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
-import BenefitBasic from "./card-benefit/basic";
-import BenefitGold from "./card-benefit/gold";
-import BenefitPlatinum from "./card-benefit/platinum";
-import BenefitPlatinumPlus from "./card-benefit/platinum-plus";
 import BenefitBasicLg from "./card-benefit/basic-lg";
 import BenefitGoldLg from "./card-benefit/gold-lg";
 import BenefitPlatinumLg from "./card-benefit/platinum-lg";
@@ -97,8 +93,10 @@ function CardSwiperLg() {
           }}
           // pagination={{ el: '.swiper-pagination', clickable: true }}
           navigation={{
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev",
+            nextEl: ".kanan-in",
+            // nextEl: ".swiper-button-next",
+            prevEl: ".kiri-in",
+            // prevEl: ".swiper-button-prev",
             clickable: true,
           }}
           modules={[EffectCoverflow, Pagination, Navigation]}
