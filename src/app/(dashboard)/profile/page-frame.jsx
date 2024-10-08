@@ -9,13 +9,13 @@ import Image from "next/image";
 import { UploadImageProfile } from "@/server/profile/upload-image-profile";
 import { updateProfile } from "@/server/profile/update-profile";
 import Swal from "sweetalert2";
+import Photo from "../../../../public/images/content/profile/Photo.png";
 
 export default function PageFrame({ defaultValues }) {
   const [valueTglLhr, setValueTglLhr] = useState({
     startDate: defaultValues.tgl_lahir != null ? defaultValues.tgl_lahir.substring(0, 10) : null,
     endDate: defaultValues.tgl_lahir != null ? defaultValues.tgl_lahir.substring(0, 10) : null,
   });
-  console.log("ini default values ", defaultValues);
   const [imageProfile, setImageProfile] = useState(defaultValues.img_profile);
 
   const {
@@ -89,7 +89,7 @@ export default function PageFrame({ defaultValues }) {
             className="w-20 h-20 md:w-24 md:h-24 bg-cover bg-center rounded-full md:mt-2"
             style={{
               backgroundImage: `url('${
-                imageProfile == "" ? "/images/content/profile/Photo.png" : "http://localhost:3003" + imageProfile
+                imageProfile == "" ? "/images/content/profile/Photo.png" : "http://192.168.70.17:3003" + imageProfile
               }')`,
             }}
           ></label>
