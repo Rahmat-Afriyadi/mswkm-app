@@ -59,7 +59,7 @@ export default function Page() {
           <div className="w-full text-center text-white font-bold text-xl">My Card</div>
         </div>
         <br />
-        <div className="w-10/12 bg-white h-[2px] rounded-lg"></div>
+        <div className="w-10/12 md:w-11/12 bg-white h-[2px] rounded-lg"></div>
         <br />
         <div className="w-9/12">
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -71,11 +71,11 @@ export default function Page() {
                 type="text"
                 name="kode"
                 id="kode"
-                className="rounded-l-md placeholder:text-sm bg-white py-[3px]"
+                className="rounded-l-md placeholder:text-sm bg-white py-[3px] md:w-6/12  md:h-12"
                 placeholder="Masukan Nomor Mesin"
               />
               <button type="submit">
-                <div className="w-[37px] h-[33px] cursor-pointer">
+                <div className="w-[37px] h-[33px] md:h-[48px] md:w-[54px] cursor-pointer">
                   <Image
                     src={"/images/content/button/Button 3.png"}
                     alt="illustrasi-1"
@@ -101,7 +101,7 @@ export default function Page() {
           {windowWidth < 768 && <CardSwiper />}
         </div>
       </div>
-      <div className="w-full h-auto -bottom-16">
+      <div className="w-full h-auto -bottom-16 lg:-bottom-0 lg:mt-8 xl:mt-12">
         {windowWidth < 641 && (
           <Image
             src={"/images/content/footer/Footer.png"}

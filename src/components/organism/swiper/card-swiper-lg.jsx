@@ -125,41 +125,43 @@ function CardSwiperLg() {
 
             return (
               <SwiperSlide key={e.no_msn} className="rounded-lg">
-                <div className="w-full grid grid-cols-12">
-                  <div className="col-span-3 relative">
-                    <div
-                      style={{ width: "100%", position: "relative" }}
-                      className=" max-w-[500px] left-0 right-0 mx-auto"
-                    >
-                      <Image
-                        alt="slide_1"
-                        src={`/images/master_card/${src}`}
-                        width={0}
-                        height={0}
-                        sizes="100vw"
-                        style={{ width: "100%", height: "auto" }}
-                      />
-                      <div className="absolute right-6 xl:right-9 bottom-4 xl:bottom-6 text-white text-right text-[12px] xl:text-[16px]">
-                        <p className="leading-4 xl:leading-5 font-sans font-bold">{e.nm_customer}</p>
-                        <p
-                          className="leading-4 xl:leading-5 font-sans xl:text-[16px] font-bold"
-                          dangerouslySetInnerHTML={{ __html: e.no_kartu.split(" ").join("&nbsp;") }}
-                        ></p>
-                        <p className="leading-4 xl:leading-5 font-sans font-bold uppercase">{e.no_msn}</p>
-                        <p className="leading-4 xl:leading-5 font-sans">
-                          Exp.{" "}
-                          {String(expiredDate.getMonth() + 1).padStart(2, "0") +
-                            "/" +
-                            String(expiredDate.getFullYear()).slice(2, 4)}
-                        </p>
+                <div className="w-full flex justify-center">
+                  <div className="w-11/12 grid grid-cols-12">
+                    <div className="col-span-5 relative">
+                      <div
+                        style={{ width: "90%", position: "relative" }}
+                        className=" max-w-[500px] -left-5 right-0 mx-auto"
+                      >
+                        <Image
+                          alt="slide_1"
+                          src={`/images/master_card/${src}`}
+                          width={0}
+                          height={0}
+                          sizes="100vw"
+                          style={{ width: "100%", height: "auto" }}
+                        />
+                        <div className="absolute right-6 xl:right-9 bottom-4 xl:bottom-6 text-white text-right text-[12px] xl:text-[16px]">
+                          <p className="leading-4 xl:leading-5 font-sans font-bold">{e.nm_customer}</p>
+                          <p
+                            className="leading-4 xl:leading-5 font-sans xl:text-[16px] font-bold"
+                            dangerouslySetInnerHTML={{ __html: e.no_kartu.split(" ").join("&nbsp;") }}
+                          ></p>
+                          <p className="leading-4 xl:leading-5 font-sans font-bold uppercase">{e.no_msn}</p>
+                          <p className="leading-4 xl:leading-5 font-sans">
+                            Exp.{" "}
+                            {String(expiredDate.getMonth() + 1).padStart(2, "0") +
+                              "/" +
+                              String(expiredDate.getFullYear()).slice(2, 4)}
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="col-span-9">
-                    {benefitDesc == "Basic" && <BenefitBasicLg />}
-                    {benefitDesc == "Gold" && <BenefitGoldLg />}
-                    {benefitDesc == "Platinum" && <BenefitPlatinumLg />}
-                    {benefitDesc == "Platinum Plus" && <BenefitPlatinumPlusLg />}
+                    <div className="col-span-7">
+                      {benefitDesc == "Basic" && <BenefitBasicLg />}
+                      {benefitDesc == "Gold" && <BenefitGoldLg />}
+                      {benefitDesc == "Platinum" && <BenefitPlatinumLg />}
+                      {benefitDesc == "Platinum Plus" && <BenefitPlatinumPlusLg />}
+                    </div>
                   </div>
                 </div>
               </SwiperSlide>

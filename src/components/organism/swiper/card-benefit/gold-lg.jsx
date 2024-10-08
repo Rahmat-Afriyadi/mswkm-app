@@ -5,7 +5,7 @@ import Image from "next/image";
 export default function BenefitGoldLg() {
   return (
     <div className="w-full justify-center flex">
-      <div className="w-11/12 rounded-2xl border-2 h-auto border-white  grid grid-cols-12 gap-x-3 px-3 bg-slate-800 bg-opacity-50 py-5">
+      <div className="w-full rounded-2xl border-2 h-auto border-white  grid grid-cols-12 gap-x-3 px-3 bg-slate-800 bg-opacity-50 py-5">
         <div className="col-span-12 ">
           <p className="font-bold text-white italic text-lg">Benefit Honda VIP Card Gold</p>
           <div className="w-8/12 bg-white h-[2px] rounded-lg mt-2 mx-auto"></div>
