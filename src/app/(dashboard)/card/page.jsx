@@ -9,8 +9,18 @@ import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/");
+    }
+  }, [status, router]);
+
   const queryCLient = useQueryClient();
   const { register, handleSubmit } = useForm();
   const mutTambahKartu = useMutation({

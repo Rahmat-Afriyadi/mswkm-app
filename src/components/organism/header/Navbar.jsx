@@ -72,13 +72,15 @@ export default function Navbar() {
           </a>
         </div>
         {status == "unauthenticated" && (
-          <div className="col-span-6  flex justify-start items-center">
-            <a
-              href="/login"
-              className="h-5 w-5 sm:h-8 sm:w-8 sm:text-xl md:h-10 md:w-10 md:text-3xl font-bold cursor-pointer leading-3"
-            >
-              Login
-            </a>
+          <div className="col-span-3  flex items-center">
+            <div className="w-full text-center">
+              <a
+                href="/login"
+                className="h-5 w-5 text-center sm:h-8 sm:w-8 sm:text-xl md:h-10 md:w-10 md:text-3xl font-bold cursor-pointer leading-3"
+              >
+                Login
+              </a>
+            </div>
           </div>
         )}
       </div>

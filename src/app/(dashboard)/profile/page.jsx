@@ -6,9 +6,11 @@ import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { ProfileMe } from "@/server/profile/me";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+  const router = useRouter();
 
   const [windowWidth, setWindowWidth] = useState(0);
 
@@ -27,6 +29,12 @@ export default function Page() {
     queryKey: ["profile-me"],
     queryFn: ProfileMe,
   });
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/");
+    }
+  }, [status, router]);
 
   if (isLoading) {
     return "Loading...";

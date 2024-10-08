@@ -1,9 +1,10 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Navbar from "./Navbar";
+import { ArrowLeftStartOnRectangleIcon, ArrowRightStartOnRectangleIcon } from "@heroicons/react/24/solid";
 
 const userNavigation = [
   { name: "Your profile", href: "#" },
@@ -17,7 +18,7 @@ function classNames(...classes) {
 export default function Header() {
   const [windowWidth, setWindowWidth] = useState(0);
   const [message, setMessage] = useState("");
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
   const handleMessage = () => {
     var today = new Date();
@@ -64,8 +65,19 @@ export default function Header() {
         sizes="100vw"
         style={{ width: "100%", height: "auto" }}
       />
-      <div className="absolute w-5/12  h-6 top-0 bottom-0  my-auto right-4">
+      <div className="absolute w-5/12  h-6 top-0 bottom-0  my-auto right-9 flex justify-center">
         <Navbar />
+        {status == "authenticated" && (
+          <button
+            onClick={() => {
+              signOut({ redirect: false }).then(() => {
+                void signIn();
+              });
+            }}
+          >
+            <ArrowRightStartOnRectangleIcon className="h-5 w-5 sm:h-8 sm:w-8 md:h-8 md:w-8 cursor-pointer" />
+          </button>
+        )}
       </div>
     </header>
   );

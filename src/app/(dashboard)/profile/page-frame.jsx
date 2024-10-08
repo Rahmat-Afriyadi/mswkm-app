@@ -12,9 +12,10 @@ import Swal from "sweetalert2";
 
 export default function PageFrame({ defaultValues }) {
   const [valueTglLhr, setValueTglLhr] = useState({
-    startDate: defaultValues.tgl_lahir.substring(0, 10),
-    endDate: defaultValues.tgl_lahir.substring(0, 10),
+    startDate: defaultValues.tgl_lahir != null ? defaultValues.tgl_lahir.substring(0, 10) : null,
+    endDate: defaultValues.tgl_lahir != null ? defaultValues.tgl_lahir.substring(0, 10) : null,
   });
+  console.log("ini default values ", defaultValues);
   const [imageProfile, setImageProfile] = useState(defaultValues.img_profile);
 
   const {
