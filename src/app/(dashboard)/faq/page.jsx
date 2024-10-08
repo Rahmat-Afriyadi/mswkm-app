@@ -3,9 +3,24 @@
 import { useSession } from "next-auth/react";
 import Accordion from "@/components/accordion/accordion";
 import Image from "next/image";
+import { useState, useEffect } from "react";
 
 export default function Page() {
   const { data: session } = useSession();
+
+  const [windowWidth, setWindowWidth] = useState(0);
+
+  useEffect(() => {
+    setWindowWidth(window.innerWidth);
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <>
@@ -28,14 +43,26 @@ export default function Page() {
           <br />
         </div>
         <div className="w-full h-auto">
-          <Image
-            src={"/images/content/footer/Footer.png"}
-            alt="illustrasi-1"
-            width={0}
-            height={0}
-            sizes="100vw"
-            style={{ width: "100%", height: "auto" }}
-          />
+          {windowWidth < 641 && (
+            <Image
+              src={"/images/content/footer/Footer.png"}
+              alt="illustrasi-1"
+              width={0}
+              height={0}
+              sizes="100vw"
+              style={{ width: "100%", height: "auto" }}
+            />
+          )}
+          {windowWidth > 640 && (
+            <Image
+              src={"/images/content/footer/Footer-lg.png"}
+              alt="illustrasi-1"
+              width={0}
+              height={0}
+              sizes="100vw"
+              style={{ width: "100%", height: "auto" }}
+            />
+          )}
         </div>
       </div>
     </>
