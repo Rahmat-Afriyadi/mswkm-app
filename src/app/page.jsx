@@ -23,26 +23,36 @@ export default function Page() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
   const listBannerMobile = ["Home Banner.png", "Home Banner.png", "Home Banner.png", "Home Banner.png"];
+  const listBannerDesktop = [
+    "home/Home Banner 2.png",
+    "home/Home Banner 3.png",
+    "home/Home Banner 3.png",
+    "home/Home Banner 3.png",
+  ];
   const merchants = ["Merchant.png", "Merchant.png", "Merchant.png"];
   const news = ["Artikel.png", "Artikel.png", "Artikel.png"];
-  let banners = listBannerMobile;
+  let banners = windowWidth > 768 ? listBannerDesktop : listBannerMobile;
   return (
     <>
       <div className="w-full">
         <SwiperComponent sWidth={windowWidth} banners={banners} />
-        <div className="w-full h-auto relative ">
+        <div className="w-full h-auto md:h-[500px] lg:h-[600px] xl:h-[700px] relative ">
           <Image
             src={bgHome1}
             alt="illustrasi-1"
             width={0}
             height={0}
             sizes="100vw"
-            style={{ width: "100%", height: "auto" }}
+            style={{
+              width: "100%",
+              height:
+                windowWidth > 1279 ? "700px" : windowWidth > 1023 ? "600px" : windowWidth > 767 ? "500px" : "auto",
+            }}
           />
-          <div className="w-full h-auto absolute  top-4">
+          <div className="w-full h-auto absolute top-4">
             <Search />
           </div>
-          <div className="w-full h-auto absolute bottom-[70px] sm:bottom-28 rounded-t-3xl overflow-hidden">
+          <div className="w-full md:h-[300px] lg:h-[400px] xl:h-[500px] absolute md:top-[100px] sm:bottom-28 rounded-t-3xl overflow-hidden">
             <Image
               src={"/images/content/background/BG (Home 2).png"}
               alt="illustrasi-1"

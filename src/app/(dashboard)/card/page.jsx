@@ -1,14 +1,12 @@
 "use client";
 import CardSwiper from "@/components/organism/swiper/card-swiper";
+import CardSwiperLg from "@/components/organism/swiper/card-swiper-lg";
 import { addCard } from "@/server/member/add-card";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
-import React from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
-import bgImage from "../../../../public/images/content/background/BG.png";
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
-import CardSwiperLg from "@/components/organism/swiper/card-swiper-lg";
 
 export default function Page() {
   const queryCLient = useQueryClient();
@@ -16,6 +14,18 @@ export default function Page() {
   const mutTambahKartu = useMutation({
     mutationFn: addCard,
   });
+  const [windowWidth, setWindowWidth] = useState(0);
+
+  useEffect(() => {
+    setWindowWidth(window.innerWidth);
+  }, []);
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const onSubmit = async (values) => {
     Swal.fire({
@@ -86,19 +96,32 @@ export default function Page() {
         style={{ backgroundImage: "url('/images/content/background/BG.png')" }}
       >
         <div className="w-full h-auto">
-          <CardSwiperLg />
-          {/* <CardSwiper /> */}
+          {/* <CardSwiperLg /> */}
+          {windowWidth > 767 && <CardSwiperLg />}
+          {windowWidth < 768 && <CardSwiper />}
         </div>
       </div>
       <div className="w-full h-auto -bottom-16">
-        <Image
-          src={"/images/content/footer/Footer.png"}
-          alt="illustrasi-1"
-          width={0}
-          height={0}
-          sizes="100vw"
-          style={{ width: "100%", height: "auto" }}
-        />
+        {windowWidth < 641 && (
+          <Image
+            src={"/images/content/footer/Footer.png"}
+            alt="illustrasi-1"
+            width={0}
+            height={0}
+            sizes="100vw"
+            style={{ width: "100%", height: "auto" }}
+          />
+        )}
+        {windowWidth > 640 && (
+          <Image
+            src={"/images/content/footer/Footer-lg.png"}
+            alt="illustrasi-1"
+            width={0}
+            height={0}
+            sizes="100vw"
+            style={{ width: "100%", height: "auto" }}
+          />
+        )}
       </div>
     </div>
   );

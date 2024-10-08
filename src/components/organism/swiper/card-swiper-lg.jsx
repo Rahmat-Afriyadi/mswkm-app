@@ -18,6 +18,9 @@ import BenefitGold from "./card-benefit/gold";
 import BenefitPlatinum from "./card-benefit/platinum";
 import BenefitPlatinumPlus from "./card-benefit/platinum-plus";
 import BenefitBasicLg from "./card-benefit/basic-lg";
+import BenefitGoldLg from "./card-benefit/gold-lg";
+import BenefitPlatinumLg from "./card-benefit/platinum-lg";
+import BenefitPlatinumPlusLg from "./card-benefit/platinum-plus-lg";
 
 function CardSwiperLg() {
   const swiperRef = useRef(null);
@@ -76,7 +79,6 @@ function CardSwiperLg() {
           </div>
         </div>
       </div> */}
-      <div className="w-full h-5 bg-red-500"></div>
       <div className="container">
         <Swiper
           // spaceBetween={windowWidth < 835 ? 6 : windowWidth < 1225 ? 8 : 10}
@@ -100,7 +102,7 @@ function CardSwiperLg() {
             clickable: true,
           }}
           modules={[EffectCoverflow, Pagination, Navigation]}
-          className="relative"
+          className="relative mt-5"
         >
           {data.data.data.map((e, index) => {
             const expiredDate = new Date(e.tgl_expired);
@@ -154,14 +156,12 @@ function CardSwiperLg() {
                     </div>
                   </div>
                   <div className="col-span-9">
-                    <BenefitBasicLg />
+                    {benefitDesc == "Basic" && <BenefitBasicLg />}
+                    {benefitDesc == "Gold" && <BenefitGoldLg />}
+                    {benefitDesc == "Platinum" && <BenefitPlatinumLg />}
+                    {benefitDesc == "Platinum Plus" && <BenefitPlatinumPlusLg />}
                   </div>
                 </div>
-
-                {/* {benefitDesc == "Basic" && <BenefitBasic />}
-                {benefitDesc == "Gold" && <BenefitGold />}
-                {benefitDesc == "Platinum" && <BenefitPlatinum />}
-                {benefitDesc == "Platinum Plus" && <BenefitPlatinumPlus />} */}
               </SwiperSlide>
             );
           })}

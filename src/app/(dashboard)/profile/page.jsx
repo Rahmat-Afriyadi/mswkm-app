@@ -2,12 +2,26 @@
 
 import PageFrame from "./page-frame";
 import { useSession } from "next-auth/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { ProfileMe } from "@/server/profile/me";
+import Image from "next/image";
 
 export default function Page() {
   const { data: session } = useSession();
+
+  const [windowWidth, setWindowWidth] = useState(0);
+
+  useEffect(() => {
+    setWindowWidth(window.innerWidth);
+  }, []);
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const { data: me, isLoading } = useQuery({
     queryKey: ["profile-me"],
@@ -29,6 +43,28 @@ export default function Page() {
           <div className="w-11/12 bg-white h-[2px] rounded-lg"></div>
           <br />
           <PageFrame defaultValues={me.data.data} />
+        </div>
+        <div className="w-full h-auto -bottom-16">
+          {windowWidth < 641 && (
+            <Image
+              src={"/images/content/footer/Footer.png"}
+              alt="illustrasi-1"
+              width={0}
+              height={0}
+              sizes="100vw"
+              style={{ width: "100%", height: "auto" }}
+            />
+          )}
+          {windowWidth > 640 && (
+            <Image
+              src={"/images/content/footer/Footer-lg.png"}
+              alt="illustrasi-1"
+              width={0}
+              height={0}
+              sizes="100vw"
+              style={{ width: "100%", height: "auto" }}
+            />
+          )}
         </div>
       </div>
     </>
