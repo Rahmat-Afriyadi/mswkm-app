@@ -55,7 +55,7 @@ export default function PageFrame({ defaultValues }) {
   const onSubmit = (data) => {
     data.tgl_lahir = new Date(valueTglLhr.startDate);
     data.img_profile = imageProfile;
-    console.log("ini tgl_lahir ", data.tgl_lahir);
+    data.jns_kelamin = data.perempuan ? "Perempuan" : data.laki_laki ? "Laki-laki" : "";
     Swal.fire({
       title: "Apakah data yang dimasukan sudah benar",
       icon: "question",
