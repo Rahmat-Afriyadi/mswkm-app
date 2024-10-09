@@ -16,6 +16,7 @@ import BenefitBasicLg from "./card-benefit/basic-lg";
 import BenefitGoldLg from "./card-benefit/gold-lg";
 import BenefitPlatinumLg from "./card-benefit/platinum-lg";
 import BenefitPlatinumPlusLg from "./card-benefit/platinum-plus-lg";
+import { signIn, signOut } from "next-auth/react";
 
 function CardLg() {
   const swiperRef = useRef(null);
@@ -48,6 +49,11 @@ function CardLg() {
     return <span>Loading...</span>;
   }
   if (isError) {
+    if (error.message == "Unauthorized") {
+      signOut({ redirect: false }).then(() => {
+        router.push("/");
+      });
+    }
     return <span>Error: {error.message}</span>;
   }
 

@@ -1,7 +1,7 @@
 "use client";
 
 import PageFrame from "./page-frame";
-import { useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { ProfileMe } from "@/server/profile/me";
@@ -25,7 +25,12 @@ export default function Page() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const { data: me, isLoading } = useQuery({
+  const {
+    data: me,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
     queryKey: ["profile-me"],
     queryFn: ProfileMe,
   });
@@ -38,6 +43,14 @@ export default function Page() {
 
   if (isLoading) {
     return "Loading...";
+  }
+
+  if (isError) {
+    if (error.message == "Unauthorized") {
+      signOut({ redirect: false }).then(() => {
+        router.push("/");
+      });
+    }
   }
 
   return (

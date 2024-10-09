@@ -17,6 +17,7 @@ import BenefitBasicLg from "./card-benefit/basic-lg";
 import BenefitGoldLg from "./card-benefit/gold-lg";
 import BenefitPlatinumLg from "./card-benefit/platinum-lg";
 import BenefitPlatinumPlusLg from "./card-benefit/platinum-plus-lg";
+import { signIn, signOut } from "next-auth/react";
 
 function CardSwiperLg() {
   const swiperRef = useRef(null);
@@ -26,6 +27,8 @@ function CardSwiperLg() {
     queryKey: ["member-cards"],
     queryFn: MemberCard,
   });
+
+  console.log("ini error member ", error);
 
   const [activeIndex, setActiveIndex] = useState(null);
 
@@ -49,6 +52,11 @@ function CardSwiperLg() {
     return <span>Loading...</span>;
   }
   if (isError) {
+    if (error.message == "Unauthorized") {
+      signOut({ redirect: false }).then(() => {
+        router.push("/");
+      });
+    }
     return <span>Error: {error.message}</span>;
   }
 

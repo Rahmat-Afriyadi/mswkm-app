@@ -9,7 +9,7 @@ import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 export default function Page() {
@@ -19,7 +19,7 @@ export default function Page() {
     if (status === "unauthenticated") {
       router.push("/");
     }
-  }, [status, router]);
+  }, [status, router, session]);
 
   const queryCLient = useQueryClient();
   const { register, handleSubmit } = useForm();

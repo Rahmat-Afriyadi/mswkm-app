@@ -18,6 +18,7 @@ import BenefitGold from "./card-benefit/gold";
 import BenefitPlatinum from "./card-benefit/platinum";
 import BenefitPlatinumPlus from "./card-benefit/platinum-plus";
 import BenefitBasicLg from "./card-benefit/basic-lg";
+import { signIn, signOut } from "next-auth/react";
 
 function CardSwiper() {
   const swiperRef = useRef(null);
@@ -50,6 +51,12 @@ function CardSwiper() {
     return <span>Loading...</span>;
   }
   if (isError) {
+    if (error.message == "Unauthorized") {
+      signOut({ redirect: false }).then(() => {
+        router.push("/");
+      });
+    }
+    console.log("ini errornya ", error.message);
     return <span>Error: {error.message}</span>;
   }
 
