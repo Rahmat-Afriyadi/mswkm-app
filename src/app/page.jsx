@@ -23,12 +23,7 @@ export default function Page() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
   const listBannerMobile = ["Home Banner.png", "Home Banner.png", "Home Banner.png", "Home Banner.png"];
-  const listBannerDesktop = [
-    "home/Home Banner 2.png",
-    "home/Home Banner 3.png",
-    "home/Home Banner 3.png",
-    "home/Home Banner 3.png",
-  ];
+  const listBannerDesktop = ["home/Home Banner.png", "home/Home Banner 2.jpg", "home/Home Banner 3.jpg"];
   const merchants = ["Merchant.png", "Merchant.png", "Merchant.png"];
   const news = ["Artikel.png", "Artikel.png", "Artikel.png"];
   let banners = windowWidth > 768 ? listBannerDesktop : listBannerMobile;

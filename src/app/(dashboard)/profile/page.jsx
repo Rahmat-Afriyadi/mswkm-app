@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 
 export default function Page() {
   const { data: session, status } = useSession();
+
   const router = useRouter();
 
   const [windowWidth, setWindowWidth] = useState(0);
@@ -56,7 +57,10 @@ export default function Page() {
   return (
     <>
       <div className="w-full bg-[#54565a]">
-        <div className="w-full flex flex-col items-center bg-[#54565a]">
+        <div
+          className="w-full flex flex-col items-center bg-cover bg-center"
+          style={{ backgroundImage: "url('/images/content/background/BG.png')" }}
+        >
           <div className="w-9/12 h-3 mt-2">
             <div className="w-full text-center text-white font-bold text-xl">Profile</div>
           </div>

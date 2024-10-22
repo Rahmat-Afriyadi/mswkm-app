@@ -1,6 +1,5 @@
 import axios from "axios";
 import { getSession } from "next-auth/react";
-import { redirect } from "next/navigation";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_API;
 

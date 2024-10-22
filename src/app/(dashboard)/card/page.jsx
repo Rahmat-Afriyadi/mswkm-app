@@ -65,7 +65,11 @@ export default function Page() {
   };
 
   return (
-    <div className="w-full bg-[#54565a] h-au">
+    // <div className="w-full bg-[#54565a] h-auto">
+    <div
+      className="w-full bg-fit bg-center h-auto"
+      style={{ backgroundImage: "url('/images/content/background/BG.png')" }}
+    >
       <div className="w-full flex flex-col items-center">
         <div className="w-9/12 h-3 mt-2">
           <div className="w-full text-center text-white font-bold text-xl">My Card</div>
@@ -105,7 +109,6 @@ export default function Page() {
 
       <div
         className={`w-full flex flex-col items-center bg-cover bg-center h-auto ${windowWidth > 767 ? "relative" : ""}`}
-        style={{ backgroundImage: "url('/images/content/background/BG.png')" }}
       >
         {windowWidth > 767 && (
           <div className="w-full h-auto relative">
@@ -124,6 +127,7 @@ export default function Page() {
           {windowWidth < 768 && <CardSwiper />}
         </div>
       </div>
+
       <div className="w-full h-auto -bottom-16 lg:-bottom-0 lg:mt-8 xl:mt-12">
         {windowWidth < 641 && (
           <Image
