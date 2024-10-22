@@ -67,8 +67,8 @@ export default function Page() {
   return (
     // <div className="w-full bg-[#54565a] h-auto">
     <div
-      className="w-full bg-fit bg-center h-auto"
-      style={{ backgroundImage: "url('/images/content/background/BG.png')" }}
+      className="w-full bg-cover bg-center h-auto"
+      style={{ backgroundImage: "url('http://192.168.70.17:3003/uploads/BG.png')" }}
     >
       <div className="w-full flex flex-col items-center">
         <div className="w-9/12 h-3 mt-2">
