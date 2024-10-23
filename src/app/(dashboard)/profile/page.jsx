@@ -69,6 +69,7 @@ export default function Page() {
           <br />
           <PageFrame defaultValues={me.data.data} />
         </div>
+
         <div className="w-full h-auto -bottom-16">
           {windowWidth < 641 && (
             <Image
