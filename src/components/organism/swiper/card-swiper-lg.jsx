@@ -175,48 +175,6 @@ function CardSwiperLg() {
           })}
         </Swiper>
       </div>
-
-      {/* ini deskripsi */}
-      {/* <Swiper
-        ref={swiperRef}
-        spaceBetween={2}
-        effect={"fade"}
-        grabCursor={true}
-        loop={true}
-        slidesPerView={"1"}
-        coverflowEffect={{
-          rotate: 0,
-          stretch: 0,
-          depth: 10,
-          modifier: 2.5,
-        }}
-        navigation={{
-          nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev",
-          clickable: true,
-        }}
-        modules={[EffectCoverflow, Pagination, Navigation]}
-        className="relative"
-      >
-        {data.data.data.map((e, index) => {
-          let benefit = "Basic";
-          if (e.no_kartu.slice(2, 4) == "02") {
-            benefit = "Gold";
-          } else if (e.no_kartu.slice(2, 4) == "03") {
-            benefit = "Platinum";
-          } else if (e.no_kartu.slice(2, 4) == "23") {
-            benefit = "Platinum Plus";
-          }
-          return (
-            <SwiperSlide key={e.no_msn} className="-mt-3">
-              {benefit == "Basic" && <BenefitBasic />}
-              {benefit == "Gold" && <BenefitGold />}
-              {benefit == "Platinum" && <BenefitPlatinum />}
-              {benefit == "Platinum Plus" && <BenefitPlatinumPlus />}
-            </SwiperSlide>
-          );
-        })}
-      </Swiper> */}
     </>
   );
 }

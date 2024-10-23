@@ -22,8 +22,8 @@ export default function Page() {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-  const listBannerMobile = ["Home Banner.png", "Home Banner.png", "Home Banner.png", "Home Banner.png"];
-  const listBannerDesktop = ["home/Home Banner.png", "home/Home Banner 2.jpg", "home/Home Banner 3.jpg"];
+  const listBannerMobile = ["home/Home Banner.jpg", "home/Home Banner 2.jpg", "home/Home Banner 3.jpg"];
+  const listBannerDesktop = ["home/Home Banner.jpg", "home/Home Banner 2.jpg", "home/Home Banner 3.jpg"];
   const merchants = ["Merchant.png", "Merchant.png", "Merchant.png"];
   const news = ["Artikel.png", "Artikel.png", "Artikel.png"];
   let banners = windowWidth > 768 ? listBannerDesktop : listBannerMobile;
@@ -31,7 +31,7 @@ export default function Page() {
     <>
       <div className="w-full">
         <SwiperComponent sWidth={windowWidth} banners={banners} />
-        <div className="w-full h-auto md:h-[500px] lg:h-[600px] xl:h-[700px] relative ">
+        <div className="w-full h-auto md:h-[515px] lg:h-[600px] xl:h-[700px] 2xl:h-[800px] relative ">
           <Image
             src={bgHome1}
             alt="illustrasi-1"

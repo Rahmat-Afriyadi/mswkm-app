@@ -67,7 +67,7 @@ export default function Page() {
   return (
     // <div className="w-full bg-[#54565a] h-auto">
     <div
-      className="w-full bg-cover bg-center h-auto"
+      className="w-full bg-cover bg-center h-screen"
       style={{ backgroundImage: "url('http://192.168.70.17:3003/uploads/BG.png')" }}
     >
       <div className="w-full flex flex-col items-center">
@@ -112,11 +112,11 @@ export default function Page() {
       >
         {windowWidth > 767 && (
           <div className="w-full h-auto relative">
-            <div className="w-8 h-8 lg:w-12 lg:h-12 xl:w-16 xl:h-16 2xl:w-20 2xl:h-20 z-50 absolute md:left-[10px] lg:left-[25px] xl:left-[31px] 2xl:left-[37px] cursor-pointer md:top-3 inset-0 my-auto">
+            <div className="w-8 h-8 lg:w-12 lg:h-12 xl:w-16 xl:h-16 2xl:w-20 2xl:h-20 z-50 absolute md:left-[2.5%] lg:left-[25px] xl:left-[31px] 2xl:left-[37px] cursor-pointer md:top-3 inset-0 my-auto">
               <ChevronLeftIcon className="h-full w-full text-white kiri-in" />
             </div>
-            <div className="w-8 h-8 lg:w-12 lg:h-12 xl:w-16 xl:h-16 2xl:w-20 2xl:h-20 z-50  absolute md:left-[290px] lg:left-[377.5px] xl:left-[478px] 2xl:left-[564px] cursor-pointer md:top-3 inset-0 my-auto">
-              <ChevronRightIcon className="h-full w-full text-white kanan-in" />
+            <div className="w-8 h-8 lg:w-12 lg:h-12 xl:w-16 xl:h-16 2xl:w-20 2xl:h-20 z-50  absolute md:left-[37.7%] lg:left-[377.5px] xl:left-[478px] 2xl:left-[37.5%] cursor-pointer md:top-3 inset-0 my-auto">
+              <ChevronRightIcon className="h-full w-full text-white kanan-in " />
             </div>
             <CardLg />
           </div>
@@ -128,7 +128,7 @@ export default function Page() {
         </div>
       </div>
 
-      <div className="w-full h-auto -bottom-16 lg:-bottom-0 lg:mt-8 xl:mt-12">
+      <div className="w-full h-auto lg:-bottom-0 lg:mt-8 xl:mt-12">
         {windowWidth < 641 && (
           <Image
             src={"/images/content/footer/Footer.png"}
