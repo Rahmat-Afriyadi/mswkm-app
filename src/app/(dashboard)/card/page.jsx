@@ -128,7 +128,7 @@ export default function Page() {
         </div>
       </div>
 
-      <div className="w-full h-auto lg:-bottom-0 lg:mt-8 xl:mt-12">
+      <div className="w-full h-auto bottom-0 lg:mt-8 xl:mt-12">
         {windowWidth < 641 && (
           <Image
             src={"/images/content/footer/Footer.png"}

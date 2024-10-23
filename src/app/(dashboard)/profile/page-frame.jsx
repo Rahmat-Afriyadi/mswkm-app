@@ -85,7 +85,7 @@ export default function PageFrame({ defaultValues }) {
         <div className="w-full flex justify-center">
           <label
             htmlFor="profile_image"
-            className="w-20 h-20 md:w-24 md:h-24 bg-cover bg-center rounded-full md:mt-2"
+            className="w-20 h-20 md:w-40 md:h-40 bg-cover bg-center rounded-full md:mt-2"
             style={{
               backgroundImage: `url('${
                 imageProfile == "" ? "/images/content/profile/Photo.png" : "http://192.168.70.17:3003" + imageProfile
