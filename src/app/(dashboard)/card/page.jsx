@@ -12,6 +12,8 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_API;
+
 export default function Page() {
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -68,8 +70,8 @@ export default function Page() {
     // <div className="w-full bg-[#54565a] h-auto">
     <>
       <div
-        className="w-full bg-cover bg-center h-screen"
-        style={{ backgroundImage: "url('http://192.168.70.17:3003/uploads/BG.png')" }}
+        className={`w-full bg-cover bg-center ${windowWidth > 768 ? "h-screen" : "h-auto"}`}
+        style={{ backgroundImage: `url('${BASE_URL}/uploads/BG.png')` }}
       >
         <div className="w-full flex flex-col items-center">
           <div className="w-9/12 h-3 mt-2">

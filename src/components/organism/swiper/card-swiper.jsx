@@ -19,9 +19,14 @@ import BenefitPlatinum from "./card-benefit/platinum";
 import BenefitPlatinumPlus from "./card-benefit/platinum-plus";
 import BenefitBasicLg from "./card-benefit/basic-lg";
 import { signIn, signOut } from "next-auth/react";
+import { QRCode } from "react-qrcode-logo";
+import Drawer from "@/components/drawer/drawer-center";
+
+const BASE_URL = process.env.NEXT_PUBLIC_URL;
 
 function CardSwiper() {
-  const swiperRef = useRef(null);
+  const [open, setOpen] = useState(false);
+  const [currentQrcode, setCurrentQrcode] = useState(false);
 
   const [windowWidth, setWindowWidth] = useState(0);
   const { data, isPending, isError, error } = useQuery({
@@ -59,12 +64,6 @@ function CardSwiper() {
     console.log("ini errornya ", error.message);
     return <span>Error: {error.message}</span>;
   }
-
-  const goToSlide = (index) => {
-    if (swiperRef.current) {
-      swiperRef.current.swiper.slideTo(index); // Set active index
-    }
-  };
 
   //   0101 basic
   // 0102 gold
@@ -139,6 +138,22 @@ function CardSwiper() {
                       sizes="100vw"
                       style={{ width: "100%", height: "auto" }}
                     />
+                    <div
+                      className="absolute left-8 xl:left-12 bottom-8 xl:bottom-12  h-10 w-10 cursor-pointer"
+                      onClick={() => {
+                        setCurrentQrcode(e.no_kartu);
+                        setOpen(true);
+                      }}
+                    >
+                      <Image
+                        alt="slide_1"
+                        src={`/images/content/button/QR.PNG`}
+                        width={0}
+                        height={0}
+                        sizes="100vw"
+                        style={{ width: "100%", height: "auto" }}
+                      />
+                    </div>
                     <div className="absolute right-6 xl:right-9 bottom-4 xl:bottom-9 text-white text-right text-[12px] xl:text-xl">
                       <p className="leading-4 xl:leading-8 font-sans font-bold">{e.nm_customer}</p>
                       <p
@@ -165,47 +180,36 @@ function CardSwiper() {
         </Swiper>
       </div>
 
-      {/* ini deskripsi */}
-      {/* <Swiper
-        ref={swiperRef}
-        spaceBetween={2}
-        effect={"fade"}
-        grabCursor={true}
-        loop={true}
-        slidesPerView={"1"}
-        coverflowEffect={{
-          rotate: 0,
-          stretch: 0,
-          depth: 10,
-          modifier: 2.5,
-        }}
-        navigation={{
-          nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev",
-          clickable: true,
-        }}
-        modules={[EffectCoverflow, Pagination, Navigation]}
-        className="relative"
-      >
-        {data.data.data.map((e, index) => {
-          let benefit = "Basic";
-          if (e.no_kartu.slice(2, 4) == "02") {
-            benefit = "Gold";
-          } else if (e.no_kartu.slice(2, 4) == "03") {
-            benefit = "Platinum";
-          } else if (e.no_kartu.slice(2, 4) == "23") {
-            benefit = "Platinum Plus";
-          }
-          return (
-            <SwiperSlide key={e.no_msn} className="-mt-3">
-              {benefit == "Basic" && <BenefitBasic />}
-              {benefit == "Gold" && <BenefitGold />}
-              {benefit == "Platinum" && <BenefitPlatinum />}
-              {benefit == "Platinum Plus" && <BenefitPlatinumPlus />}
-            </SwiperSlide>
-          );
-        })}
-      </Swiper> */}
+      <Drawer open={open} setOpen={setOpen}>
+        <div style={{ display: "flex", justifyContent: "center" }} className="relative w-auto">
+          <QRCode
+            value={currentQrcode} // The URL or text you want the QR code to encode
+            size={256} // Size of the QR code
+            qrStyle="dots" // Optional, makes the QR code have dots instead of squares
+            eyeRadius={[5, 5, 5]} // Round the corner of QR code "eyes"
+            bgColor="#ffffff" // Background color of the QR code
+            fgColor="#000000" // Foreground color of the QR code
+            logoImage={`${BASE_URL}/images/CardPlus.png`}
+            logoWidth={120}
+            logoHeight={45}
+            logoOpacity={0.9}
+            eyeColor={[
+              {
+                outer: "#52050c", // Color of the outer eye
+                inner: "#a60d27", // Color of the inner eye
+              },
+              {
+                outer: "#52050c",
+                inner: "#a60d27",
+              },
+              {
+                outer: "#52050c",
+                inner: "#a60d27",
+              },
+            ]}
+          />
+        </div>
+      </Drawer>
     </>
   );
 }

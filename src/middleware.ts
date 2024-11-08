@@ -7,7 +7,6 @@ export const config = {
 };
 
 export const middleware: NextMiddleware = async (request: NextRequest) => {
-  console.log("middleware bisa nih");
   const cookiesList = request.cookies.getAll();
   const sessionCookie = process.env.NEXTAUTH_URL?.startsWith("https://")
     ? "__Secure-next-auth.session-token"
@@ -65,7 +64,7 @@ export const middleware: NextMiddleware = async (request: NextRequest) => {
       },
       // ...otherTokenData,
     },
-    maxAge: 30 * 24 * 60 * 60, // 30 days, or get the previous token's exp
+    maxAge: 1 * 24 * 60 * 60, // 30 days, or get the previous token's exp
   });
 
   // // update session token with new access token

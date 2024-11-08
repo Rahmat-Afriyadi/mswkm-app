@@ -17,10 +17,15 @@ import BenefitBasicLg from "./card-benefit/basic-lg";
 import BenefitGoldLg from "./card-benefit/gold-lg";
 import BenefitPlatinumLg from "./card-benefit/platinum-lg";
 import BenefitPlatinumPlusLg from "./card-benefit/platinum-plus-lg";
+import Drawer from "@/components/drawer/drawer-center";
 import { signIn, signOut } from "next-auth/react";
+import { QRCode } from "react-qrcode-logo";
+
+const BASE_URL = process.env.NEXT_PUBLIC_URL;
 
 function CardSwiperLg() {
-  const swiperRef = useRef(null);
+  const [open, setOpen] = useState(false);
+  const [currentQrcode, setCurrentQrcode] = useState(false);
 
   const [windowWidth, setWindowWidth] = useState(0);
   const { data, isPending, isError, error } = useQuery({
@@ -59,12 +64,6 @@ function CardSwiperLg() {
     }
     return <span>Error: {error.message}</span>;
   }
-
-  const goToSlide = (index) => {
-    if (swiperRef.current) {
-      swiperRef.current.swiper.slideTo(index); // Set active index
-    }
-  };
 
   //   0101 basic
   // 0102 gold
@@ -146,6 +145,22 @@ function CardSwiperLg() {
                           sizes="100vw"
                           style={{ width: "100%", height: "auto" }}
                         />
+                        <div
+                          className="absolute left-8 xl:left-12 bottom-8 xl:bottom-12  h-12 w-12 cursor-pointer"
+                          onClick={() => {
+                            setCurrentQrcode(e.no_kartu);
+                            setOpen(true);
+                          }}
+                        >
+                          <Image
+                            alt="slide_1"
+                            src={`/images/content/button/QR.PNG`}
+                            width={0}
+                            height={0}
+                            sizes="100vw"
+                            style={{ width: "100%", height: "auto" }}
+                          />
+                        </div>
                         <div className="absolute right-6 xl:right-9 bottom-4 xl:bottom-6 text-white text-right text-[12px] xl:text-[16px]">
                           <p className="leading-4 xl:leading-5 font-sans font-bold">{e.nm_customer}</p>
                           <p
@@ -175,6 +190,36 @@ function CardSwiperLg() {
           })}
         </Swiper>
       </div>
+      <Drawer open={open} setOpen={setOpen}>
+        <div style={{ display: "flex", justifyContent: "center" }} className="relative w-auto">
+          <QRCode
+            value={currentQrcode} // The URL or text you want the QR code to encode
+            size={256} // Size of the QR code
+            qrStyle="dots" // Optional, makes the QR code have dots instead of squares
+            eyeRadius={[5, 5, 5]} // Round the corner of QR code "eyes"
+            bgColor="#ffffff" // Background color of the QR code
+            fgColor="#000000" // Foreground color of the QR code
+            logoImage={`${BASE_URL}/images/CardPlus.png`}
+            logoWidth={120}
+            logoHeight={45}
+            logoOpacity={0.9}
+            eyeColor={[
+              {
+                outer: "#52050c", // Color of the outer eye
+                inner: "#a60d27", // Color of the inner eye
+              },
+              {
+                outer: "#52050c",
+                inner: "#a60d27",
+              },
+              {
+                outer: "#52050c",
+                inner: "#a60d27",
+              },
+            ]}
+          />
+        </div>
+      </Drawer>
     </>
   );
 }

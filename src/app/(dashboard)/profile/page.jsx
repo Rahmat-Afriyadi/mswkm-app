@@ -8,6 +8,8 @@ import { ProfileMe } from "@/server/profile/me";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_API;
+
 export default function Page() {
   const { data: session, status } = useSession();
 
@@ -59,7 +61,7 @@ export default function Page() {
       <div className="w-full bg-[#54565a]">
         <div
           className="w-full flex flex-col items-center bg-cover bg-center"
-          style={{ backgroundImage: "url('http://192.168.70.17:3003/uploads/BG.png')" }}
+          style={{ backgroundImage: `url('${BASE_URL}/uploads/BG.png')` }}
         >
           <div className="w-9/12 h-3 mt-2">
             <div className="w-full text-center text-white font-bold text-xl">Profile</div>

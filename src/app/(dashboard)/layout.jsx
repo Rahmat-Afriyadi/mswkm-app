@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import AutoLogoutProvider from "@/components/providers/auto-logout-provider";
 
 export default function MainLayout({ children }) {
   const router = useRouter();
@@ -15,5 +16,10 @@ export default function MainLayout({ children }) {
     }
   }, [status, session, router]);
 
-  return <>{children}</>;
+  return (
+    <>
+      <AutoLogoutProvider />
+      {children}
+    </>
+  );
 }
