@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import AutoLogoutProvider from "@/components/providers/auto-logout-provider";
+import Header from "@/components/organism/header/Header";
 
 export default function MainLayout({ children }) {
   const router = useRouter();
@@ -18,6 +19,7 @@ export default function MainLayout({ children }) {
 
   return (
     <>
+      <Header />
       <AutoLogoutProvider />
       {children}
     </>

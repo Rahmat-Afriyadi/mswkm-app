@@ -12,7 +12,6 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_API;
 
 export default function Page() {
   const { data: session, status } = useSession();
-
   const router = useRouter();
 
   const [windowWidth, setWindowWidth] = useState(0);

@@ -30,6 +30,7 @@ export default function Page() {
   return (
     <>
       <div className="w-full">
+        <Header />
         <SwiperComponent sWidth={windowWidth} banners={banners} />
         <div className="w-full h-auto md:h-[515px] lg:h-[600px] xl:h-[700px] 2xl:h-[800px] relative ">
           <Image

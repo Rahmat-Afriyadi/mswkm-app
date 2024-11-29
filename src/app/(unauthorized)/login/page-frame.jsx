@@ -24,7 +24,11 @@ export default function Page() {
   useEffect(() => {
     if (status == "authenticated") {
       // signOut({ redirect: false }).then();
-      router.push("/profile");
+      if (session?.user?.is_admin) {
+        router.push("/admin/dashboard");
+      } else {
+        router.push("/profile");
+      }
     }
   }, [status]); // eslint-disable-line
 
@@ -149,7 +153,7 @@ export default function Page() {
           },
           allowOutsideClick: () => !Swal.isLoading(),
         });
-        return ;
+        return;
       }
       console.log("Login error", result?.error);
       setMessage(result?.error);
