@@ -26,7 +26,7 @@ export default function Page() {
               type="button"
               icon={PlusIcon}
               disabled={!true}
-              onClick={() => router.push("/merchants/add")}
+              onClick={() => router.push("/admin/merchant/add")}
             />
           </div>
         </div>
