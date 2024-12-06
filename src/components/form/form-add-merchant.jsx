@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import Checkbox from "./input/checkbox";
 import MultipleSelect from "./input/multiple-select";
 import { useState } from "react";
+import RichTextEditor from "./input/rich-text-editor";
 
 export default function FormAddMerchant() {
   const {
@@ -163,6 +164,9 @@ export default function FormAddMerchant() {
                 optionsList={opstionsC}
                 placeholder={"Nama PIC MRO"}
               />
+            </div>
+            <div className="col-span-6">
+              <RichTextEditor />
             </div>
           </div>
         </div>

@@ -33,8 +33,8 @@
   }
 }
 
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -97,7 +97,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .wrapper .arrow {
-  transition: .5s ease-in-out;
+  transition: 0.5s ease-in-out;
 }
 
 .arrow.active {
@@ -108,7 +108,7 @@ input[type=number]::-webkit-outer-spin-button {
 .wrapper .answer-container {
   padding: 0 1rem;
   text-align: left;
-  transition: height .7s ease-in-out;
+  transition: height 0.7s ease-in-out;
 }
 
 .wrapper .answer-content {
@@ -125,7 +125,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .slider-controler .slider-arrow::after {
-  content: '';
+  content: "";
 }
 
 .slider-controler .slider-arrow {
@@ -137,7 +137,7 @@ span.swiper-pagination-bullet {
   height: 9px;
   width: 14px;
   border-radius: 10px;
-  transition: .5s ease-in-out;
+  transition: 0.5s ease-in-out;
 }
 
 span.swiper-pagination-bullet-active {
@@ -146,4 +146,10 @@ span.swiper-pagination-bullet-active {
   width: 24px;
   color: white;
   background-color: #af282f;
+}
+
+.ql-editor ul li::before,
+.ql-editor ol li::before {
+  font-size: inherit; /* Bullet mengikuti ukuran font dari item */
+  line-height: inherit; /* Pastikan jarak antar teks dan bullet/number tetap */
 }
