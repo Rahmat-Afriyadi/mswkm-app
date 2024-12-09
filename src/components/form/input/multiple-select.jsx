@@ -4,7 +4,8 @@ import { useRef, useState } from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { ChevronUpDownIcon } from "@heroicons/react/20/solid";
 
-export default function MultipleSelect({ optionsList, placeholder, label, id }) {
+export default function MultipleSelect({ optionsList, placeholder, label, id, setValue, name }) {
+  console.log("ini list yaa ", optionsList);
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState([]);
 
@@ -17,6 +18,8 @@ export default function MultipleSelect({ optionsList, placeholder, label, id }) 
       item.name?.toLocaleLowerCase()?.includes(query.toLocaleLowerCase()?.trim()) &&
       !selected.some((item1) => Object.values(item1).includes(item.id))
   );
+
+  console.log("ini selected yaa ", selected);
 
   const isDisable =
     !query?.trim() ||
@@ -38,11 +41,15 @@ export default function MultipleSelect({ optionsList, placeholder, label, id }) 
                 className="rounded-full w-fit py-1.5 px-3 border border-gray-400 bg-gray-50 text-gray-500
                   flex items-center gap-2"
               >
-                {optionsList.find((e) => e.id == tag.id).name}
+                {optionsList.find((e) => e.id == tag.id)?.name}
                 <div
                   className="cursor-pointer"
                   onMouseDown={(e) => e.preventDefault()}
-                  onClick={() => setSelected(selected.filter((i) => i.id !== tag.id))}
+                  onClick={() => {
+                    const theSelected = selected.filter((i) => i.id !== tag.id);
+                    setSelected(theSelected);
+                    setValue(name, theSelected);
+                  }}
                 >
                   X
                 </div>
@@ -54,6 +61,7 @@ export default function MultipleSelect({ optionsList, placeholder, label, id }) 
               className="text-gray-400 cursor-pointer"
               onClick={() => {
                 setSelected([]);
+                setValue(name, []);
                 inputRef.current?.focus();
               }}
             >
@@ -80,7 +88,9 @@ export default function MultipleSelect({ optionsList, placeholder, label, id }) 
           onBlur={() => setMenuOpen(false)}
           onKeyDown={(e) => {
             if (e.key === "Enter" && !isDisable) {
-              setSelected((prev) => [...prev, query]);
+              const theSelected = [...selected, query];
+              setSelected(theSelected);
+              setValue(name, theSelected);
               setQuery("");
               setMenuOpen(true);
             }
@@ -111,7 +121,7 @@ export default function MultipleSelect({ optionsList, placeholder, label, id }) 
 
       {/* Menu's */}
       {menuOpen ? (
-        <div className="bg-white shadow-md rounded-md absolute w-full max-h-52 mt-2 p-1 flex overflow-y-auto scrollbar-thin scrollbar-track-slate-50 scrollbar-thumb-slate-200">
+        <div className="z-30 bg-white shadow-md rounded-md absolute w-full max-h-52 mt-2 p-1 flex overflow-y-auto scrollbar-thin scrollbar-track-slate-50 scrollbar-thumb-slate-200">
           <ul className="w-full overflow-y-auto">
             {filteredTags?.length ? (
               filteredTags.map((tag, i) => (
@@ -121,7 +131,9 @@ export default function MultipleSelect({ optionsList, placeholder, label, id }) 
                   onMouseDown={(e) => e.preventDefault()}
                   onClick={() => {
                     setMenuOpen(true);
-                    setSelected((prev) => [...prev, tag]);
+                    const theSelected = [...selected, tag];
+                    setSelected(theSelected);
+                    setValue(name, theSelected);
                     setQuery("");
                   }}
                 >

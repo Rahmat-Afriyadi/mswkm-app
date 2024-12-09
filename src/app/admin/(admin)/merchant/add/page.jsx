@@ -2,7 +2,7 @@
 
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/navigation";
-import FormAddMerchant from "@/components/form/form-add-merchant";
+import FormAddMerchant from "@/components/form/form-merchant";
 
 function AddVacanciesPage() {
   const router = useRouter();
