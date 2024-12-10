@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import withReactContent from "sweetalert2-react-content";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
-import { readManyMerchant } from "@/server/admin/merchant/read-many-merchant";
+import { readManyOutlet } from "@/server/admin/outlet/read-many-outlet";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/20/solid";
 import DataTable from "@/components/organism/table/data-table";
 import ActionButton from "@/components/form/input/action-button";
@@ -14,7 +14,7 @@ import Badge from "@/components/atoms/badge";
 
 const MySwal = withReactContent(Swal);
 
-const MerchantPage = () => {
+const OutletPage = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -22,8 +22,8 @@ const MerchantPage = () => {
 
   const { data: session } = useSession();
   const role = session?.user?.role;
-  const canEditMerchant = true;
-  const canDeleteMerchant = true;
+  const canEditOutlet = true;
+  const canDeleteOutlet = true;
 
   useEffect(() => {
     const params = new URLSearchParams(searchParams);
@@ -38,9 +38,9 @@ const MerchantPage = () => {
   const pageParams = searchParams.get("pageParams");
 
   const { data, error, isLoading } = useQuery({
-    queryKey: ["merchants", limit, search, pageParams],
+    queryKey: ["outlets", limit, search, pageParams],
     queryFn: async () =>
-      await readManyMerchant({
+      await readManyOutlet({
         limit,
         search,
         pageParams,
@@ -49,7 +49,7 @@ const MerchantPage = () => {
 
   const columns = [
     {
-      header: "Nama Merchant",
+      header: "Nama Outlet",
       accessorKey: "nama",
     },
     {
@@ -57,12 +57,12 @@ const MerchantPage = () => {
       accessorKey: "nama_pic",
     },
     {
-      header: "Email",
-      accessorKey: "email",
+      header: "Nomor Telepon PIC",
+      accessorKey: "no_telp_pic",
     },
     {
-      header: "Website",
-      accessorKey: "website",
+      header: "Map",
+      accessorKey: "map",
     },
     {
       header: "Active",
@@ -87,9 +87,9 @@ const MerchantPage = () => {
             theme="primary"
             size="small"
             icon={PencilSquareIcon}
-            disabled={!canEditMerchant}
+            disabled={!canEditOutlet}
             onClick={() => {
-              router.push("/admin/merchant/update/" + row.original.id);
+              router.push("/admin/outlet/update/" + row.original.id);
             }}
           />
           {/* Delete Button */}
@@ -97,7 +97,7 @@ const MerchantPage = () => {
             theme="danger"
             size="small"
             icon={TrashIcon}
-            disabled={!canDeleteMerchant}
+            disabled={!canDeleteOutlet}
             onClick={() => handleDelete(row.getValue("id"))}
           />
         </div>
@@ -145,4 +145,4 @@ const MerchantPage = () => {
   );
 };
 
-export default MerchantPage;
+export default OutletPage;
