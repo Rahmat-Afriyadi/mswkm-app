@@ -20,7 +20,6 @@ const axiosAuth = axios.create({
 axiosAuth.interceptors.request.use(
   async (conf) => {
     const session = await getSession();
-    console.log("ini session ", session);
     if (!conf.headers["Authorization"]) {
       conf.headers["Authorization"] = `Bearer ${session?.user.accessToken}`;
     }

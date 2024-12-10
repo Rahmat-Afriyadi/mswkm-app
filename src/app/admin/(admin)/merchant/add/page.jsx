@@ -2,9 +2,10 @@
 
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/navigation";
-import FormAddMerchant from "@/components/form/form-merchant";
+import dynamic from "next/dynamic";
+const FormMerchant = dynamic(() => import("@/components/form/form-merchant"), { ssr: false });
 
-function AddVacanciesPage() {
+export default function Page() {
   const router = useRouter();
   return (
     <>
@@ -19,11 +20,9 @@ function AddVacanciesPage() {
       <div className="overflow-hidden bg-white shadow sm:rounded-lg">
         <div className="px-4 py-5 sm:p-6">
           {/* Content goes here */}
-          <FormAddMerchant />
+          <FormMerchant isEditing={false} defaultValues={{}} />
         </div>
       </div>
     </>
   );
 }
-
-export default AddVacanciesPage;

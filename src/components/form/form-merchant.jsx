@@ -1,3 +1,5 @@
+"use client";
+
 import InputGroup from "@/components/form/input/input-group";
 import Button from "./input/button";
 import { useForm } from "react-hook-form";
@@ -11,26 +13,23 @@ import { MasterPicMro } from "@/server/admin/master/mst-pic-mro";
 import { MasterMediaPromosi } from "@/server/admin/master/mst-media-promosi";
 import { MerchantUpdate } from "@/server/admin/merchant/merchant-update";
 import { MerchantAdd } from "@/server/admin/merchant/merchant-add";
+import Swal from "sweetalert2";
+import { useRouter } from "next/navigation";
+import FormFile from "./input/input-file";
 
 export default function FormMerchant({ isEditing = false, defaultValues }) {
   const {
     register,
     handleSubmit,
     setValue,
-    watch,
     reset,
-    control,
     formState: { errors },
   } = useForm({
-    defaultValues: isEditing ? defaultValues : {},
+    defaultValues: isEditing ? defaultValues : { kategori: [], media_promosi: [], nama_pic_mro: [] },
     mode: "onChange", // Enables real-time validation
   });
 
-  const opstionsC = [
-    { id: "id", name: "name" },
-    { id: "id1", name: "name1" },
-    { id: "id2", name: "name2" },
-  ];
+  const router = useRouter();
 
   const queryClient = useQueryClient();
   const { data: mstKategori } = useQuery({
@@ -52,18 +51,51 @@ export default function FormMerchant({ isEditing = false, defaultValues }) {
     mutationFn: isEditing ? MerchantUpdate : MerchantAdd,
   });
 
-  console.log("ini master kategori yaa ", mstKategori);
-
   useEffect(() => {
     if (!isEditing) {
-      reset(); // Mengosongkan form ketika membuka form Add
+      reset({}); // Mengosongkan form ketika membuka form Add
     } else if (defaultValues && mstKategori && mstPIC && mstPromosi) {
       reset(defaultValues); // Set nilai default ketika dalam mode edit
     }
   }, [mstKategori, mstPIC, mstPromosi, reset]); // eslint-disable-line
 
   const onSubmit = async (values) => {
+    values.valid_from = new Date(values.valid_from);
+    values.valid_thru = new Date(values.valid_thru);
     console.log("ini values ", values);
+    if (values.kategori < 1 || !values.hasOwnProperty("kategori")) {
+      return Swal.fire("Failed!", "mohon pilih satu atau lebih kategori merchant", "error");
+    }
+    if (values.media_promosi < 1 || !values.hasOwnProperty("media_promosi")) {
+      return Swal.fire("Failed!", "mohon pilih satu atau lebih media promosi", "error");
+    }
+    if (values.nama_pic_mro < 1 || !values.hasOwnProperty("nama_pic_mro")) {
+      return Swal.fire("Failed!", "mohon pilih satu atau lebih pic mro", "error");
+    }
+    Swal.fire({
+      title: "Apakah data yang dimasukan sudah benar",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#4f46e5",
+      cancelButtonColor: "#dc2626",
+      confirmButtonText: "Save",
+      showLoaderOnConfirm: true,
+      preConfirm: () => {
+        merchantMut.mutate(values, {
+          onSuccess: (data) => {
+            queryClient.invalidateQueries({ queryKey: ["merchants"] });
+            Swal.fire("Success!", `Merchant berhasil ${isEditing ? "diperbarui" : "ditambahkan"}`, "info").then(() => {
+              router.replace("/admin/merchant");
+            });
+          },
+          onError: (e) => {
+            console.log("ini error ", e);
+            Swal.fire("Failed!", e.response.data.message, "error");
+          },
+        });
+      },
+      allowOutsideClick: () => !Swal.isLoading(),
+    });
   };
 
   return (
@@ -74,6 +106,14 @@ export default function FormMerchant({ isEditing = false, defaultValues }) {
           <p className="mt-1 text-sm leading-6 text-gray-600">Use a permanent address where you can receive mail.</p>
 
           <div className="grid grid-cols-1 mt-10 gap-x-6 gap-y-8 sm:grid-cols-6">
+            <div className="sm:col-span-6">
+              <FormFile
+                name={"logo"}
+                setValue={setValue}
+                defaultValues={isEditing && defaultValues.logo != null ? defaultValues.logo : ""}
+              />
+            </div>
+
             <div className="sm:col-span-3">
               <InputGroup
                 label="Nama"
@@ -107,6 +147,7 @@ export default function FormMerchant({ isEditing = false, defaultValues }) {
                 label="Valid From"
                 id="valid-from"
                 name="valid_from"
+                validation={{ required: "This field is required" }}
                 type="date"
                 register={register}
                 errors={errors}
@@ -117,6 +158,7 @@ export default function FormMerchant({ isEditing = false, defaultValues }) {
                 label="Valid Thru"
                 id="valid-thru"
                 name="valid_thru"
+                validation={{ required: "This field is required" }}
                 type="date"
                 register={register}
                 errors={errors}
@@ -152,7 +194,7 @@ export default function FormMerchant({ isEditing = false, defaultValues }) {
               <InputGroup
                 label="Nama PIC"
                 id="nama-pic"
-                name="nama-pic"
+                name="nama_pic"
                 type="text"
                 register={register}
                 validation={{ required: "This field is required" }}
@@ -163,7 +205,7 @@ export default function FormMerchant({ isEditing = false, defaultValues }) {
               <InputGroup
                 label="Nomor Telepon PIC"
                 id="phone-number-pic"
-                name="phone_number_pic"
+                name="no_telp_pic"
                 type="text"
                 register={register}
                 validation={{
@@ -187,6 +229,7 @@ export default function FormMerchant({ isEditing = false, defaultValues }) {
                 optionsList={mstKategori}
                 placeholder={"Kategori"}
                 name={"kategori"}
+                defaultValues={isEditing ? defaultValues.kategori : null}
                 setValue={setValue}
               />
             </div>
@@ -197,6 +240,7 @@ export default function FormMerchant({ isEditing = false, defaultValues }) {
                 optionsList={mstPromosi}
                 placeholder={"Media Promosi"}
                 name={"media_promosi"}
+                defaultValues={isEditing ? defaultValues.media_promosi : null}
                 setValue={setValue}
               />
             </div>
@@ -206,12 +250,13 @@ export default function FormMerchant({ isEditing = false, defaultValues }) {
                 id={"nama-pic-mro"}
                 optionsList={mstPIC}
                 placeholder={"Nama PIC MRO"}
-                name={"pic_mro"}
+                name={"nama_pic_mro"}
+                defaultValues={isEditing ? defaultValues.nama_pic_mro : null}
                 setValue={setValue}
               />
             </div>
             <div className="col-span-6">
-              <RichTextEditor />
+              <RichTextEditor name={"deskripsi"} setValue={setValue} defaultValues={defaultValues.deskripsi} />
             </div>
           </div>
         </div>

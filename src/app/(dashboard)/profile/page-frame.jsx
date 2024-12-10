@@ -102,7 +102,6 @@ export default function PageFrame({ defaultValues }) {
               imageProfileMut.mutate(formData, {
                 onSuccess: (data) => {
                   queryCLient.invalidateQueries({ queryKey: ["profile-me"] });
-                  console.log("berhasil kok ", data.data.data);
                   setImageProfile(data.data.data);
                 },
                 onError: (e) => {

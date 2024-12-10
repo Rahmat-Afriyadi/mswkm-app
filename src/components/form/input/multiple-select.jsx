@@ -1,25 +1,39 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
+import { useRef, useState, useEffect } from "react";
+import { ExclamationCircleIcon, MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { ChevronUpDownIcon } from "@heroicons/react/20/solid";
 
-export default function MultipleSelect({ optionsList, placeholder, label, id, setValue, name }) {
-  console.log("ini list yaa ", optionsList);
+export default function MultipleSelect({
+  optionsList,
+  placeholder,
+  label,
+  id,
+  setValue,
+  name,
+  required,
+  defaultValues = null,
+}) {
   const [query, setQuery] = useState("");
-  const [selected, setSelected] = useState([]);
+  const [selected, setSelected] = useState(defaultValues != null ? defaultValues : []);
 
   const [menuOpen, setMenuOpen] = useState(false);
 
   const inputRef = useRef(null);
+
+  useEffect(() => {
+    return setSelected(defaultValues != null ? defaultValues : []);
+  }, [optionsList, defaultValues]); // eslint-disable-line
+
+  useEffect(() => {
+    return setValue(name, selected);
+  }, [selected]); // eslint-disable-line
 
   const filteredTags = optionsList.filter(
     (item) =>
       item.name?.toLocaleLowerCase()?.includes(query.toLocaleLowerCase()?.trim()) &&
       !selected.some((item1) => Object.values(item1).includes(item.id))
   );
-
-  console.log("ini selected yaa ", selected);
 
   const isDisable =
     !query?.trim() ||
@@ -37,7 +51,7 @@ export default function MultipleSelect({ optionsList, placeholder, label, id, se
           {selected.map((tag) => {
             return (
               <div
-                key={tag}
+                key={tag.id + " terpilih"}
                 className="rounded-full w-fit py-1.5 px-3 border border-gray-400 bg-gray-50 text-gray-500
                   flex items-center gap-2"
               >
@@ -46,9 +60,7 @@ export default function MultipleSelect({ optionsList, placeholder, label, id, se
                   className="cursor-pointer"
                   onMouseDown={(e) => e.preventDefault()}
                   onClick={() => {
-                    const theSelected = selected.filter((i) => i.id !== tag.id);
-                    setSelected(theSelected);
-                    setValue(name, theSelected);
+                    setSelected((prev) => prev.filter((i) => i.id !== tag.id));
                   }}
                 >
                   X
@@ -61,7 +73,6 @@ export default function MultipleSelect({ optionsList, placeholder, label, id, se
               className="text-gray-400 cursor-pointer"
               onClick={() => {
                 setSelected([]);
-                setValue(name, []);
                 inputRef.current?.focus();
               }}
             >
@@ -88,9 +99,7 @@ export default function MultipleSelect({ optionsList, placeholder, label, id, se
           onBlur={() => setMenuOpen(false)}
           onKeyDown={(e) => {
             if (e.key === "Enter" && !isDisable) {
-              const theSelected = [...selected, query];
-              setSelected(theSelected);
-              setValue(name, theSelected);
+              setSelected((prev) => [...prev, query]);
               setQuery("");
               setMenuOpen(true);
             }
@@ -102,21 +111,16 @@ export default function MultipleSelect({ optionsList, placeholder, label, id, se
             setMenuOpen(!menuOpen);
           }}
         />
-        {/* <button
-            className="text-sm disabled:text-gray-300 text-rose-500 disabled:cursor-not-allowed"
-            disabled={isDisable}
-            onClick={() => {
-              if (isDisable) {
-                return;
-              }
-              setSelected((prev) => [...prev, query]);
-              setQuery("");
-              inputRef.current?.focus();
-              setMenuOpen(true);
-            }}
-          >
-            + Add
-          </button> */}
+        {required && selected.length < 1 && (
+          <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+            <ExclamationCircleIcon aria-hidden="true" className="w-5 h-5 text-red-500" />
+          </div>
+        )}
+        {required && selected.length < 1 && (
+          <p className="text-sm text-red-600" style={{ marginTop: 2 }}>
+            This Field is Required
+          </p>
+        )}
       </div>
 
       {/* Menu's */}
@@ -131,9 +135,7 @@ export default function MultipleSelect({ optionsList, placeholder, label, id, se
                   onMouseDown={(e) => e.preventDefault()}
                   onClick={() => {
                     setMenuOpen(true);
-                    const theSelected = [...selected, tag];
-                    setSelected(theSelected);
-                    setValue(name, theSelected);
+                    setSelected((prev) => [...prev, tag]);
                     setQuery("");
                   }}
                 >

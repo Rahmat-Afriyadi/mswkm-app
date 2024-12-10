@@ -1,9 +1,12 @@
+"use client";
+
 import React, { useState } from "react";
+import dynamic from "next/dynamic";
 import "froala-editor/css/froala_editor.pkgd.min.css";
 import "froala-editor/css/froala_style.min.css";
 import "froala-editor/css/plugins/image.min.css";
-import FroalaEditor from "react-froala-wysiwyg";
-import FroalaEditorView from "react-froala-wysiwyg/FroalaEditorView";
+// import FroalaEditor from "react-froala-wysiwyg";
+// import FroalaEditorView from "react-froala-wysiwyg/FroalaEditorView";
 
 // Import plugin tambahan
 import "froala-editor/js/plugins/image.min.js";
@@ -12,12 +15,16 @@ import "froala-editor/js/plugins/font_size.min.js";
 import "froala-editor/js/plugins/lists.min.js";
 import "froala-editor/js/plugins/align.min.js";
 
-const FroalaEditorComponent = () => {
-  const [content, setContent] = useState("");
+const FroalaEditor = dynamic(() => import("react-froala-wysiwyg"), { ssr: false });
+const FroalaEditorView = dynamic(() => import("react-froala-wysiwyg/FroalaEditorView"), { ssr: false });
+
+const FroalaEditorComponent = ({ name, setValue, defaultValues = "" }) => {
+  const [content, setContent] = useState(defaultValues);
 
   // Fungsi untuk menangani perubahan konten editor
   const handleModelChange = (model) => {
     setContent(model);
+    setValue(name, model);
   };
 
   return (

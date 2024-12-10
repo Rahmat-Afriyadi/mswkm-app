@@ -89,7 +89,7 @@ const MerchantPage = () => {
             icon={PencilSquareIcon}
             disabled={!canEditMerchant}
             onClick={() => {
-              router.push("/merchants/update/" + row.original.id);
+              router.push("/admin/merchant/update/" + row.original.id);
             }}
           />
           {/* Delete Button */}
