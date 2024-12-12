@@ -11,6 +11,7 @@ import icon3 from "../../../../public/images/content/header/Icon 3.png";
 import icon4Active from "../../../../public/images/content/header/Icon 4 active.png";
 import icon4 from "../../../../public/images/content/header/Icon 4.png";
 import { useSession } from "next-auth/react";
+import { FolderIcon } from "@heroicons/react/24/solid";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -18,7 +19,7 @@ export default function Navbar() {
   return (
     <div className=" h-6 w-full">
       <div className="grid grid-cols-12 gap-x-1">
-        <div className="col-span-3  flex justify-center">
+        <div className="col-span-2  flex justify-center">
           <a href="/" className="h-5 w-5 sm:h-8 sm:w-8 cursor-pointer">
             <Image
               src={pathname == "/" ? iconActive : icon}
@@ -33,7 +34,7 @@ export default function Navbar() {
         {status == "authenticated" && (
           <>
             {" "}
-            <div className="col-span-3  flex justify-center">
+            <div className="col-span-2  flex justify-center">
               <a href="/profile" className="h-5 w-5 sm:h-8 sm:w-8 md:h-8 md:w-8 cursor-pointer ">
                 <Image
                   src={pathname == "/profile" ? icon2Active : icon2}
@@ -45,7 +46,7 @@ export default function Navbar() {
                 />
               </a>
             </div>
-            <div className="col-span-3  flex justify-center">
+            <div className="col-span-2  flex justify-center">
               <a href="/card" className="h-5 w-5 sm:h-8 sm:w-8 md:h-8 md:w-8 cursor-pointer ">
                 <Image
                   src={pathname == "/card" ? icon3Active : icon3}
@@ -59,7 +60,12 @@ export default function Navbar() {
             </div>{" "}
           </>
         )}
-        <div className="col-span-3  flex justify-center">
+        <div className="col-span-2  flex justify-center">
+          <a href="/merchant" className="h-5 w-5 sm:h-8 sm:w-8 md:h-8 md:w-8 cursor-pointer mt-1">
+            <FolderIcon />
+          </a>
+        </div>
+        <div className="col-span-2  flex justify-center">
           <a href="/faq" className="h-5 w-5 sm:h-8 sm:w-8 md:h-8 md:w-8 cursor-pointer mt-1">
             <Image
               src={pathname == "/faq" ? icon4Active : icon4}
@@ -72,7 +78,7 @@ export default function Navbar() {
           </a>
         </div>
         {status == "unauthenticated" && (
-          <div className="col-span-3  flex items-center">
+          <div className="col-span-2  flex items-center">
             <div className="w-full text-center">
               <a
                 href="/login"

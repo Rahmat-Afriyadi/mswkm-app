@@ -153,3 +153,17 @@ span.swiper-pagination-bullet-active {
   font-size: inherit; /* Bullet mengikuti ukuran font dari item */
   line-height: inherit; /* Pastikan jarak antar teks dan bullet/number tetap */
 }
+
+.horizontalScroll {
+  width: 100%;
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+  user-select: none;
+  scrollbar-color: transparent transparent;
+}
+
+.horizontalScroll::-webkit-scrollbar {
+  height: 1px;
+  background-color: transparent;
+}

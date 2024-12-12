@@ -2,6 +2,8 @@
 const nextConfig = {
   reactStrictMode: false,
   images: {
+    domains: ["localhost"],
+    formats: ["image/avif", "image/webp"],
     remotePatterns: [
       {
         // Matches any image hosted on localhost:3002
