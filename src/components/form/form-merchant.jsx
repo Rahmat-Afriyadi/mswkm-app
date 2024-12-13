@@ -16,6 +16,7 @@ import { MerchantAdd } from "@/server/admin/merchant/merchant-add";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import FormFile from "./input/input-file";
+import FormFileBanner from "./input/input-file-banner";
 
 export default function FormMerchant({ isEditing = false, defaultValues }) {
   const {
@@ -85,7 +86,7 @@ export default function FormMerchant({ isEditing = false, defaultValues }) {
           onSuccess: (data) => {
             queryClient.invalidateQueries({ queryKey: ["merchants"] });
             Swal.fire("Success!", `Merchant berhasil ${isEditing ? "diperbarui" : "ditambahkan"}`, "info").then(() => {
-              // router.replace("/admin/merchant");
+              router.replace("/admin/merchant");
             });
           },
           onError: (e) => {
@@ -105,16 +106,25 @@ export default function FormMerchant({ isEditing = false, defaultValues }) {
           <h2 className="text-base font-semibold leading-7 text-gray-900">Merchant Information Information</h2>
           <p className="mt-1 text-sm leading-6 text-gray-600">Use a permanent address where you can receive mail.</p>
 
-          <div className="grid grid-cols-1 mt-10 gap-x-6 gap-y-8 sm:grid-cols-6">
-            <div className="sm:col-span-6">
+          <div className="grid grid-cols-6 mt-10 gap-x-6 gap-y-8">
+            <div className="col-span-6 sm:col-span-3 flex items-center">
               <FormFile
                 name={"logo"}
+                id={"logo"}
                 setValue={setValue}
                 defaultValues={isEditing && defaultValues.logo != null ? defaultValues.logo : ""}
               />
             </div>
+            <div className="col-span-6 sm:col-span-3">
+              <FormFileBanner
+                name={"banner"}
+                id={"banner"}
+                setValue={setValue}
+                defaultValues={isEditing && defaultValues.banner != null ? defaultValues.banner : ""}
+              />
+            </div>
 
-            <div className="sm:col-span-3">
+            <div className="col-span-6 sm:col-span-3">
               <InputGroup
                 label="Nama"
                 id="nama"
@@ -125,7 +135,7 @@ export default function FormMerchant({ isEditing = false, defaultValues }) {
                 errors={errors}
               />
             </div>
-            <div className="sm:col-span-3">
+            <div className="col-span-6 sm:col-span-3">
               <InputGroup
                 label="Email address"
                 id="email"
@@ -142,7 +152,7 @@ export default function FormMerchant({ isEditing = false, defaultValues }) {
                 errors={errors}
               />
             </div>
-            <div className="sm:col-span-2">
+            <div className="col-span-6 sm:col-span-2">
               <InputGroup
                 label="Valid From"
                 id="valid-from"
@@ -153,7 +163,7 @@ export default function FormMerchant({ isEditing = false, defaultValues }) {
                 errors={errors}
               />
             </div>
-            <div className="sm:col-span-2">
+            <div className="col-span-6 sm:col-span-2">
               <InputGroup
                 label="Valid Thru"
                 id="valid-thru"
@@ -164,10 +174,10 @@ export default function FormMerchant({ isEditing = false, defaultValues }) {
                 errors={errors}
               />
             </div>
-            <div className="sm:col-span-1 flex items-end">
+            <div className="col-span-6 sm:col-span-1 flex items-end">
               <Checkbox label="Aktif" id="is-active" name="is_active" register={register} errors={errors} />
             </div>
-            <div className="sm:col-span-3">
+            <div className="col-span-6 sm:col-span-3">
               <InputGroup
                 label="Website"
                 id="website"
@@ -179,7 +189,7 @@ export default function FormMerchant({ isEditing = false, defaultValues }) {
               />
             </div>
 
-            <div className="sm:col-span-3">
+            <div className="col-span-6 sm:col-span-3">
               <InputGroup
                 label="Nama PIC"
                 id="nama-pic"
@@ -190,7 +200,7 @@ export default function FormMerchant({ isEditing = false, defaultValues }) {
                 errors={errors}
               />
             </div>
-            <div className="sm:col-span-3">
+            <div className="col-span-6 sm:col-span-3">
               <InputGroup
                 label="Nomor Telepon PIC"
                 id="phone-number-pic"
@@ -207,7 +217,7 @@ export default function FormMerchant({ isEditing = false, defaultValues }) {
                 errors={errors}
               />
             </div>
-            <div className="sm:col-span-3">
+            <div className="col-span-6 sm:col-span-3">
               <InputGroup
                 label="Map"
                 id="map"

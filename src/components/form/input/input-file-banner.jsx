@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_API;
 
-export default function FormFile({ name, setValue, defaultValues = "", id }) {
+export default function FormFileBanner({ name, setValue, defaultValues = "", id }) {
   const [imageProfile, setImageProfile] = useState(defaultValues);
   const imageProfileMut = useMutation({
     mutationFn: UploadImageProfile,
@@ -16,13 +16,13 @@ export default function FormFile({ name, setValue, defaultValues = "", id }) {
   }, [imageProfile]); // eslint-disable-line
 
   return (
-    <div className="w-full flex justify-center cursor-pointer">
+    <div className="w-full flex justify-center cursor-pointer h-full">
       <label
         htmlFor={id}
-        className="w-20 h-20 md:w-40 md:h-40 bg-cover bg-center rounded-full md:mt-2 cursor-pointer shadow-md"
+        className="w-full bg-cover bg-center md:mt-2 cursor-pointer shadow-md aspect-[21/9]"
         style={{
           backgroundImage: `url('${
-            imageProfile == "" ? "/images/content/profile/Photo.png" : BASE_URL + imageProfile
+            imageProfile == "" ? "/images/content/default/banner 21-9.jpg" : BASE_URL + imageProfile
           }')`,
         }}
       ></label>

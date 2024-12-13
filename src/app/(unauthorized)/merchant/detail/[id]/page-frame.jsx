@@ -2,6 +2,8 @@ import { formatDateLongMonth } from "@/lib/utils";
 import Image from "next/image";
 import React from "react";
 import FroalaEditorView from "react-froala-wysiwyg/FroalaEditorView";
+import { MapPinIcon } from "@heroicons/react/24/solid";
+import { GlobeAltIcon } from "@heroicons/react/20/solid";
 
 const BASE_URl = process.env.NEXT_PUBLIC_BASE_API;
 
@@ -10,7 +12,7 @@ export default function PageFrame({ merchant }) {
     <>
       <div className="flex justify-center">
         <div className="w-11/12 md:w-10/12 h-auto shadow-md grid grid-cols-12 py-4 px-3 gap-x-2">
-          <div className="col-span-12 lg:col-span-3 md:col-span-4 p-2 flex flex-col items-center">
+          <div className="col-span-12 lg:col-span-3 md:col-span-4 p-1 flex flex-col items-center">
             <div className="w-7/12 md:w-full">
               <Image
                 alt="slide_1"
@@ -23,16 +25,13 @@ export default function PageFrame({ merchant }) {
               />
             </div>
             <br />
-            <div className="grid grid-cols-12 gap-x-2 w-full">
-              {merchant.kategori.map((f) => {
-                return (
-                  <div key={f.id + " kategori-detail"} className="col-span-6 lg:col-span-4 ">
-                    <p className="bg-slate-50 text-slate-800 rounded-lg text-xs leading-none px-3 py-2 shadow-md">
-                      {f.name}
-                    </p>
-                  </div>
-                );
-              })}
+            <div className="w-full px-3 md:px-0">
+              <a className="flex font-bold items-center h-auto" href={merchant.website}>
+                <p className="leading-none font-bold mr-2 mt-1">
+                  <GlobeAltIcon className="h-7 w-7" />
+                </p>
+                <p className="leading-none">{merchant.website.split("//")[1].replace("/", "")}</p>
+              </a>
             </div>
           </div>
           <div className="col-span-12 lg:col-span-9 md:col-span-8 rounded-md px-3 mt-3 md:mt-0">
@@ -48,7 +47,10 @@ export default function PageFrame({ merchant }) {
           {merchant.outlets.map((e) => {
             return (
               <>
-                <div className="col-span-12 sm:col-span-6 lg:col-span-4 rounded-md shadow-md">
+                <a
+                  className="col-span-12 sm:col-span-6 lg:col-span-4 rounded-md shadow-md"
+                  href={"/outlet/detail/" + e.id}
+                >
                   <div className="grid grid-cols-12">
                     <div className="col-span-3 flex items-center h-full">
                       <div className="rounded-l-md overflow-x-hidden ">
@@ -70,7 +72,7 @@ export default function PageFrame({ merchant }) {
                       </p>
                     </div>
                   </div>
-                </div>
+                </a>
               </>
             );
           })}
