@@ -103,7 +103,10 @@ export default function PageFrame({ outlet }) {
               <p className="text-xl font-bold">Deskripsi</p>
               <FroalaEditorView model={outlet.merchant.deskripsi} />
             </div>
-            <div className="col-span-3 cursor-pointer pl-2">
+            <a
+              className="col-span-3 cursor-pointer pl-2"
+              href={`https://www.google.com/maps?q=${outlet.latitude},${outlet.longitude}`}
+            >
               <Image
                 alt="gmaps-icon"
                 src={"/images/content/button/gmaps.png"}
@@ -114,7 +117,7 @@ export default function PageFrame({ outlet }) {
                 className="max-w-28 mx-auto"
                 blurDataURL="/images/content/profile/Photo.png"
               />
-            </div>
+            </a>
           </div>
         </div>
       )}

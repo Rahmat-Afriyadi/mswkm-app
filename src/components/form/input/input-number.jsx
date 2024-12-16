@@ -14,7 +14,7 @@ function InputNumber({ id, name, label, placeholder, value, register, max, min, 
           name={name}
           type={"number"}
           value={value}
-          step={"0.00000000000001"}
+          step={"0.000000000000001"}
           max={max}
           min={min}
           placeholder={placeholder}

@@ -11,6 +11,7 @@ import DataTable from "@/components/organism/table/data-table";
 import ActionButton from "@/components/form/input/action-button";
 import { useSession } from "next-auth/react";
 import Badge from "@/components/atoms/badge";
+import Image from "next/image";
 
 const MySwal = withReactContent(Swal);
 
@@ -63,6 +64,23 @@ const OutletPage = () => {
     {
       header: "Map",
       accessorKey: "map",
+      cell: ({ row }) => (
+        <a
+          className="-ml-3 cursor-pointer"
+          href={`https://www.google.com/maps?q=${row.original.latitude},${row.original.longitude}`}
+        >
+          <Image
+            alt="gmaps-icon"
+            src={"/images/content/button/gmaps.png"}
+            width={0}
+            height={0}
+            sizes="100vw"
+            style={{ width: "100%", height: "auto" }}
+            className="max-w-12 mx-auto"
+            blurDataURL="/images/content/profile/Photo.png"
+          />
+        </a>
+      ),
     },
     {
       header: "Active",
