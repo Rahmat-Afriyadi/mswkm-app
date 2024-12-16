@@ -1,9 +1,11 @@
 import { formatDateLongMonth } from "@/lib/utils";
 import Image from "next/image";
 import React, { useState } from "react";
-import FroalaEditorView from "react-froala-wysiwyg/FroalaEditorView";
+import dynamic from "next/dynamic";
 import { MapPinIcon } from "@heroicons/react/24/solid";
 import { GlobeAltIcon } from "@heroicons/react/20/solid";
+
+const FroalaEditorView = dynamic(() => import("react-froala-wysiwyg/FroalaEditorView"), { ssr: false });
 
 const BASE_URl = process.env.NEXT_PUBLIC_BASE_API;
 
@@ -44,7 +46,7 @@ export default function PageFrame({ outlet }) {
                   />
                 </div>
                 <div className="col-span-10 flex flex-col justify-center h-full pl-2 lg:pl-0">
-                  <p className="font-bold text-lg leading-none">{outlet.nama}</p>
+                  <p className="font-bold text-lg leading-none">{outlet.merchant.nama}</p>
                   <div className="w-full flex flex-wrap gap-x-2 gap-y-1 mt-2">
                     {outlet.merchant.kategori.map((e) => {
                       return (
@@ -57,9 +59,9 @@ export default function PageFrame({ outlet }) {
                       );
                     })}
                   </div>
-                  <p className="text-sm leading-none mt-1">
+                  {/* <p className="text-sm leading-none mt-1">
                     Berlaku s/d: {formatDateLongMonth(new Date(outlet.merchant.valid_thru))}{" "}
-                  </p>
+                  </p> */}
                 </div>
               </div>
             </div>
@@ -67,6 +69,7 @@ export default function PageFrame({ outlet }) {
         </div>
       </div>
       <br />
+
       <div className="flex justify-center">
         <div className="w-11/12 md:w-10/12 h-auto shadow-md grid grid-cols-12 rounded-lg overflow-hidden">
           <div
@@ -75,7 +78,7 @@ export default function PageFrame({ outlet }) {
               tab == 1 ? "bg-red-400 text-white hover:border-2 " : "hover:bg-red-400 hover:text-white"
             }  col-span-6 text-center border-r-2 border-red-400`}
           >
-            Lokasi
+            Outlet
           </div>
           <div
             onClick={() => setTab(2)}
@@ -87,6 +90,42 @@ export default function PageFrame({ outlet }) {
           </div>
         </div>
       </div>
+      <br />
+      {tab == 1 && (
+        <div className="flex justify-center">
+          <div className="w-11/12 md:w-10/12 h-auto shadow-md grid grid-cols-12 rounded-lg p-3 lg:p-5">
+            <div className="col-span-9">
+              <p className="text-xl font-bold">{outlet.nama}</p>
+              <ul class="list-disc list-inside text-gray-700">
+                <li className="mt-2">{outlet.alamat}</li>
+              </ul>
+              <br />
+              <p className="text-xl font-bold">Deskripsi</p>
+              <FroalaEditorView model={outlet.merchant.deskripsi} />
+            </div>
+            <div className="col-span-3 cursor-pointer pl-2">
+              <Image
+                alt="gmaps-icon"
+                src={"/images/content/button/gmaps.png"}
+                width={0}
+                height={0}
+                sizes="100vw"
+                style={{ width: "100%", height: "auto" }}
+                className="max-w-28 mx-auto"
+                blurDataURL="/images/content/profile/Photo.png"
+              />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {tab == 2 && (
+        <div className="flex justify-center">
+          <div className="w-11/12 md:w-10/12 h-auto shadow-md grid grid-cols-12 rounded-lg p-3 lg:p-5 place-items-center">
+            <div className="col-span-12 h-32 font-bold italic text-xl flex items-center">Coming soon....</div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

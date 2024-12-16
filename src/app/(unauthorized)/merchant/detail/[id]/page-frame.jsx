@@ -1,9 +1,11 @@
 import { formatDateLongMonth } from "@/lib/utils";
 import Image from "next/image";
 import React from "react";
-import FroalaEditorView from "react-froala-wysiwyg/FroalaEditorView";
+import dynamic from "next/dynamic";
 import { MapPinIcon } from "@heroicons/react/24/solid";
 import { GlobeAltIcon } from "@heroicons/react/20/solid";
+
+const FroalaEditorView = dynamic(() => import("react-froala-wysiwyg/FroalaEditorView"), { ssr: false });
 
 const BASE_URl = process.env.NEXT_PUBLIC_BASE_API;
 

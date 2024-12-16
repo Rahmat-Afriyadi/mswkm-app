@@ -18,6 +18,7 @@ import { useRouter } from "next/navigation";
 import FormFile from "./input/input-file";
 import Select from "./input/select";
 import { MasterMerchant } from "@/server/admin/master/mst-merchant";
+import InputNumber from "./input/input-number";
 
 export default function FormOutlet({ isEditing = false, defaultValues }) {
   const {
@@ -107,11 +108,24 @@ export default function FormOutlet({ isEditing = false, defaultValues }) {
               />
             </div>
             <div className="sm:col-span-3">
-              <InputGroup
-                label="Map"
-                id="map"
-                name="map"
-                type="text"
+              <InputNumber
+                label="Latitude"
+                id="latitude"
+                name="latitude"
+                max={90}
+                min={-90}
+                register={register}
+                validation={{ required: "This field is required" }}
+                errors={errors}
+              />
+            </div>
+            <div className="sm:col-span-3">
+              <InputNumber
+                label="Longitude"
+                id="longitude"
+                name="longitude"
+                max={180}
+                min={-180}
                 register={register}
                 validation={{ required: "This field is required" }}
                 errors={errors}
@@ -146,7 +160,7 @@ export default function FormOutlet({ isEditing = false, defaultValues }) {
               />
             </div>
 
-            <div className="sm:col-span-2 sm:col-start-1">
+            <div className="sm:col-span-3">
               <Select
                 label="Merchant"
                 id="merchant"
@@ -179,7 +193,7 @@ export default function FormOutlet({ isEditing = false, defaultValues }) {
       </div>
 
       <div className="flex items-center justify-end mt-6 gap-x-6">
-        <Button label="Cancel" type="button" theme="secondary" onClick={() => router.replace("/candidates")} />
+        <Button label="Cancel" type="button" theme="secondary" onClick={() => router.replace("/admin/outlet")} />
         <Button label="Save" type="submit" theme="primary" />
       </div>
     </form>

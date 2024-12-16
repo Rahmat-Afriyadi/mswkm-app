@@ -272,7 +272,7 @@ export default function FormMerchant({ isEditing = false, defaultValues }) {
       </div>
 
       <div className="flex items-center justify-end mt-6 gap-x-6">
-        <Button label="Cancel" type="button" theme="secondary" onClick={() => router.replace("/candidates")} />
+        <Button label="Cancel" type="button" theme="secondary" onClick={() => router.replace("/admin/merchant")} />
         <Button label="Save" type="submit" theme="primary" />
       </div>
     </form>
