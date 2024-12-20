@@ -1,7 +1,7 @@
 "use client";
 import { Suspense, useEffect, useState } from "react";
 // import Header from "../../components/organisms/header/header";
-import Header from "@/components/organism/header/Header-Admin";
+import Header from "@/components/organism/header/header-Admin";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter, useSelectedLayoutSegment } from "next/navigation";
 import AutoLogoutProvider from "@/components/providers/auto-logout-provider";
