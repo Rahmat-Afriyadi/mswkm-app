@@ -144,6 +144,50 @@ export default function FormOutlet({ isEditing = false, defaultValues }) {
             </div>
             <div className="sm:col-span-3">
               <InputGroup
+                label="Kota"
+                id="kota"
+                name="kota"
+                type="text"
+                register={register}
+                validation={{ required: "This field is required" }}
+                errors={errors}
+              />
+            </div>
+            <div className="sm:col-span-3">
+              <InputGroup
+                label="Kecamatan"
+                id="kecamatan"
+                name="kecamatan"
+                type="text"
+                register={register}
+                validation={{ required: "This field is required" }}
+                errors={errors}
+              />
+            </div>
+            <div className="sm:col-span-3">
+              <InputGroup
+                label="Kelurahan"
+                id="kelurahan"
+                name="kelurahan"
+                type="text"
+                register={register}
+                validation={{ required: "This field is required" }}
+                errors={errors}
+              />
+            </div>
+            <div className="sm:col-span-3">
+              <InputGroup
+                label="Kodepos"
+                id="kodepos"
+                name="kodepos"
+                type="text"
+                register={register}
+                validation={{ required: "This field is required" }}
+                errors={errors}
+              />
+            </div>
+            <div className="sm:col-span-3">
+              <InputGroup
                 label="Nomor Telepon PIC"
                 id="phone-number-pic"
                 name="no_telp_pic"

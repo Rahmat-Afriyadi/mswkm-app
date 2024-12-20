@@ -17,6 +17,10 @@ import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import FormFile from "./input/input-file";
 import FormFileBanner from "./input/input-file-banner";
+// import CustomEditor from "./input/custom-rich";
+import dynamic from "next/dynamic";
+
+const CustomEditor = dynamic(() => import("@/components/form/input/custom-rich"), { ssr: false });
 
 export default function FormMerchant({ isEditing = false, defaultValues }) {
   const {
@@ -267,6 +271,9 @@ export default function FormMerchant({ isEditing = false, defaultValues }) {
             <div className="col-span-6">
               <RichTextEditor name={"deskripsi"} setValue={setValue} defaultValues={defaultValues.deskripsi} />
             </div>
+            {/* <div className="col-span-6">
+              <CustomEditor initialData="<h1>Hello from CKEditor in Next.js!</h1>" />
+            </div> */}
           </div>
         </div>
       </div>

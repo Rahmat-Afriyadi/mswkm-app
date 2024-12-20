@@ -4,12 +4,15 @@ import React from "react";
 import dynamic from "next/dynamic";
 import { MapPinIcon } from "@heroicons/react/24/solid";
 import { GlobeAltIcon } from "@heroicons/react/20/solid";
+import { useSearchParams } from "next/navigation";
 
 const FroalaEditorView = dynamic(() => import("react-froala-wysiwyg/FroalaEditorView"), { ssr: false });
 
 const BASE_URl = process.env.NEXT_PUBLIC_BASE_API;
 
 export default function PageFrame({ merchant }) {
+  const searchParams = useSearchParams();
+  const params = new URLSearchParams(searchParams);
   return (
     <>
       <div className="flex justify-center">
@@ -51,7 +54,7 @@ export default function PageFrame({ merchant }) {
               <>
                 <a
                   className="col-span-12 sm:col-span-6 lg:col-span-4 rounded-md shadow-md"
-                  href={"/outlet/detail/" + e.id}
+                  href={"/outlet/detail/" + e.id + `?${params.toString()}`}
                 >
                   <div className="grid grid-cols-12">
                     <div className="col-span-3 flex items-center h-full">

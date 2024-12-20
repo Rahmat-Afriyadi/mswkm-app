@@ -5,11 +5,14 @@ import PageFrame from "./page-frame";
 import { useQuery } from "@tanstack/react-query";
 import { MerchantDetail } from "@/server/admin/merchant/merchant-detail";
 import { MerchantDetailFree } from "@/server/admin/merchant/merchant-detail-free";
+import { useSearchParams } from "next/navigation";
 
 export default function Page({ params }) {
+  const searchParams = useSearchParams();
   const { data: merchant, isLoading } = useQuery({
     queryKey: ["merchant-detail"],
-    queryFn: async () => await MerchantDetailFree(params.id),
+    queryFn: async () =>
+      await MerchantDetailFree({ id: params.id, lokasi: searchParams.get("lokasi") ? searchParams.get("lokasi") : "" }),
   });
 
   if (isLoading) {

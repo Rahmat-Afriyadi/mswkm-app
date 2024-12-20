@@ -97,11 +97,14 @@ export default function PageFrame({ outlet }) {
             <div className="col-span-9">
               <p className="text-xl font-bold">{outlet.nama}</p>
               <ul class="list-disc list-inside text-gray-700">
-                <li className="mt-2">{outlet.alamat}</li>
+                <li className="mt-2">
+                  {[outlet.kota, outlet.kecamatan, outlet.kelurahan, outlet.kodepos, outlet.alamat].join(", ")}
+                </li>
               </ul>
               <br />
               <p className="text-xl font-bold">Deskripsi</p>
-              <FroalaEditorView model={outlet.merchant.deskripsi} />
+              {/* <FroalaEditorView model={outlet.merchant.deskripsi} /> */}
+              <div dangerouslySetInnerHTML={{ __html: outlet.merchant.deskripsi }} />
             </div>
             <a
               className="col-span-3 cursor-pointer pl-2"

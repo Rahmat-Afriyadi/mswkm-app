@@ -65,7 +65,8 @@ const FroalaEditorComponent = ({ name, setValue, defaultValues = "" }) => {
       <h3>Preview:</h3>
       {content.length > 0 && (
         <div className="w-full border-2 border-slate-700 rounded-md py-2 px-4">
-          <FroalaEditorView model={content} />
+          <div dangerouslySetInnerHTML={{ __html: content }} />
+          {/* <FroalaEditorView model={content} /> */}
         </div>
       )}
     </div>
