@@ -77,16 +77,17 @@ export default function PageFrame() {
       <br />
       <br />
       <div className="w-full flex justify-center">
-        <div className="grid grid-cols-12 lg:grid-cols-10 gap-10 w-3/4">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-10 w-3/4">
           {merchant.data.map((e) => {
             return (
               <a
                 href={"/merchant/detail/" + e.id + `?${params.toString()}`}
-                className="col-span-6 md:col-span-4 lg:col-span-2 rounded-md mb-2"
+                className="col-span-1 rounded-md mb-2"
                 key={e.id + " merchant-display"}
               >
                 <Card title={e.nama} logo={e.logo} alamat={""} />
               </a>
+              // <div key={e.id + "merchant "} className="col-span-1 h-5 bg-slate-700"></div>
             );
           })}
         </div>

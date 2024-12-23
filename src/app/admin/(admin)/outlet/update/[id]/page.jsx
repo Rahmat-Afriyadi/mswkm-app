@@ -19,6 +19,7 @@ function EditVacanciesPage({ params }) {
   if (isLoading) {
     return "Loading...";
   }
+  console.log("ini outlets ", data.data);
   return (
     <>
       <div className="flex justify-start mb-3">

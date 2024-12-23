@@ -52,10 +52,12 @@ export default function FormOutlet({ isEditing = false, defaultValues }) {
   useEffect(() => {
     if (!isEditing) {
       reset({}); // Mengosongkan form ketika membuka form Add
-    } else if (defaultValues && mstPromosi) {
+    } else if (defaultValues && mstPromosi && mstMerchant) {
       reset(defaultValues); // Set nilai default ketika dalam mode edit
     }
   }, [mstMerchant, mstPromosi, reset]); // eslint-disable-line
+
+  console.log("ini default values yaa ", defaultValues);
 
   const onSubmit = async (values) => {
     console.log("ini values ", values);
