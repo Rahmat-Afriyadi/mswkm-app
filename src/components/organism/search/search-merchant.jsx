@@ -1,40 +1,14 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
 import { useQuery } from "@tanstack/react-query";
 import { merchantSearch } from "@/server/admin/merchant/merchant-search";
-
-const userNavigation = [
-  { name: "Your profile", href: "#" },
-  { name: "Sign out", href: "#" },
-];
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
+import { useRouter } from "next/navigation";
 
 export default function Search() {
-  const [message, setMessage] = useState("");
   const [searchInput, setSearchInput] = useState("");
   const [seearchBox, setSearchBox] = useState(false);
-
-  const handleMessage = () => {
-    var today = new Date();
-    var hrs = today.getHours();
-
-    if (hrs < 12) {
-      setMessage("Good morning");
-    } else if (hrs < 18) {
-      setMessage("Good afternoon");
-    } else {
-      setMessage("Good evening");
-    }
-  };
-
-  useEffect(() => {
-    handleMessage();
-  }, []);
+  const router = useRouter();
 
   const { data: merchant, isLoading } = useQuery({
     queryKey: ["master-merchant-search", searchInput],
@@ -76,7 +50,10 @@ export default function Search() {
         <div className="h-auto">
           <div className="mx-auto w-3/4 max-h-72 z-0 bg-slate-100 -mt-3 rounded-b-xl pt-2 pr-5">
             {!isLoading && searchInput.length > 0 && merchant && (
-              <p className="bg-slate-300 text-lg py-2 px-5 hover:bg-slate-300 rounded-r-full border-l-4 border-l-cyan-400">
+              <p
+                onClick={() => router.push("/merchant/detail/" + merchant.data[0]?.id)}
+                className="bg-slate-300 cursor-pointer text-lg py-2 px-5 hover:bg-slate-300 rounded-r-full border-l-4 border-l-cyan-400"
+              >
                 {merchant.data[0]?.nama}
               </p>
             )}
@@ -86,9 +63,15 @@ export default function Search() {
               merchant.data.slice(1).map((e) => {
                 console.log("ini data yaa ", e);
                 return (
-                  <p key={e.id + " search"} className="text-lg py-1 px-5 hover:bg-slate-300 rounded-r-full">
-                    {e.nama}
-                  </p>
+                  <>
+                    <p
+                      key={e.id + " search"}
+                      onClick={() => router.push("/merchant/detail/" + merchant.data[0]?.id)}
+                      className="text-lg py-1 px-5 hover:bg-slate-300 rounded-r-full cursor-pointer"
+                    >
+                      {e.nama}
+                    </p>
+                  </>
                 );
               })}
             {/* <p className="text-lg py-1 px-5 hover:bg-slate-300 rounded-r-full">Lorem Lorem Lorem</p> */}
