@@ -66,7 +66,7 @@ export default function Search() {
                   <>
                     <p
                       key={e.id + " search"}
-                      onClick={() => router.push("/merchant/detail/" + merchant.data[0]?.id)}
+                      onClick={() => router.push("/merchant/detail/" + e.id)}
                       className="text-lg py-1 px-5 hover:bg-slate-300 rounded-r-full cursor-pointer"
                     >
                       {e.nama}
