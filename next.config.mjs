@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: false,
   images: {
-    domains: ["localhost"],
+    domains: ["localhost", "103.163.139.156", "green-m.xyz"],
     formats: ["image/avif", "image/webp"],
     remotePatterns: [
       {
@@ -31,6 +31,27 @@ const nextConfig = {
         protocol: "http",
         hostname: "localhost",
         port: "3003",
+        pathname: "/uploads/**", // Match any path under /images/
+      },
+      {
+        // Matches any image hosted on localhost:3002
+        protocol: "http",
+        hostname: "103.163.139.156",
+        port: "3003",
+        pathname: "/uploads/**", // Match any path under /images/
+      },
+      {
+        // Matches any image hosted on localhost:3002
+        protocol: "http",
+        hostname: "green-m.xyz",
+        port: "80",
+        pathname: "/uploads/**", // Match any path under /images/
+      },
+      {
+        // Matches any image hosted on localhost:3002
+        protocol: "https",
+        hostname: "green-m.xyz",
+        port: "443",
         pathname: "/uploads/**", // Match any path under /images/
       },
     ],
