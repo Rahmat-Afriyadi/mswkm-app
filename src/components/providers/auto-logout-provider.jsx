@@ -19,26 +19,17 @@ export default function AutoLogoutProvider() {
             refresh_token: session?.user.refreshToken,
           }),
         })
-          .then((data) => {
-            // if(data.status == 403){
-            //   signOut({ redirect: false })
-            //   .then(() => {
-            //     void signIn();
-            //   });
-            // }
+          .then(() => {
+            // success refresh
           })
           .catch((error) => {
-            console.log("ini error ", error);
             signOut({ redirect: false }).then(() => {
               void signIn();
             });
           });
       }
     } else {
-      console.log("masuk sini ", session);
-      signOut({ redirect: false }).then(() => {
-        void signIn();
-      });
+      signOut({ redirect: false });
     }
   }, [status]); // eslint-disable-line react-hooks/exhaustive-deps
 }

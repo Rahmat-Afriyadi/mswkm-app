@@ -20,7 +20,6 @@ export default function MainLayout({ children }) {
   return (
     <>
       <Header />
-      <AutoLogoutProvider />
       {children}
     </>
   );

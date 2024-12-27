@@ -10,7 +10,10 @@ export default function Providers({ children }) {
   return (
     <QueryClientProvider client={queryClient}>
       {/* <Notification /> */}
-      <SessionProvider>{children}</SessionProvider>
+      <SessionProvider>
+        <AutoLogoutProvider />
+        {children}
+      </SessionProvider>
     </QueryClientProvider>
   );
 }
