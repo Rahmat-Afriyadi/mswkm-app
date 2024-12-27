@@ -60,7 +60,7 @@ export default function Page() {
       <div className="w-full bg-[#54565a]">
         <div
           className="w-full flex flex-col items-center bg-cover bg-center"
-          style={{ backgroundImage: `url('${BASE_URL}/uploads/BG.png')` }}
+          style={{ backgroundImage: `url('${BASE_URL}/uploads/BG.PNG')` }}
         >
           <div className="w-9/12 h-3 mt-2">
             <div className="w-full text-center text-white font-bold text-xl">Profile</div>

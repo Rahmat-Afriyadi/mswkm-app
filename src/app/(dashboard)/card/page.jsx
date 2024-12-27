@@ -71,7 +71,7 @@ export default function Page() {
     <>
       <div
         className={`w-full bg-cover bg-center ${windowWidth > 768 ? "h-screen" : "h-auto"}`}
-        style={{ backgroundImage: `url('${BASE_URL}/uploads/BG.png')` }}
+        style={{ backgroundImage: `url('${BASE_URL}/uploads/BG.PNG')` }}
       >
         <div className="w-full flex flex-col items-center">
           <div className="w-9/12 h-3 mt-2">
