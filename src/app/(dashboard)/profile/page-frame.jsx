@@ -11,6 +11,8 @@ import { updateProfile } from "@/server/profile/update-profile";
 import Swal from "sweetalert2";
 import Photo from "../../../../public/images/content/profile/Photo.png";
 
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_API;
+
 export default function PageFrame({ defaultValues }) {
   const [valueTglLhr, setValueTglLhr] = useState({
     startDate: defaultValues.tgl_lahir != null ? defaultValues.tgl_lahir.substring(0, 10) : null,
@@ -88,7 +90,7 @@ export default function PageFrame({ defaultValues }) {
             className="w-20 h-20 md:w-40 md:h-40 bg-cover bg-center rounded-full md:mt-2"
             style={{
               backgroundImage: `url('${
-                imageProfile == "" ? "/images/content/profile/Photo.png" : "http://192.168.70.17:3003" + imageProfile
+                imageProfile == "" ? "/images/content/profile/Photo.png" : BASE_URL + imageProfile
               }')`,
             }}
           ></label>
