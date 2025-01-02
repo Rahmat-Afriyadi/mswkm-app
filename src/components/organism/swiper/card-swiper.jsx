@@ -21,8 +21,9 @@ import BenefitBasicLg from "./card-benefit/basic-lg";
 import { signIn, signOut } from "next-auth/react";
 import { QRCode } from "react-qrcode-logo";
 import Drawer from "@/components/drawer/drawer-center";
+import { ClipLoader } from "react-spinners";
 
-const BASE_URL = process.env.NEXT_PUBLIC_URL;
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_API;
 
 function CardSwiper() {
   const [open, setOpen] = useState(false);
@@ -53,7 +54,16 @@ function CardSwiper() {
   }, []);
 
   if (isPending) {
-    return <span>Loading...</span>;
+    return (
+      <div className="w-full bg-[#54565a] ">
+        <div
+          className="w-full flex flex-col items-center bg-cover bg-center h-52 justify-center"
+          style={{ backgroundImage: `url('${BASE_URL}/uploads/BG.PNG')` }}
+        >
+          <ClipLoader size={100} color="#3498db" cssOverride={{ borderWidth: 5 }} />
+        </div>
+      </div>
+    );
   }
   if (isError) {
     if (error.message == "Unauthorized") {

@@ -9,14 +9,12 @@ import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
-import { EffectCoverflow, Pagination, Navigation } from "swiper/modules";
 import { MemberCard } from "@/server/member/card";
 import { useQuery } from "@tanstack/react-query";
-import BenefitBasicLg from "./card-benefit/basic-lg";
-import BenefitGoldLg from "./card-benefit/gold-lg";
-import BenefitPlatinumLg from "./card-benefit/platinum-lg";
-import BenefitPlatinumPlusLg from "./card-benefit/platinum-plus-lg";
 import { signIn, signOut } from "next-auth/react";
+import { ClipLoader } from "react-spinners";
+
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_API;
 
 function CardLg() {
   const swiperRef = useRef(null);
@@ -26,12 +24,6 @@ function CardLg() {
     queryKey: ["member-cards"],
     queryFn: MemberCard,
   });
-
-  const [activeIndex, setActiveIndex] = useState(null);
-
-  const handleItemClick = (index) => {
-    setActiveIndex((prevIndex) => (prevIndex === index ? null : index));
-  };
 
   useEffect(() => {
     setWindowWidth(window.innerWidth);
@@ -46,7 +38,16 @@ function CardLg() {
   }, []);
 
   if (isPending) {
-    return <span>Loading...</span>;
+    return (
+      <div className="w-full bg-[#54565a] ">
+        <div
+          className="w-full flex flex-col items-center bg-cover bg-center h-52 justify-center"
+          style={{ backgroundImage: `url('${BASE_URL}/uploads/BG.PNG')` }}
+        >
+          <ClipLoader size={100} color="#3498db" cssOverride={{ borderWidth: 5, marginTop: 60 }} />
+        </div>
+      </div>
+    );
   }
   if (isError) {
     if (error.message == "Unauthorized") {

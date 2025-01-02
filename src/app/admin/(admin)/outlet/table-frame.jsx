@@ -12,6 +12,7 @@ import ActionButton from "@/components/form/input/action-button";
 import { useSession } from "next-auth/react";
 import Badge from "@/components/atoms/badge";
 import Image from "next/image";
+import { ClipLoader } from "react-spinners";
 
 const MySwal = withReactContent(Swal);
 
@@ -151,7 +152,15 @@ const OutletPage = () => {
     }
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) {
+    return (
+      <div className="w-full">
+        <div className="w-full flex flex-col items-center bg-cover bg-center h-screen justify-center">
+          <ClipLoader size={100} color="#3498db" cssOverride={{ borderWidth: 5, marginTop: -5 }} />
+        </div>
+      </div>
+    );
+  }
   if (error) return <div>Error: {error.message}</div>;
 
   return (
