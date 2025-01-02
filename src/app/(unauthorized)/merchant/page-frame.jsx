@@ -1,21 +1,15 @@
 "use client";
 
-import FilterMultipleSelect from "@/components/form/input/filter-multiple-select";
-import MultipleSelect from "@/components/form/input/multiple-select";
 import Card from "@/components/ui/merchant/card";
-import Kategori from "@/components/ui/merchant/kategori";
 import { merchantFilter } from "@/server/admin/merchant/merchant-filter";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 import { AdjustmentsVerticalIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import Drawer from "@/components/drawer/drawer";
-import { DialogTitle } from "@headlessui/react";
 import FilterMerchant from "@/components/ui/merchant/filter-merchant";
 import Search from "@/components/organism/search/search-merchant";
 import { ClipLoader } from "react-spinners";
-
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_API;
 
 export default function PageFrame() {
   const [open, setOpen] = useState(false);
