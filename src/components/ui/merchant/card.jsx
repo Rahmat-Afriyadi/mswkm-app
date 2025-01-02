@@ -6,10 +6,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_API;
 export default function card({ title, categories, logo, alamat, website }) {
   return (
     <>
-      <div
-        className="w-full flex flex-col justify-center items-center cursor-pointer max-w-52 aspect-square"
-        // style={{ backgroundImage: `url('${BASE_URL + logo}')` }}
-      >
+      <div className="w-full flex flex-col justify-center items-center cursor-pointer max-w-52 aspect-square">
         <Image
           alt="slide_1"
           src={BASE_URL + logo}

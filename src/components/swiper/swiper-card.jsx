@@ -12,10 +12,17 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
+import { ClipLoader } from "react-spinners";
 
 export default function SwiperComponent({ sWidth, banners }) {
-  if (!banners) {
-    return "loading...";
+  if (isLoading) {
+    return (
+      <div className="w-full ">
+        <div className="w-full flex flex-col items-center bg-cover bg-center h-screen justify-center">
+          <ClipLoader size={100} color="#3498db" cssOverride={{ borderWidth: 5 }} />
+        </div>
+      </div>
+    );
   }
   return (
     <Swiper

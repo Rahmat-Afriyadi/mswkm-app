@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { OutletDetail } from "@/server/admin/outlet/outlet-detail";
 import FormOutlet from "@/components/form/form-outlet";
+import { ClipLoader } from "react-spinners";
 // import { ReadVacancy } from "@/server/vacancy/read-vacancy";
 // import FormVacancy from "@/app/ui/form-vacancy";
 
@@ -17,7 +18,13 @@ function EditVacanciesPage({ params }) {
     queryFn: async () => await OutletDetail(id),
   });
   if (isLoading) {
-    return "Loading...";
+    return (
+      <div className="w-full ">
+        <div className="w-full flex flex-col items-center bg-cover bg-center h-screen justify-center">
+          <ClipLoader size={100} color="#3498db" cssOverride={{ borderWidth: 5 }} />
+        </div>
+      </div>
+    );
   }
   console.log("ini outlets ", data.data);
   return (

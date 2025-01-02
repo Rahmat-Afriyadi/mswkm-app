@@ -13,6 +13,7 @@ import Drawer from "@/components/drawer/drawer";
 import { DialogTitle } from "@headlessui/react";
 import FilterMerchant from "@/components/ui/merchant/filter-merchant";
 import Search from "@/components/organism/search/search-merchant";
+import { ClipLoader } from "react-spinners";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_API;
 
@@ -20,7 +21,7 @@ export default function PageFrame() {
   const [open, setOpen] = useState(false);
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams);
-  const { data: merchant, isLoading } = useQuery({
+  const { data: merchant, isLoading: isLoading } = useQuery({
     queryKey: ["master-merchant", searchParams.get("kategori"), searchParams.get("lokasi")],
     queryFn: async () =>
       await merchantFilter({
@@ -32,9 +33,6 @@ export default function PageFrame() {
       }),
     initialData: { data: [{ id: "", nama: "", logo: "" }] },
   });
-  if (isLoading) {
-    return "Loading...";
-  }
 
   return (
     <>
@@ -50,46 +48,31 @@ export default function PageFrame() {
             <Search />
           </div>
         </div>
-        {/* <div className="w-3/4 grid grid-cols-12 gap-x-3">
-          <div className="col-span-4">
-            <FilterMultipleSelect
-              label={"Kategori"}
-              id={"Kategori"}
-              optionsList={[{ id: "test", name: "name" }]}
-              placeholder={"Kategori"}
-              name={"kategori"}
-              defaultValues={null}
-            />
-          </div>
-          <div className="col-span-4">
-            <FilterMultipleSelect
-              label={"Lokasi"}
-              id={"Lokasi"}
-              optionsList={[{ id: "test", name: "name" }]}
-              placeholder={"Lokasi"}
-              name={"lokasi"}
-              defaultValues={null}
-            />
-          </div>
-        </div> */}
       </div>
       <br />
       <br />
       <br />
       <div className="w-full flex justify-center">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-10 w-3/4">
-          {merchant.data.map((e) => {
-            return (
-              <a
-                href={"/merchant/detail/" + e.id + `?${params.toString()}`}
-                className="col-span-1 rounded-md mb-2"
-                key={e.id + " merchant-display"}
-              >
-                <Card title={e.nama} logo={e.logo} alamat={""} />
-              </a>
-              // <div key={e.id + "merchant "} className="col-span-1 h-5 bg-slate-700"></div>
-            );
-          })}
+          {!isLoading && merchant.data ? (
+            merchant.data.map((e) => {
+              return (
+                <a
+                  href={"/merchant/detail/" + e.id + `?${params.toString()}`}
+                  className="col-span-1 rounded-md mb-2"
+                  key={e.id + " merchant-display"}
+                >
+                  <Card title={e.nama} logo={e.logo} alamat={""} />
+                </a>
+              );
+            })
+          ) : (
+            <div className="col-span-5">
+              <div className="w-full flex h-screen flex-col items-center justify-center">
+                <ClipLoader size={100} color="#3498db" cssOverride={{ borderWidth: 5, marginTop: -50 }} />
+              </div>
+            </div>
+          )}
         </div>
       </div>
       <Drawer open={open} setOpen={setOpen}>

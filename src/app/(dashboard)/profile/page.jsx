@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { ProfileMe } from "@/server/profile/me";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { ClipLoader } from "react-spinners";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_API;
 
@@ -44,7 +45,16 @@ export default function Page() {
   }, [status, router]);
 
   if (isLoading) {
-    return "Loading...";
+    return (
+      <div className="w-full bg-[#54565a] ">
+        <div
+          className="w-full flex flex-col items-center bg-cover bg-center h-screen justify-center"
+          style={{ backgroundImage: `url('${BASE_URL}/uploads/BG.PNG')` }}
+        >
+          <ClipLoader size={100} color="#3498db" cssOverride={{ borderWidth: 5 }} />
+        </div>
+      </div>
+    );
   }
 
   if (isError) {
