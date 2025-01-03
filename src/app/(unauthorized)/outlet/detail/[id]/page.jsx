@@ -8,7 +8,7 @@ import { ClipLoader } from "react-spinners";
 
 export default function Page({ params }) {
   const { data: outlet, isLoading } = useQuery({
-    queryKey: ["outlet-detail"],
+    queryKey: ["outlet-detail", params.id],
     queryFn: async () => await OutletDetailFree(params.id),
   });
   if (isLoading) {

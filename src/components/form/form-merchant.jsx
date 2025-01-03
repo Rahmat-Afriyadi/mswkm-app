@@ -88,7 +88,7 @@ export default function FormMerchant({ isEditing = false, defaultValues }) {
       preConfirm: () => {
         merchantMut.mutate(values, {
           onSuccess: (data) => {
-            queryClient.invalidateQueries({ queryKey: ["merchants"] });
+            queryClient.invalidateQueries({ queryKey: ["read-merchant"] });
             Swal.fire("Success!", `Merchant berhasil ${isEditing ? "diperbarui" : "ditambahkan"}`, "info").then(() => {
               router.replace("/admin/merchant");
             });

@@ -14,7 +14,7 @@ function EditVacanciesPage({ params }) {
 
   const { id } = params;
   const { data, isLoading } = useQuery({
-    queryKey: ["read-vacancy"],
+    queryKey: ["read-merchant", id],
     queryFn: async () => await MerchantDetail(id),
   });
   if (isLoading) {
