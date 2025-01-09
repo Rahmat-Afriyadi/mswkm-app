@@ -7,9 +7,11 @@ import SwiperComponent from "@/components/swiper/swiper-banner";
 import { useEffect, useState } from "react";
 import SwiperComponent1 from "@/components/swiper/swiper-banner-1";
 import bgHome1 from "../../public/images/content/background/BG (Home).png";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
   const [windowWidth, setWindowWidth] = useState(0);
+  const router = useRouter();
 
   useEffect(() => {
     setWindowWidth(window.innerWidth);
@@ -63,7 +65,7 @@ export default function Page() {
               <div className="col-span-12 md:col-span-5 flex flex-col items-center md:-mr-8">
                 <div className="w-9/12 md:w-full flex justify-between items-end">
                   <p className="font-bold text-white text-lg underline">Merchant</p>
-                  <div className="w-3/12">
+                  <div className="w-3/12 cursor-pointer" onClick={() => router.push("/merchant")}>
                     <Image
                       src={"/images/content/button/Button.png"}
                       alt="illustrasi-1"

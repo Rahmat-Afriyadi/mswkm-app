@@ -107,6 +107,7 @@ export default function PageFrame({ outlet }) {
               <div dangerouslySetInnerHTML={{ __html: outlet.merchant.deskripsi }} />
             </div>
             <a
+              target="_blank"
               className="col-span-3 cursor-pointer pl-2"
               href={`https://www.google.com/maps?q=${outlet.latitude},${outlet.longitude}`}
             >
