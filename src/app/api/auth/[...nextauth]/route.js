@@ -25,6 +25,10 @@ export const authOptions = {
           label: "Password",
           type: "password",
         },
+        auto_login: {
+          label: "Auto Login",
+          type: "checkbox",
+        },
       },
 
       async authorize(credentials) {
@@ -36,14 +40,16 @@ export const authOptions = {
           body: JSON.stringify({
             username: credentials?.username,
             password: credentials?.password,
+            auto_login: credentials?.auto_login,
           }),
         });
         const resResult = await res.json();
-        if (resResult.status == "inactive") throw new Error("inactive");
+        console.log("kesini gk sih  ", credentials, resResult);
         if (resResult.status == "fail") throw new Error(resResult.message);
+        if (resResult.status == "inactive") throw new Error("inactive");
         return {
           name: resResult.name,
-          name: resResult.email,
+          email: resResult.email,
           is_admin: resResult.is_admin,
           accessToken: resResult.access_token,
           refreshToken: resResult.refresh_token,

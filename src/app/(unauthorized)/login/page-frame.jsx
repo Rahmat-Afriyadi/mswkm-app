@@ -17,7 +17,7 @@ export default function Page() {
   const [noHp, setNohp] = useState(null);
   const router = useRouter();
   const [otp, setOtp] = useState("");
-  const { data: session, status } = useSession();
+  const { data: session, status, update } = useSession();
   const [counter, setCounter] = useState(0);
   const searchParams = useSearchParams();
 
@@ -57,19 +57,50 @@ export default function Page() {
                   mutCheckOtp.mutate(
                     { no_hp: noHp, otp: parseInt(e) },
                     {
-                      onSuccess: (data) => {
-                        Swal.fire({
-                          title: "Selamat akun anda telah aktif. Silahkan Login!",
-                          icon: "success",
-                          confirmButtonColor: "#0891B2",
-                          confirmButtonText: "Oke",
-                          showLoaderOnConfirm: true,
-                          preConfirm: () => {
-                            setNohp(null);
-                            router.push("/login");
-                          },
-                          allowOutsideClick: () => !Swal.isLoading(),
+                      onSuccess: async (data) => {
+                        const result = await signIn("credentials", {
+                          redirect: false,
+                          username: noHp,
+                          password: "",
+                          auto_login: true,
                         });
+                        if (!result?.ok) {
+                          if (result?.error == "inactive") {
+                            // akun anda belum aktif, apakah anda ingin mengulang OTP?
+                            await Swal.fire({
+                              title: "Akun anda belum aktif, apakah anda ingin mengirim ulang OTP?",
+                              icon: "question",
+                              showCancelButton: true,
+                              confirmButtonColor: "#0891B2",
+                              cancelButtonColor: "#d33",
+                              confirmButtonText: "Tentu Saja!",
+                              showLoaderOnConfirm: true,
+                              preConfirm: () => {
+                                setNohp(data.username);
+                              },
+                              allowOutsideClick: () => !Swal.isLoading(),
+                            });
+                            return;
+                          } else if (result?.error == "fail") {
+                            setMessage(result?.error);
+                            return;
+                          } else {
+                            return await Swal.fire({
+                              title: "Selamat akun anda telah aktif. Silahkan Login!",
+                              icon: "success",
+                              confirmButtonColor: "#0891B2",
+                              confirmButtonText: "Oke",
+                              showLoaderOnConfirm: true,
+                              preConfirm: () => {
+                                setNohp(null);
+                                router.push(
+                                  searchParams.get("callbackUrl") ? searchParams?.get("callbackUrl") : "/profile"
+                                );
+                              },
+                              allowOutsideClick: () => !Swal.isLoading(),
+                            });
+                          }
+                        }
                       },
                       onError: (e) => {
                         setOtp("");
@@ -136,6 +167,7 @@ export default function Page() {
       redirect: false,
       username: data.username,
       password: data.password,
+      auto_login: false,
     });
     if (!result?.ok) {
       if (result?.error == "inactive") {
@@ -154,9 +186,10 @@ export default function Page() {
           allowOutsideClick: () => !Swal.isLoading(),
         });
         return;
+      } else if (result?.error == "fail") {
+        setMessage(result?.error);
+        return;
       }
-      console.log("Login error", result?.error);
-      setMessage(result?.error);
       return;
     }
     router.push(searchParams.get("callbackUrl") ? searchParams?.get("callbackUrl") : "/profile");
