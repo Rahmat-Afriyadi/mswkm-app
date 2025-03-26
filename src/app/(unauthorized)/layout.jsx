@@ -1,5 +1,6 @@
 // import { Inter } from "next/font/google";
 import { Suspense } from "react";
+import AutoLogoutProvider from "@/components/providers/auto-logout-provider";
 
 // const inter = Inter({ subsets: ["latin"] });
 
@@ -13,6 +14,8 @@ import Header from "@/components/organism/header/Header";
 export default function RootLayout({ children }) {
   return (
     <>
+      <AutoLogoutProvider />
+
       <Header />
       <Suspense>{children}</Suspense>
       <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js" async />

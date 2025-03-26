@@ -12,6 +12,8 @@ import icon4Active from "../../../../public/images/content/header/Icon 4 active.
 import icon4 from "../../../../public/images/content/header/Icon 4.png";
 import { useSession } from "next-auth/react";
 import { FolderIcon } from "@heroicons/react/24/solid";
+import { Tooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -20,7 +22,12 @@ export default function Navbar() {
     <div className=" h-6 w-full">
       <div className="grid grid-cols-12 gap-x-1">
         <div className="col-span-2  flex justify-center">
-          <a href="/" className="h-5 w-5 sm:h-8 sm:w-8 cursor-pointer">
+          <a
+            href="/"
+            data-tooltip-id="home"
+            data-tooltip-content="Home"
+            className="h-5 w-5 sm:h-8 sm:w-8 cursor-pointer"
+          >
             <Image
               src={pathname == "/" ? iconActive : icon}
               alt="illustrasi-1"
@@ -30,12 +37,18 @@ export default function Navbar() {
               style={{ width: "100%", height: "auto" }}
             />
           </a>
+          <Tooltip id="home" place="top" effect="solid" className="z-10" />
         </div>
         {status == "authenticated" && (
           <>
             {" "}
             <div className="col-span-2  flex justify-center">
-              <a href="/profile" className="h-5 w-5 sm:h-8 sm:w-8 md:h-8 md:w-8 cursor-pointer ">
+              <a
+                href="/profile"
+                data-tooltip-id="profile"
+                data-tooltip-content="Profile"
+                className="h-5 w-5 sm:h-8 sm:w-8 md:h-8 md:w-8 cursor-pointer "
+              >
                 <Image
                   src={pathname == "/profile" ? icon2Active : icon2}
                   alt="illustrasi-1"
@@ -45,9 +58,15 @@ export default function Navbar() {
                   style={{ width: "100%", height: "auto" }}
                 />
               </a>
+              <Tooltip id="profile" place="top" effect="solid" className="z-10" />
             </div>
             <div className="col-span-2  flex justify-center">
-              <a href="/card" className="h-5 w-5 sm:h-8 sm:w-8 md:h-8 md:w-8 cursor-pointer ">
+              <a
+                href="/card"
+                data-tooltip-id="my-tooltip"
+                data-tooltip-content="E-Card"
+                className="h-5 w-5 sm:h-8 sm:w-8 md:h-8 md:w-8 cursor-pointer "
+              >
                 <Image
                   src={pathname == "/card" ? icon3Active : icon3}
                   alt="illustrasi-1"
@@ -57,16 +76,28 @@ export default function Navbar() {
                   style={{ width: "100%", height: "auto" }}
                 />
               </a>
+              <Tooltip id="my-tooltip" place="top" effect="solid" className="z-10" />
             </div>{" "}
           </>
         )}
         <div className="col-span-2  flex justify-center">
-          <a href="/merchant" className="h-5 w-5 sm:h-8 sm:w-8 md:h-8 md:w-8 cursor-pointer mt-1">
+          <a
+            href="/merchant"
+            data-tooltip-id="merchant"
+            data-tooltip-content="Merchant"
+            className="h-5 w-5 sm:h-8 sm:w-8 md:h-8 md:w-8 cursor-pointer mt-1"
+          >
             <FolderIcon />
           </a>
+          <Tooltip id="merchant" place="top" effect="solid" className="z-10" />
         </div>
         <div className="col-span-2  flex justify-center">
-          <a href="/faq" className="h-5 w-5 sm:h-8 sm:w-8 md:h-8 md:w-8 cursor-pointer mt-1">
+          <a
+            href="/faq"
+            data-tooltip-id="faq"
+            data-tooltip-content="Faq"
+            className="h-5 w-5 sm:h-8 sm:w-8 md:h-8 md:w-8 cursor-pointer mt-1"
+          >
             <Image
               src={pathname == "/faq" ? icon4Active : icon4}
               alt="illustrasi-1"
@@ -76,6 +107,7 @@ export default function Navbar() {
               style={{ width: "100%", height: "auto" }}
             />
           </a>
+          <Tooltip id="faq" place="top" effect="solid" className="z-10" />
         </div>
         {status == "unauthenticated" && (
           <div className="col-span-2  flex items-center">

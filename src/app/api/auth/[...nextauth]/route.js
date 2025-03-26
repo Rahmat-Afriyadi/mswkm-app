@@ -21,6 +21,10 @@ export const authOptions = {
           type: "text",
           placeholder: "Your User Name",
         },
+        token: {
+          label: "Token",
+          type: "text",
+        },
         password: {
           label: "Password",
           type: "password",
@@ -29,22 +33,40 @@ export const authOptions = {
           label: "Auto Login",
           type: "checkbox",
         },
+        isActivation: {
+          abel: "Auto Login",
+          type: "checkbox",
+        },
       },
 
       async authorize(credentials) {
-        const res = await fetch(process.env.NEXT_PUBLIC_BASE_API + "/auth/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            username: credentials?.username,
-            password: credentials?.password,
-            auto_login: credentials?.auto_login,
-          }),
-        });
+        let res;
+        if (credentials?.isActivation) {
+          res = await fetch(process.env.NEXT_PUBLIC_BASE_API + "/tokens/signin/by-token", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              username: credentials?.username,
+              token: credentials?.token,
+            }),
+          });
+          console.log("kesini gk sih ", credentials);
+        } else {
+          res = await fetch(process.env.NEXT_PUBLIC_BASE_API + "/auth/login", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              username: credentials?.username,
+              password: credentials?.password,
+              auto_login: credentials?.auto_login,
+            }),
+          });
+        }
         const resResult = await res.json();
-        console.log("kesini gk sih  ", credentials, resResult);
         if (resResult.status == "fail") throw new Error(resResult.message);
         if (resResult.status == "inactive") throw new Error("inactive");
         return {

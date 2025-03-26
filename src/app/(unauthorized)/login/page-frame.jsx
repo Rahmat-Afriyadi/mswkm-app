@@ -27,7 +27,7 @@ export default function Page() {
       if (session?.user?.is_admin) {
         router.push("/admin/dashboard");
       } else {
-        router.push("/profile");
+        router.push("/card");
       }
     }
   }, [status]); // eslint-disable-line

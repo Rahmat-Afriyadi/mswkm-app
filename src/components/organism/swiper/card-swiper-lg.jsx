@@ -137,6 +137,10 @@ function CardSwiperLg() {
               src = "pp.png";
               benefit = "Benefit Platinum Plus";
               benefitDesc = "Platinum Plus";
+            } else if (e.no_kartu.startsWith("POLIS")) {
+              src = "pp.png";
+              benefit = "Platinum Plus";
+              benefitDesc = "Platinum Plus";
             }
 
             return (

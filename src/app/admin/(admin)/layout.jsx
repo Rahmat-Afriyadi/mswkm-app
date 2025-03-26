@@ -32,6 +32,8 @@ export default function RootLayout({ children }) {
 
   return (
     <>
+      <AutoLogoutProvider />
+
       <div>
         <Sidebars sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
