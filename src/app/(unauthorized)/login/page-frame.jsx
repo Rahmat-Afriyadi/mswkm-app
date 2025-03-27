@@ -14,7 +14,7 @@ import { checkOtp } from "@/server/auth/otp-check";
 export default function Page() {
   const { register, handleSubmit } = useForm();
   const [message, setMessage] = useState("");
-  const [noHp, setNohp] = useState("082124744961");
+  const [noHp, setNohp] = useState(null);
   const router = useRouter();
   const [otp, setOtp] = useState("");
   const { data: session, status, update } = useSession();
