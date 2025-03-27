@@ -1,7 +1,6 @@
-// import { axiosAuth } from "@/lib/axios";
 import { axiosAuth } from "@/lib/axios";
 
-export const merchantFilter = async (query) => {
+export const MerchantFilter = async (query) => {
   const { pageParams, limit, search, kategori, lokasi } = query;
   const data = await axiosAuth.get("/merchants/master-data/filter", {
     params: { search, kategori, lokasi, pageParams, limit },

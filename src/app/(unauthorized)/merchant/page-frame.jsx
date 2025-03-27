@@ -1,7 +1,7 @@
 "use client";
 
 import Card from "@/components/ui/merchant/card";
-import { merchantFilter } from "@/server/admin/merchant/merchant-filter";
+import { MerchantFilter } from "@/server/admin/merchant/merchant-filter";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
 import React, { useState } from "react";
@@ -18,14 +18,15 @@ export default function PageFrame() {
   const { data: merchant, isLoading: isLoading } = useQuery({
     queryKey: ["master-merchant", searchParams.get("kategori"), searchParams.get("lokasi")],
     queryFn: async () =>
-      await merchantFilter({
+      await MerchantFilter({
         pageParams: 1,
         search: "",
         kategori: searchParams.get("kategori"),
         lokasi: searchParams.get("lokasi"),
         limit: 100,
       }),
-    initialData: { data: [{ id: "", nama: "", logo: "" }] },
+    initialData: { data: [{ id: "start-merchant", nama: "", logo: "" }] },
+    refetchOnWindowFocus: false,
   });
 
   return (
@@ -48,7 +49,7 @@ export default function PageFrame() {
       <br />
       <div className="w-full flex justify-center">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-10 w-3/4">
-          {!isLoading && merchant.data ? (
+          {!isLoading && merchant.data[0]?.logo != "" ? (
             merchant.data.map((e) => {
               return (
                 <a

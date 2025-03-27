@@ -12,18 +12,17 @@ export default function Search() {
 
   const { data: merchant, isLoading } = useQuery({
     queryKey: ["master-merchant-search", searchInput],
+    refetchOnWindowFocus: false,
     queryFn: async () =>
       await merchantSearch({
         search: searchInput,
       }),
-    initialData: { data: [{ id: "", nama: "" }] },
+    initialData: { data: [{ id: "start-search", nama: "" }] },
   });
 
   if (isLoading) {
     return "loading";
   }
-
-  console.log("ini merchants yaa ", merchant);
 
   return (
     <>
@@ -61,7 +60,6 @@ export default function Search() {
               searchInput.length > 0 &&
               merchant &&
               merchant.data.slice(1).map((e) => {
-                console.log("ini data yaa ", e);
                 return (
                   <>
                     <p

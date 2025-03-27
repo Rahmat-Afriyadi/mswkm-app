@@ -96,7 +96,7 @@ export default function PageFrame({ outlet }) {
           <div className="w-11/12 md:w-10/12 h-auto shadow-md grid grid-cols-12 rounded-lg p-3 lg:p-5">
             <div className="col-span-9">
               <p className="text-xl font-bold">{outlet.nama}</p>
-              <ul class="list-disc list-inside text-gray-700">
+              <ul className="list-disc list-inside text-gray-700">
                 <li className="mt-2">
                   {[outlet.kota, outlet.kecamatan, outlet.kelurahan, outlet.kodepos, outlet.alamat].join(", ")}
                 </li>

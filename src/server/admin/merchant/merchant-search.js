@@ -10,6 +10,5 @@ export const merchantSearch = async (query) => {
   if (data.status == 200) {
     res.data = data.data;
   }
-  console.log("ini res yaa ", res);
   return res;
 };
