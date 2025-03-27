@@ -14,12 +14,23 @@ import { checkOtp } from "@/server/auth/otp-check";
 export default function Page() {
   const { register, handleSubmit } = useForm();
   const [message, setMessage] = useState("");
-  const [noHp, setNohp] = useState(null);
+  const [noHp, setNohp] = useState("082124744961");
   const router = useRouter();
   const [otp, setOtp] = useState("");
   const { data: session, status, update } = useSession();
   const [counter, setCounter] = useState(0);
   const searchParams = useSearchParams();
+
+  const [width, setWidth] = useState(0);
+
+  useEffect(() => {
+    const handleResize = () => setWidth(window.innerWidth);
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     if (status == "authenticated") {
@@ -111,12 +122,12 @@ export default function Page() {
                 }
               }}
               numInputs={6}
-              renderSeparator={<span className="px-2 font-bold">o</span>}
+              renderSeparator={<span className="px-1 lg:px-2 font-bold">o</span>}
               inputStyle={{
                 borderRadius: "5px",
                 color: "black",
-                fontSize: "40px",
-                width: "55px",
+                fontSize: width < 515 ? "20px" : "40px",
+                width: width < 515 ? "30px" : "55px",
               }}
               inputType="tel"
               renderInput={(props) => <input style={"color:black;"} {...props} />}
