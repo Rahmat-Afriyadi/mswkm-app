@@ -3,8 +3,8 @@
 import Card from "@/components/ui/merchant/card";
 import { MerchantFilter } from "@/server/admin/merchant/merchant-filter";
 import { useQuery } from "@tanstack/react-query";
-import { useSearchParams } from "next/navigation";
-import React, { useState } from "react";
+import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import { AdjustmentsVerticalIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import Drawer from "@/components/drawer/drawer";
 import FilterMerchant from "@/components/ui/merchant/filter-merchant";
@@ -29,10 +29,21 @@ export default function PageFrame() {
     refetchOnWindowFocus: false,
   });
 
+  const { replace } = useRouter();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if (!searchParams.get("search")) {
+      const params = new URLSearchParams(searchParams);
+      params.set("kategori", ""); // Set default ke empty string
+      replace(`${pathname}?${params}`);
+    }
+  }, [searchParams]); // eslint-disable-line
+
   return (
     <>
       <div className="w-full flex justify-center mt-3">
-        <div className="w-3/4 relative">
+        <div className="w-10/12 lg:w-3/4 relative">
           <div
             onClick={() => setOpen(true)}
             className="absolute left-0 w-max h-auto px-3 py-2 z-10 max-h-12 rounded-md bg-slate-100 hover:bg-slate-700 hover:text-red-400 cursor-pointer "
@@ -48,7 +59,7 @@ export default function PageFrame() {
       <br />
       <br />
       <div className="w-full flex justify-center">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-10 w-3/4">
+        <div className="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-6 gap-5 md:gap-10 w-10/12 lg:w-3/4">
           {!isLoading && merchant.data[0]?.logo != "" ? (
             merchant.data.map((e) => {
               return (
