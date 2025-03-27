@@ -40,19 +40,6 @@ export default function PageFrame({ defaultValues }) {
     mutationFn: updateProfile,
   });
 
-  // useEffect(() => {
-  //   const handleKeyDown = (event) => {
-  //     if (event.key === "PrintScreen" || event.keyCode === 44) {
-  //       event.preventDefault();
-  //       alert("Print Screen is disabled.");
-  //     }
-  //   };
-  //   window.addEventListener("keydown", handleKeyDown);
-  //   return () => {
-  //     window.removeEventListener("keydown", handleKeyDown);
-  //   };
-  // }, []);
-
   const onSubmit = (data) => {
     data.tgl_lahir = new Date(valueTglLhr.startDate);
     data.img_profile = imageProfile;
@@ -82,7 +69,7 @@ export default function PageFrame({ defaultValues }) {
   };
 
   return (
-    <div className="h-screen w-8/12 md:w-11/12">
+    <div className="h-screen w-10/12 md:w-11/12">
       <form action="" onSubmit={handleSubmit(onSubmit)}>
         <div className="w-full flex justify-center">
           <label
@@ -113,7 +100,7 @@ export default function PageFrame({ defaultValues }) {
             }}
           />
         </div>
-        <div className="grid grid-cols-12 gap-x-7">
+        <div className="grid grid-cols-12 lg:gap-x-7">
           <div className="col-span-12 md:col-span-4">
             <div className="w-full mt-3 md:mt-9">
               <InputGroup

@@ -19,6 +19,17 @@ export default function Page({ defaultValues }) {
   const [counter, setCounter] = useState(0);
   const searchParams = useSearchParams();
 
+  const [width, setWidth] = useState(0);
+
+  useEffect(() => {
+    const handleResize = () => setWidth(window.innerWidth);
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   useEffect(() => {
     if (status == "authenticated") {
       // signOut({ redirect: false }).then();
@@ -81,8 +92,8 @@ export default function Page({ defaultValues }) {
               inputStyle={{
                 borderRadius: "5px",
                 color: "black",
-                fontSize: "40px",
-                width: "55px",
+                fontSize: width < 515 ? "20px" : "40px",
+                width: width < 515 ? "30px" : "55px",
               }}
               inputType="tel"
               renderInput={(props) => <input style={"color:black;"} {...props} />}

@@ -7,20 +7,19 @@ import { login } from "@/server/auth/signin";
 import OTPInput from "react-otp-input";
 import Swal from "sweetalert2";
 import { useState, useEffect } from "react";
-import {  useRouter,useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { generateNewOtp } from "@/server/auth/generate-new-otp";
 import { checkOtpReset } from "@/server/auth/otp-check";
 
 export default function Page() {
   const { register, handleSubmit } = useForm();
-  const [message, setMessage] = useState("")
+  const [message, setMessage] = useState("");
   const [noHp, setNohp] = useState(null);
-  const router = useRouter()
+  const router = useRouter();
   const [otp, setOtp] = useState("");
-  const {data:session} = useSession()
+  const { data: session } = useSession();
   const [counter, setCounter] = useState(0);
   const searchParams = useSearchParams();
-
 
   const mutCheckOtp = useMutation({
     mutationFn: checkOtpReset,
@@ -28,6 +27,17 @@ export default function Page() {
   const mutGenerateOtp = useMutation({
     mutationFn: generateNewOtp,
   });
+
+  const [width, setWidth] = useState(0);
+
+  useEffect(() => {
+    const handleResize = () => setWidth(window.innerWidth);
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     counter > 0 && setTimeout(() => setCounter(counter - 1), 1000);
@@ -48,7 +58,7 @@ export default function Page() {
                     { no_hp: noHp, otp: parseInt(e) },
                     {
                       onSuccess: (data) => {
-                       router.push("/reset-password?zxcvb=" + data.data.otp.id )
+                        router.push("/reset-password?zxcvb=" + data.data.otp.id);
                       },
                       onError: (e) => {
                         setOtp("");
@@ -63,8 +73,8 @@ export default function Page() {
               inputStyle={{
                 borderRadius: "5px",
                 color: "black",
-                fontSize: "40px",
-                width: "55px",
+                fontSize: width < 515 ? "20px" : "40px",
+                width: width < 515 ? "30px" : "55px",
               }}
               inputType="tel"
               renderInput={(props) => <input style={"color:black;"} {...props} />}
@@ -109,7 +119,6 @@ export default function Page() {
       </div>
     );
   }
-
 
   const onSubmit = async (data) => {
     Swal.fire({
