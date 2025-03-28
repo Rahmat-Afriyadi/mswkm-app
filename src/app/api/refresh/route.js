@@ -13,6 +13,7 @@ export const GET = async (_req) => {
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
     body: JSON.stringify({ refresh_token: json?.user?.refreshToken }),
   });
   const newAccessToken = await resNewAccessToken.json();

@@ -6,6 +6,7 @@ export const GET = async (_req) => {
       "content-type": "application/json",
       cookie: _req.cookies.toString(),
     },
+    credentials: "include",
   });
   const json = await session.json();
   const resNewAccessToken = await fetch(process.env.NEXT_PUBLIC_BASE_API + "/auth/refresh-token", {
@@ -13,6 +14,8 @@ export const GET = async (_req) => {
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
+
     body: JSON.stringify({ refresh_token: json?.user?.refreshToken }),
   });
   const newAccessToken = await resNewAccessToken.json();
@@ -25,6 +28,7 @@ export const POST = async (_req) => {
       "content-type": "application/json",
       cookie: _req.cookies.toString(),
     },
+    credentials: "include",
   });
   const json = await session.json();
   const resNewAccessToken = await fetch(process.env.NEXT_PUBLIC_BASE_API + "/auth/refresh-token", {
@@ -32,6 +36,7 @@ export const POST = async (_req) => {
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
     body: JSON.stringify({ refresh_token: json?.user?.refreshToken }),
   });
   const newAccessToken = await resNewAccessToken.json();

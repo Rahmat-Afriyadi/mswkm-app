@@ -29,6 +29,7 @@ export const middleware: NextMiddleware = async (request: NextRequest) => {
       "content-type": "application/json",
       cookie: request.cookies.toString(),
     },
+    credentials: "include",
   } satisfies RequestInit);
   const json = await session.json();
 
@@ -51,6 +52,7 @@ export const middleware: NextMiddleware = async (request: NextRequest) => {
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
     body: JSON.stringify({ refresh_token: json?.user?.refreshToken }),
   });
   const newAccessToken = await resNewAccessToken.json();

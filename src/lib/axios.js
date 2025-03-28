@@ -5,6 +5,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_API;
 
 export default axios.create({
   baseURL: BASE_URL,
+  withCredentials: true,
   headers: {
     "Content-Type": "application/json",
   },
@@ -12,6 +13,7 @@ export default axios.create({
 
 const axiosAuth = axios.create({
   baseURL: BASE_URL,
+  withCredentials: true,
   headers: {
     "Content-Type": "application/json",
   },
@@ -39,7 +41,7 @@ axiosAuth.interceptors.response.use(
     const prevRequest = error.config;
     if (error.response.status == 401 && !prevRequest.sent) {
       prevRequest.sent = true;
-      const newTokenRes = await fetch("/api/refresh");
+      const newTokenRes = await fetch("/api/refresh", { credentials: "include" });
       const newToken = await newTokenRes.json();
       prevRequest.headers["Authorization"] = `Bearer ${newToken?.access_token}`;
       return axiosAuth(prevRequest);
