@@ -34,27 +34,44 @@ export const authOptions = {
           type: "checkbox",
         },
         isActivation: {
-          abel: "Auto Login",
+          label: "Auto Login",
+          type: "checkbox",
+        },
+        isAdmin: {
+          label: "Is Admin",
           type: "checkbox",
         },
       },
 
       async authorize(credentials) {
         let res;
-        if (credentials?.isActivation) {
-          res = await fetch(process.env.NEXT_PUBLIC_BASE_API + "/tokens/signin/by-token", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              username: credentials?.username,
-              token: credentials?.token,
-            }),
-          });
-          console.log("kesini gk sih ", credentials);
+        if (!credentials.isAdmin) {
+          if (credentials?.isActivation) {
+            res = await fetch(process.env.NEXT_PUBLIC_BASE_API + "/tokens/signin/by-token", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                username: credentials?.username,
+                token: credentials?.token,
+              }),
+            });
+          } else {
+            res = await fetch(process.env.NEXT_PUBLIC_BASE_API + "/auth/login", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                username: credentials?.username,
+                password: credentials?.password,
+                auto_login: credentials?.auto_login,
+              }),
+            });
+          }
         } else {
-          res = await fetch(process.env.NEXT_PUBLIC_BASE_API + "/auth/login", {
+          res = await fetch(process.env.NEXT_PUBLIC_BASE_API + "/auth/login/admin", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -62,17 +79,17 @@ export const authOptions = {
             body: JSON.stringify({
               username: credentials?.username,
               password: credentials?.password,
-              auto_login: credentials?.auto_login,
             }),
           });
         }
+
         const resResult = await res.json();
         if (resResult.status == "fail") throw new Error(resResult.message);
         if (resResult.status == "inactive") throw new Error("inactive");
         return {
           name: resResult.name,
           email: resResult.email,
-          is_admin: resResult.is_admin,
+          is_admin: credentials?.isAdmin,
           accessToken: resResult.access_token,
           refreshToken: resResult.refresh_token,
           // accessToken: resResult.access_token,
@@ -104,6 +121,17 @@ export const authOptions = {
     // return url.startsWith(baseUrl) ? url : baseUrl + '/';
     // return url;
     // },
+  },
+  cookies: {
+    sessionToken: {
+      name: `next-auth.session-token`,
+      options: {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        path: "/",
+      },
+    },
   },
 };
 

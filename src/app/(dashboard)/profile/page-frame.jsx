@@ -103,41 +103,17 @@ export default function PageFrame({ defaultValues }) {
         <div className="grid grid-cols-12 lg:gap-x-7">
           <div className="col-span-12 md:col-span-4">
             <div className="w-full mt-3 md:mt-9">
-              <InputGroup
-                label="Nama"
-                id="full-name"
-                name="name"
-                type="text"
-                register={register}
-                validation={{ required: "This field is required" }}
-                errors={errors}
-              />
+              <InputGroup label="Nama" id="full-name" name="name" type="text" register={register} errors={errors} />
             </div>
           </div>
           <div className="col-span-12 md:col-span-4">
             <div className="w-full mt-3 md:mt-9">
-              <InputGroup
-                label="Email"
-                id="email"
-                name="email"
-                type="text"
-                register={register}
-                validation={{ required: "This field is required" }}
-                errors={errors}
-              />
+              <InputGroup label="Email" id="email" name="email" type="text" register={register} errors={errors} />
             </div>
           </div>
           <div className="col-span-12 md:col-span-4">
             <div className="w-full mt-3 md:mt-9">
-              <InputGroup
-                label="Phone"
-                id="phone"
-                name="no_hp"
-                type="text"
-                register={register}
-                validation={{ required: "This field is required" }}
-                errors={errors}
-              />
+              <InputGroup label="Phone" id="phone" name="no_hp" type="text" register={register} errors={errors} />
             </div>
           </div>
           <div className="col-span-12 md:col-span-4">
@@ -206,15 +182,7 @@ export default function PageFrame({ defaultValues }) {
           </div>
           <div className="col-span-12 md:col-span-4">
             <div className="w-full mt-3 md:mt-9">
-              <InputGroup
-                label="Alamat"
-                id="alamat"
-                name="alamat"
-                type="text"
-                register={register}
-                validation={{ required: "This field is required" }}
-                errors={errors}
-              />
+              <InputGroup label="Alamat" id="alamat" name="alamat" type="text" register={register} errors={errors} />
             </div>
           </div>
           <div className="col-span-12">
