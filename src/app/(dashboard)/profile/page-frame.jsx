@@ -89,11 +89,12 @@ export default function PageFrame({ defaultValues }) {
             className="hidden"
             onChange={(e) => {
               const file = e.target.files?.[0];
-              if (!file || file.size === 0) {
-                console.log("File tidak valid atau kosong");
-                return;
-              }
+
               setTimeout(() => {
+                if (!file || file.size === 0) {
+                  console.log("File tidak valid atau kosong");
+                  return;
+                }
                 const formData = new FormData();
                 formData.append("file", file);
                 imageProfileMut.mutate(formData, {
