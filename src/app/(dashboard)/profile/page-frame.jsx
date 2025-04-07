@@ -88,17 +88,24 @@ export default function PageFrame({ defaultValues }) {
             capture="environment"
             className="hidden"
             onChange={(e) => {
-              const formData = new FormData();
-              formData.append("file", e.target.files[0]);
-              imageProfileMut.mutate(formData, {
-                onSuccess: (data) => {
-                  queryCLient.invalidateQueries({ queryKey: ["profile-me"] });
-                  setImageProfile(data.data.data);
-                },
-                onError: (e) => {
-                  console.log("ini error ", e);
-                },
-              });
+              const file = e.target.files?.[0];
+              if (!file || file.size === 0) {
+                console.log("File tidak valid atau kosong");
+                return;
+              }
+              setTimeout(() => {
+                const formData = new FormData();
+                formData.append("file", file);
+                imageProfileMut.mutate(formData, {
+                  onSuccess: (data) => {
+                    queryCLient.invalidateQueries({ queryKey: ["profile-me"] });
+                    setImageProfile(data.data.data);
+                  },
+                  onError: (e) => {
+                    console.log("ini error ", e);
+                  },
+                });
+              }, 200);
             }}
           />
         </div>
