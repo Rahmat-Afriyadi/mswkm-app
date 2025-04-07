@@ -84,6 +84,8 @@ export default function PageFrame({ defaultValues }) {
           <input
             type="file"
             id="profile_image"
+            accept="image/*"
+            capture="environment"
             className="hidden"
             onChange={(e) => {
               const formData = new FormData();
