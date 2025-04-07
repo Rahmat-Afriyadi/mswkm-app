@@ -14,7 +14,7 @@ import Header from "@/components/organism/header/Header";
 export default function RootLayout({ children }) {
   return (
     <>
-      <AutoLogoutProvider />
+      {/* <AutoLogoutProvider /> */}
 
       <Header />
       <Suspense>{children}</Suspense>

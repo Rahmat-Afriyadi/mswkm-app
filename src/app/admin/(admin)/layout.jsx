@@ -32,7 +32,7 @@ export default function RootLayout({ children }) {
 
   return (
     <>
-      <AutoLogoutProvider />
+      {/* <AutoLogoutProvider /> */}
 
       <div>
         <Sidebars sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
@@ -42,11 +42,12 @@ export default function RootLayout({ children }) {
 
           <main className="py-10">
             <div className="px-4 sm:px-6 lg:px-8">
-              {rolePrivileges && !rolePrivileges.canAccess.includes(segment) ? (
+              {/* {rolePrivileges && !rolePrivileges.canAccess.includes(segment) ? (
                 <p>You do not have access to this page</p>
               ) : (
                 children
-              )}
+              )} */}
+              {children}
             </div>
           </main>
         </div>

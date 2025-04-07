@@ -56,7 +56,7 @@ const UserPage = () => {
     },
     {
       header: "Role",
-      accessorKey: "role",
+      accessorKey: "role.name",
     },
     {
       accessorKey: "actions",

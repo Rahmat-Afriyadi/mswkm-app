@@ -20,7 +20,7 @@ import Select from "./input/select";
 import { MasterMerchant } from "@/server/admin/master/mst-merchant";
 import InputNumber from "./input/input-number";
 
-export default function FormOutlet({ isEditing = false, defaultValues }) {
+export default function FormUser({ isEditing = false, defaultValues }) {
   const {
     register,
     handleSubmit,

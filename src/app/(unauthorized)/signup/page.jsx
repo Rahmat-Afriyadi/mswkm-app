@@ -9,12 +9,14 @@ import { checkOtp } from "@/server/auth/otp-check";
 import Swal from "sweetalert2";
 import OtpInput from "react-otp-input";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function Page() {
   const [otp, setOtp] = useState("");
   const [noHp, setNohp] = useState(null);
+  const [message, setMessage] = useState("");
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const {
     register,
@@ -79,18 +81,50 @@ export default function Page() {
                   mutCheckOtp.mutate(
                     { no_hp: noHp, otp: parseInt(e) },
                     {
-                      onSuccess: (data) => {
-                        Swal.fire({
-                          title: "Selamat akun anda telah aktif. Silahkan Login!",
-                          icon: "success",
-                          confirmButtonColor: "#0891B2",
-                          confirmButtonText: "Oke",
-                          showLoaderOnConfirm: true,
-                          preConfirm: () => {
-                            router.push("/login")
-                          },
-                          allowOutsideClick: () => !Swal.isLoading(),
+                      onSuccess: async (data) => {
+                        const result = await signIn("credentials", {
+                          redirect: false,
+                          username: noHp,
+                          password: "",
+                          auto_login: true,
                         });
+                        if (!result?.ok) {
+                          if (result?.error == "inactive") {
+                            // akun anda belum aktif, apakah anda ingin mengulang OTP?
+                            await Swal.fire({
+                              title: "Akun anda belum aktif, apakah anda ingin mengirim ulang OTP?",
+                              icon: "question",
+                              showCancelButton: true,
+                              confirmButtonColor: "#0891B2",
+                              cancelButtonColor: "#d33",
+                              confirmButtonText: "Tentu Saja!",
+                              showLoaderOnConfirm: true,
+                              preConfirm: () => {
+                                setNohp(data.username);
+                              },
+                              allowOutsideClick: () => !Swal.isLoading(),
+                            });
+                            return;
+                          } else if (result?.error == "fail") {
+                            setMessage(result?.error);
+                            return;
+                          } else {
+                            return await Swal.fire({
+                              title: "Selamat akun anda telah aktif. Silahkan Login!",
+                              icon: "success",
+                              confirmButtonColor: "#0891B2",
+                              confirmButtonText: "Oke",
+                              showLoaderOnConfirm: true,
+                              preConfirm: () => {
+                                setNohp(null);
+                                router.push(
+                                  searchParams.get("callbackUrl") ? searchParams?.get("callbackUrl") : "/profile"
+                                );
+                              },
+                              allowOutsideClick: () => !Swal.isLoading(),
+                            });
+                          }
+                        }
                       },
                       onError: (e) => {
                         setOtp("");
