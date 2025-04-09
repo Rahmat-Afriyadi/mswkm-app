@@ -8,25 +8,25 @@ import Avatar from "@/components/organism/header/avatar";
 import Drawer from "@/components/drawer/drawer";
 import FormChangePassword from "@/components/form/form-change-password";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Header({ setSidebarOpen }) {
   const { data: session } = useSession();
   const [open, setOpen] = useState(false);
+  const router = useRouter();
 
   const userNavigation = [
-    {
-      name: "Change Password",
-      href: "#",
-      onClick: function () {
-        setOpen(true);
-      },
-    },
+    // {
+    //   name: "Change Password",
+    //   onClick: function () {
+    //     setOpen(true);
+    //   },
+    // },
     {
       name: "Logout",
-      href: "#",
       onClick: function () {
         signOut({ redirect: false }).then(() => {
-          void signIn();
+          router.push("/admin/login");
         });
       },
     },
@@ -93,7 +93,6 @@ export default function Header({ setSidebarOpen }) {
                 {userNavigation.map((item) => (
                   <MenuItem key={item.name}>
                     <a
-                      href={item.href}
                       onClick={item.onClick}
                       className="block px-3 py-1 text-sm leading-6 text-gray-900 data-[focus]:bg-gray-50"
                     >

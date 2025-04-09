@@ -28,6 +28,12 @@ export default function Page() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  useEffect(() => {
+    if (session?.user?.is_admin) {
+      router.push("/admin/dashboard"); // admin dashboard
+    }
+  }, [session]); // eslint-disable-line
+
   const {
     data: me,
     isLoading,

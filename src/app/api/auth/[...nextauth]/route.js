@@ -45,14 +45,13 @@ export const authOptions = {
 
       async authorize(credentials) {
         let res;
-        if (!credentials.isAdmin) {
-          if (credentials?.isActivation) {
+        if (credentials.isAdmin == "false") {
+          if (credentials?.isActivation == "true") {
             res = await fetch(process.env.NEXT_PUBLIC_BASE_API + "/tokens/signin/by-token", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
               },
-              credentials: "include",
               body: JSON.stringify({
                 username: credentials?.username,
                 token: credentials?.token,
@@ -64,7 +63,6 @@ export const authOptions = {
               headers: {
                 "Content-Type": "application/json",
               },
-              credentials: "include",
               body: JSON.stringify({
                 username: credentials?.username,
                 password: credentials?.password,
@@ -78,7 +76,6 @@ export const authOptions = {
             headers: {
               "Content-Type": "application/json",
             },
-            credentials: "include",
             body: JSON.stringify({
               username: credentials?.username,
               password: credentials?.password,
@@ -92,9 +89,10 @@ export const authOptions = {
         return {
           name: resResult.name,
           email: resResult.email,
-          is_admin: credentials?.isAdmin,
+          is_admin: credentials?.isAdmin == "true" ? true : false,
           accessToken: resResult.access_token,
           refreshToken: resResult.refresh_token,
+          permissions: credentials?.isAdmin == "true" ? resResult.permissions : undefined,
           // accessToken: resResult.access_token,
           // refreshToken: resResult.refresh_token,
         };

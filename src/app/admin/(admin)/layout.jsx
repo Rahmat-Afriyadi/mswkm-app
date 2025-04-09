@@ -23,6 +23,8 @@ export default function RootLayout({ children }) {
       void signIn(segment ? segment : "");
     } else if (status === "authenticated" && session?.user.password_change_counter == 0) {
       router.push("/account/change-password-counter");
+    } else if (status === "authenticated" && !session?.user?.is_admin) {
+      router.push("/");
     }
 
     if (role) {

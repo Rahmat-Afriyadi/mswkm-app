@@ -17,12 +17,13 @@ export default function Sidebars({ sidebarOpen, setSidebarOpen }) {
   const role = session?.user?.is_admin ? "Administrator" : "User";
   const pathname = usePathname();
   const [navigationByRole, setNavigationByRole] = useState([]);
+  const permissions = session?.user?.permissions;
 
   useEffect(() => {
-    if (role) {
-      setNavigationByRole(navigation.filter((item) => userRoles[role]?.canAccess.includes(item.privilege)));
+    if (permissions) {
+      setNavigationByRole(navigation.filter((item) => permissions.includes(item.privilege)));
     }
-  }, [role]);
+  }, [permissions]);
 
   return (
     <>

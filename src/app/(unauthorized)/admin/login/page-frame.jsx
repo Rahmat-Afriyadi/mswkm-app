@@ -52,6 +52,7 @@ export default function Page() {
       password: data.password,
       auto_login: false,
       isAdmin: true,
+      isActivation: false,
     });
     if (!result?.ok) {
       if (result?.error == "inactive") {

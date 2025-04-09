@@ -181,6 +181,9 @@ export default function FormMerchant({ isEditing = false, defaultValues }) {
             <div className="col-span-6 sm:col-span-1 flex items-end">
               <Checkbox label="Aktif" id="is-active" name="is_active" register={register} errors={errors} />
             </div>
+            <div className="col-span-6 sm:col-span-1 flex items-end">
+              <Checkbox label="Pin" id="pin" name="pin" register={register} errors={errors} />
+            </div>
             <div className="col-span-6 sm:col-span-3">
               <InputGroup
                 label="Website"

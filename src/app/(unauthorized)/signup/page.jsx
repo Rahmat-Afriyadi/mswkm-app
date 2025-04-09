@@ -87,6 +87,8 @@ export default function Page() {
                           username: noHp,
                           password: "",
                           auto_login: true,
+                          isAdmin: false,
+                          isActivation: false,
                         });
                         if (!result?.ok) {
                           if (result?.error == "inactive") {

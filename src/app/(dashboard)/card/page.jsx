@@ -21,6 +21,9 @@ export default function Page() {
     if (status === "unauthenticated") {
       router.push("/");
     }
+    if (session?.user?.is_admin) {
+      router.push("/admin/dashboard"); // admin dashboard
+    }
   }, [status, router, session]);
 
   const queryCLient = useQueryClient();

@@ -70,6 +70,7 @@ export default function Page({ defaultValues }) {
                         const result = await signIn("credentials", {
                           username: noHp,
                           token: defaultValues.token,
+                          isAdmin: false,
                           isActivation: true,
                         });
                         if (!result?.ok) {

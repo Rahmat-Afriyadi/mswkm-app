@@ -2,10 +2,10 @@ import axios from "axios";
 import { getSession } from "next-auth/react";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_API;
+console.log("ENV BASE API", process.env.NEXT_PUBLIC_BASE_API, "BASE_URL", BASE_URL);
 
 export default axios.create({
   baseURL: BASE_URL,
-  withCredentials: true,
   headers: {
     "Content-Type": "application/json",
   },
@@ -13,7 +13,6 @@ export default axios.create({
 
 const axiosAuth = axios.create({
   baseURL: BASE_URL,
-  withCredentials: true,
   headers: {
     "Content-Type": "application/json",
   },
@@ -41,7 +40,7 @@ axiosAuth.interceptors.response.use(
     const prevRequest = error.config;
     if (error.response.status == 401 && !prevRequest.sent) {
       prevRequest.sent = true;
-      const newTokenRes = await fetch("/api/refresh", { credentials: "include" });
+      const newTokenRes = await fetch("/api/refresh");
       const newToken = await newTokenRes.json();
       prevRequest.headers["Authorization"] = `Bearer ${newToken?.access_token}`;
       return axiosAuth(prevRequest);
