@@ -1,6 +1,8 @@
 "use client";
 
-import Card from "@/components/ui/merchant/card";
+import dynamic from "next/dynamic";
+const Card = dynamic(() => import("@/components/ui/merchant/card"), { ssr: false });
+const Search = dynamic(() => import("@/components/organism/search/search-merchant"), { ssr: false });
 import { MerchantFilter } from "@/server/admin/merchant/merchant-filter";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
@@ -8,7 +10,6 @@ import React, { useEffect, useState } from "react";
 import { AdjustmentsVerticalIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import Drawer from "@/components/drawer/drawer";
 import FilterMerchant from "@/components/ui/merchant/filter-merchant";
-import Search from "@/components/organism/search/search-merchant";
 import { ClipLoader } from "react-spinners";
 import { ArrowLeftCircleIcon, ArrowRightCircleIcon } from "@heroicons/react/24/outline";
 
@@ -33,14 +34,6 @@ export default function PageFrame() {
 
   const { replace } = useRouter();
   const pathname = usePathname();
-
-  useEffect(() => {
-    if (!searchParams.get("search")) {
-      const params = new URLSearchParams(searchParams);
-      params.set("kategori", ""); // Set default ke empty string
-      replace(`${pathname}?${params}`);
-    }
-  }, [searchParams]); // eslint-disable-line
 
   return (
     <>

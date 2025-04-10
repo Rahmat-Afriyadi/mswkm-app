@@ -1,7 +1,12 @@
 "use client";
-import CardLg from "@/components/organism/swiper/card-lg";
-import CardSwiper from "@/components/organism/swiper/card-swiper";
-import CardSwiperLg from "@/components/organism/swiper/card-swiper-lg";
+
+import dynamic from "next/dynamic";
+const CardLg = dynamic(() => import("@/components/organism/swiper/card-lg"), { ssr: false });
+const CardSwiper = dynamic(() => import("@/components/organism/swiper/card-swiper"), { ssr: false });
+const CardSwiperLg = dynamic(() => import("@/components/organism/swiper/card-swiper-lg"), { ssr: false });
+// import CardLg from "@/components/organism/swiper/card-lg";
+// import CardSwiper from "@/components/organism/swiper/card-swiper";
+// import CardSwiperLg from "@/components/organism/swiper/card-swiper-lg";
 import { addCard } from "@/server/member/add-card";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";

@@ -12,6 +12,7 @@ function Search({ id, name, placeholder }) {
   function handleChange(e) {
     const params = new URLSearchParams(searchParams);
     params.set("search", e.target.value.trim());
+    params.set("pageParams", 1);
     setTimeout(() => {}, 300);
     replace(`${pathname}?${params}`);
   }

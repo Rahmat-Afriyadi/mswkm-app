@@ -1,24 +1,25 @@
 "use client";
 
-import InputGroup from "@/components/form/input/input-group";
-import Button from "./input/button";
+import dynamic from "next/dynamic";
+const InputGroup = dynamic(() => import("@/components/form/input/input-group"), { ssr: false });
+const Button = dynamic(() => import("./input/button"), { ssr: false });
+const Checkbox = dynamic(() => import("./input/checkbox"), { ssr: false });
+const MultipleSelect = dynamic(() => import("./input/multiple-select"), { ssr: false });
+const Select = dynamic(() => import("./input/select"), { ssr: false });
+const InputNumber = dynamic(() => import("./input/input-number"), { ssr: false });
+const SearchableSelect = dynamic(() => import("@/components/form/input/searchable-select"), { ssr: false });
+const DrawerCenter = dynamic(() => import("@/components/drawer/drawer-center-transparent"));
+
 import { useForm } from "react-hook-form";
-import Checkbox from "./input/checkbox";
-import MultipleSelect from "./input/multiple-select";
 import { useState, useEffect } from "react";
-import RichTextEditor from "./input/rich-text-editor";
 import { useQueryClient, useQuery, useMutation } from "@tanstack/react-query";
-import { MasterKategori } from "@/server/admin/master/mst-kategori";
-import { MasterPicMro } from "@/server/admin/master/mst-pic-mro";
 import { MasterMediaPromosi } from "@/server/admin/master/mst-media-promosi";
 import { OutletUpdate } from "@/server/admin/outlet/outlet-update";
 import { OutletAdd } from "@/server/admin/outlet/outlet-add";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
-import FormFile from "./input/input-file";
-import Select from "./input/select";
 import { MasterMerchant } from "@/server/admin/master/mst-merchant";
-import InputNumber from "./input/input-number";
+import { MasterKodepos } from "@/server/admin/master/mst-kodepos";
 
 export default function FormOutlet({ isEditing = false, defaultValues }) {
   const {
@@ -26,11 +27,18 @@ export default function FormOutlet({ isEditing = false, defaultValues }) {
     handleSubmit,
     setValue,
     reset,
+    watch,
     formState: { errors },
   } = useForm({
     defaultValues: isEditing ? defaultValues : { media_promosi: [] },
     mode: "onChange", // Enables real-time validation
   });
+
+  const selectedKodepos = watch("selected_kodepos");
+  const selectedMerchant = watch("selected_merchant");
+
+  const [openKodepos, setOpenKodepos] = useState(false);
+  const [openMerchant, setOpenMerchant] = useState(false);
 
   const router = useRouter();
 
@@ -39,6 +47,12 @@ export default function FormOutlet({ isEditing = false, defaultValues }) {
     queryKey: ["master-promosi"],
     queryFn: async () => await MasterMediaPromosi(),
     initialData: [{ id: "", name: "" }],
+  });
+  const { data: kodepos } = useQuery({
+    queryKey: ["kodepos"],
+    refetchOnWindowFocus: false,
+    queryFn: async () => await MasterKodepos(),
+    initialData: { data: [{ value: "", nama: "" }] },
   });
   const { data: mstMerchant } = useQuery({
     queryKey: ["master-merchant"],
@@ -50,14 +64,42 @@ export default function FormOutlet({ isEditing = false, defaultValues }) {
   });
 
   useEffect(() => {
-    if (!isEditing) {
-      reset({}); // Mengosongkan form ketika membuka form Add
-    } else if (defaultValues && mstPromosi && mstMerchant) {
-      reset(defaultValues); // Set nilai default ketika dalam mode edit
-    }
-  }, [mstMerchant, mstPromosi, reset]); // eslint-disable-line
+    if (!defaultValues) return; // Early return jika defaultValues tidak ada
 
-  console.log("ini default values yaa ", defaultValues);
+    const isDataReady = [mstPromosi].every(Boolean);
+    if (!isDataReady) return; // Early return jika ada data yang belum siap
+
+    const fields = ["media_promosi"];
+
+    fields.forEach((field) => {
+      if (defaultValues?.[field]) {
+        setValue(field, defaultValues[field]);
+      }
+    });
+  }, [defaultValues, mstPromosi]); // eslint-disable-line
+
+  useEffect(() => {
+    setValue("merchant_name", mstMerchant.filter((e) => e.id == defaultValues.merchant_id)[0]?.name);
+  }, [defaultValues, mstMerchant]); // eslint-disable-line
+
+  useEffect(() => {
+    if (selectedKodepos) {
+      console.log("selected kodepos ", selectedKodepos);
+      const fillKodepos = selectedKodepos.split(", ");
+
+      setValue("kota", fillKodepos[0]);
+      setValue("kecamatan", fillKodepos[1]);
+      setValue("kelurahan", fillKodepos[2]);
+      setValue("kodepos", fillKodepos[3]);
+    }
+  }, [selectedKodepos]); // eslint-disable-line
+
+  useEffect(() => {
+    if (selectedMerchant) {
+      setValue("merchant_name", selectedMerchant);
+      setValue("merchant_id", mstMerchant.filter((e) => e.name == selectedMerchant)[0].id);
+    }
+  }, [selectedMerchant]); // eslint-disable-line
 
   const onSubmit = async (values) => {
     console.log("ini values ", values);
@@ -96,9 +138,29 @@ export default function FormOutlet({ isEditing = false, defaultValues }) {
         <div className="pb-12 border-b border-gray-900/10">
           <h2 className="text-base font-semibold leading-7 text-gray-900">Outlet Information Information</h2>
           <p className="mt-1 text-sm leading-6 text-gray-600">Use a permanent address where you can receive mail.</p>
+          <DrawerCenter open={openKodepos} setOpen={setOpenKodepos}>
+            <div className="h-screen">
+              <SearchableSelect
+                options={kodepos?.data}
+                name={"selected_kodepos"}
+                setValue={setValue}
+                setOpen={setOpenKodepos}
+              />
+            </div>
+          </DrawerCenter>
+          <DrawerCenter open={openMerchant} setOpen={setOpenMerchant}>
+            <div className="h-screen">
+              <SearchableSelect
+                options={mstMerchant.map((e) => e.name)}
+                name={"selected_merchant"}
+                setValue={setValue}
+                setOpen={setOpenMerchant}
+              />
+            </div>
+          </DrawerCenter>
 
-          <div className="grid grid-cols-1 mt-10 gap-x-6 gap-y-8 sm:grid-cols-6">
-            <div className="sm:col-span-3">
+          <div className="grid grid-cols-3  mt-10 gap-x-6 gap-y-8 ">
+            <div className="col-span-3 sm:col-span-1">
               <InputGroup
                 label="Nama"
                 id="nama"
@@ -109,7 +171,21 @@ export default function FormOutlet({ isEditing = false, defaultValues }) {
                 errors={errors}
               />
             </div>
-            <div className="sm:col-span-3">
+            <div className="col-span-3 sm:col-span-1">
+              <InputGroup
+                label="Nama PIC"
+                id="nama-pic"
+                name="nama_pic"
+                type="text"
+                register={register}
+                validation={{ required: "This field is required" }}
+                errors={errors}
+              />
+            </div>
+            <div className="col-span-3 sm:col-span-1 flex items-end">
+              <Checkbox label="Aktif" id="is-active" name="is_active" register={register} errors={errors} />
+            </div>
+            <div className="col-span-3 sm:col-span-1">
               <InputNumber
                 label="Latitude"
                 id="latitude"
@@ -121,7 +197,7 @@ export default function FormOutlet({ isEditing = false, defaultValues }) {
                 errors={errors}
               />
             </div>
-            <div className="sm:col-span-3">
+            <div className="col-span-3 sm:col-span-1">
               <InputNumber
                 label="Longitude"
                 id="longitude"
@@ -133,19 +209,14 @@ export default function FormOutlet({ isEditing = false, defaultValues }) {
                 errors={errors}
               />
             </div>
-            <div className="sm:col-span-3">
-              <InputGroup
-                label="Nama PIC"
-                id="nama-pic"
-                name="nama_pic"
-                type="text"
-                register={register}
-                validation={{ required: "This field is required" }}
-                errors={errors}
-              />
+
+            <div className="col-span-3 sm:col-span-1 ">
+              <InputGroup label="Alamat" id="alamat" name="alamat" type="text" register={register} errors={errors} />
             </div>
-            <div className="sm:col-span-3">
+            <div className="col-span-3 sm:col-span-1">
               <InputGroup
+                readOnly={true}
+                onClick={() => setOpenKodepos(true)}
                 label="Kota"
                 id="kota"
                 name="kota"
@@ -155,8 +226,10 @@ export default function FormOutlet({ isEditing = false, defaultValues }) {
                 errors={errors}
               />
             </div>
-            <div className="sm:col-span-3">
+            <div className="col-span-3 sm:col-span-1">
               <InputGroup
+                readOnly={true}
+                onClick={() => setOpenKodepos(true)}
                 label="Kecamatan"
                 id="kecamatan"
                 name="kecamatan"
@@ -166,8 +239,10 @@ export default function FormOutlet({ isEditing = false, defaultValues }) {
                 errors={errors}
               />
             </div>
-            <div className="sm:col-span-3">
+            <div className="col-span-3 sm:col-span-1">
               <InputGroup
+                readOnly={true}
+                onClick={() => setOpenKodepos(true)}
                 label="Kelurahan"
                 id="kelurahan"
                 name="kelurahan"
@@ -177,8 +252,10 @@ export default function FormOutlet({ isEditing = false, defaultValues }) {
                 errors={errors}
               />
             </div>
-            <div className="sm:col-span-3">
+            <div className="col-span-3 sm:col-span-1">
               <InputGroup
+                readOnly={true}
+                onClick={() => setOpenKodepos(true)}
                 label="Kodepos"
                 id="kodepos"
                 name="kodepos"
@@ -188,7 +265,7 @@ export default function FormOutlet({ isEditing = false, defaultValues }) {
                 errors={errors}
               />
             </div>
-            <div className="sm:col-span-3">
+            <div className="col-span-3 sm:col-span-1">
               <InputGroup
                 label="Nomor Telepon PIC"
                 id="phone-number-pic"
@@ -206,23 +283,20 @@ export default function FormOutlet({ isEditing = false, defaultValues }) {
               />
             </div>
 
-            <div className="sm:col-span-3">
-              <Select
+            <div className="col-span-3 sm:col-span-1">
+              <InputGroup
+                readOnly={true}
+                onClick={() => setOpenMerchant(true)}
                 label="Merchant"
                 id="merchant"
-                name="merchant_id"
-                options={mstMerchant}
+                name="merchant_name"
+                type="text"
                 register={register}
-                errors={errors}
                 validation={{ required: "This field is required" }}
+                errors={errors}
               />
             </div>
-            <div className="col-span-3">
-              <InputGroup label="Alamat" id="alamat" name="alamat" type="text" register={register} errors={errors} />
-            </div>
-            <div className="sm:col-span-1 flex items-end">
-              <Checkbox label="Aktif" id="is-active" name="is_active" register={register} errors={errors} />
-            </div>
+
             <div className="col-span-3">
               <MultipleSelect
                 label={"Media Promosi"}

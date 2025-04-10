@@ -1,7 +1,30 @@
+# Node modules (dibuild ulang dalam container)
 node_modules
-.nitro
-.nuxt
-.output
-dist
-.git
+
+# Log files
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# OS-specific files
 .DS_Store
+Thumbs.db
+
+# Environment files (biasanya dikopi manual atau lewat secrets)
+
+# Editor/IDE settings
+.vscode
+.idea
+
+# Git
+.git
+.gitignore
+
+# Build output (jika tidak ingin copy hasil build lokal)
+.next
+out
+
+# Docker-related files
+Dockerfile
+docker-compose.yml
+.dockerignore

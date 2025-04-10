@@ -24,8 +24,6 @@ export default function Page({ params }) {
     );
   }
 
-  console.log("ini merchant yaa ", merchant);
-
   return (
     <>
       <PageFrame merchant={merchant.data} />

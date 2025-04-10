@@ -3,7 +3,7 @@
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { useEffect } from "react";
 import withReactContent from "sweetalert2-react-content";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import { readManyMerchant } from "@/server/admin/merchant/read-many-merchant";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/20/solid";
@@ -12,6 +12,7 @@ import ActionButton from "@/components/form/input/action-button";
 import { useSession } from "next-auth/react";
 import Badge from "@/components/atoms/badge";
 import { ClipLoader } from "react-spinners";
+import { MerchantDelete } from "@/server/admin/merchant/merchant-delete";
 
 const MySwal = withReactContent(Swal);
 
@@ -38,6 +39,7 @@ const MerchantPage = () => {
   const search = searchParams.get("search");
   const pageParams = searchParams.get("pageParams");
 
+  const queryClient = useQueryClient();
   const { data, error, isLoading } = useQuery({
     queryKey: ["merchants", limit, search, pageParams],
     queryFn: async () =>
@@ -46,6 +48,9 @@ const MerchantPage = () => {
         search,
         pageParams,
       }),
+  });
+  const deleteMut = useMutation({
+    mutationFn: MerchantDelete,
   });
 
   const columns = [
@@ -99,7 +104,7 @@ const MerchantPage = () => {
             size="small"
             icon={TrashIcon}
             disabled={!canDeleteMerchant}
-            onClick={() => handleDelete(row.getValue("id"))}
+            onClick={() => handleDelete(row.original.id)}
           />
         </div>
       ),
@@ -113,7 +118,7 @@ const MerchantPage = () => {
     return true;
   });
 
-  const handleDelete = async () => {
+  const handleDelete = async (id) => {
     try {
       const result = await MySwal.fire({
         title: "Are you sure?",
@@ -123,12 +128,21 @@ const MerchantPage = () => {
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
         confirmButtonText: "Yes, delete it!",
+        preConfirm: () => {
+          deleteMut.mutate(id, {
+            onSuccess: (data) => {
+              queryClient.invalidateQueries({ queryKey: ["merchants"] });
+              Swal.fire("Success!", `Data berhasil dihapus`, "info").then(() => {
+                router.replace("/admin/merchant");
+              });
+            },
+            onError: (e) => {
+              console.log("ini error ", e);
+              Swal.fire("Failed!", e.response.data.message, "error");
+            },
+          });
+        },
       });
-
-      if (result.isConfirmed) {
-        await MySwal.fire("Deleted!", "Your file has been deleted.", "success");
-        setShow(true);
-      }
     } catch (error) {
       console.error("Error:", error);
     }

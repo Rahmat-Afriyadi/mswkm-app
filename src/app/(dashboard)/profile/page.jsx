@@ -1,6 +1,7 @@
 "use client";
 
-import PageFrame from "./page-frame";
+import dynamic from "next/dynamic";
+const PageFrame = dynamic(() => import("./page-frame"), { ssr: false });
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";

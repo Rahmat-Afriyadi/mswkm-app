@@ -35,7 +35,9 @@ export default function PageFrame({ merchant }) {
                 <p className="leading-none font-bold mr-2 mt-1">
                   <GlobeAltIcon className="h-7 w-7" />
                 </p>
-                <p className="leading-none">{merchant.website.split("//")[1].replace("/", "")}</p>
+                <p className="leading-none">
+                  {merchant.website.includes("://") ? merchant.website.split("//")[1].replace("/", "") : ""}
+                </p>
               </a>
             </div>
           </div>

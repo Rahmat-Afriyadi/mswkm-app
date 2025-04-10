@@ -1,11 +1,13 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { MerchantDetail } from "@/server/admin/merchant/merchant-detail";
-import FormMerchant from "@/components/form/form-merchant";
+const FormMerchant = dynamic(() => import("@/components/form/form-merchant"), { ssr: false });
 import { ClipLoader } from "react-spinners";
+import { formatDate } from "@/lib/utils";
 // import { ReadVacancy } from "@/server/vacancy/read-vacancy";
 // import FormVacancy from "@/app/ui/form-vacancy";
 
@@ -29,8 +31,8 @@ function EditVacanciesPage({ params }) {
   if (data.status == 200) {
     const valid_from = new Date(data.data.valid_from);
     const valid_thru = new Date(data.data.valid_thru);
-    data.data.valid_from = valid_from.toISOString().split("T")[0];
-    data.data.valid_thru = valid_thru.toISOString().split("T")[0];
+    data.data.valid_from = formatDate(valid_from);
+    data.data.valid_thru = formatDate(valid_thru);
   }
   return (
     <>

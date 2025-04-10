@@ -1,10 +1,15 @@
 "use client";
 
-import InputGroup from "@/components/form/input/input-group";
-import Button from "./input/button";
+import dynamic from "next/dynamic";
+
+const InputGroup = dynamic(() => import("@/components/form/input/input-group"), { ssr: false });
+const Button = dynamic(() => import("./input/button"), { ssr: false });
+const Checkbox = dynamic(() => import("./input/checkbox"), { ssr: false });
+const MultipleSelect = dynamic(() => import("./input/multiple-select"), { ssr: false });
+const FormFileBanner = dynamic(() => import("./input/input-file-banner"), { ssr: false });
+const FormFile = dynamic(() => import("./input/input-file"), { ssr: false });
+
 import { useForm } from "react-hook-form";
-import Checkbox from "./input/checkbox";
-import MultipleSelect from "./input/multiple-select";
 import { useState, useEffect } from "react";
 import RichTextEditor from "./input/rich-text-editor";
 import { useQueryClient, useQuery, useMutation } from "@tanstack/react-query";
@@ -15,10 +20,7 @@ import { MerchantUpdate } from "@/server/admin/merchant/merchant-update";
 import { MerchantAdd } from "@/server/admin/merchant/merchant-add";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
-import FormFile from "./input/input-file";
-import FormFileBanner from "./input/input-file-banner";
 // import CustomEditor from "./input/custom-rich";
-import dynamic from "next/dynamic";
 
 const CustomEditor = dynamic(() => import("@/components/form/input/custom-rich"), { ssr: false });
 
@@ -30,7 +32,9 @@ export default function FormMerchant({ isEditing = false, defaultValues }) {
     reset,
     formState: { errors },
   } = useForm({
-    defaultValues: isEditing ? defaultValues : { kategori: [], media_promosi: [], nama_pic_mro: [] },
+    defaultValues: isEditing
+      ? defaultValues
+      : { kategori: [], media_promosi: [], nama_pic_mro: [], is_active: true, pin: true },
     mode: "onChange", // Enables real-time validation
   });
 
@@ -185,15 +189,7 @@ export default function FormMerchant({ isEditing = false, defaultValues }) {
               <Checkbox label="Pin" id="pin" name="pin" register={register} errors={errors} />
             </div>
             <div className="col-span-6 sm:col-span-3">
-              <InputGroup
-                label="Website"
-                id="website"
-                name="website"
-                type="text"
-                register={register}
-                validation={{ required: "This field is required" }}
-                errors={errors}
-              />
+              <InputGroup label="Website" id="website" name="website" type="text" register={register} errors={errors} />
             </div>
 
             <div className="col-span-6 sm:col-span-3">
@@ -215,7 +211,7 @@ export default function FormMerchant({ isEditing = false, defaultValues }) {
                 type="text"
                 register={register}
                 validation={{
-                  required: false,
+                  required: true,
                   pattern: {
                     value: /^(\+62|62|0)8[1-9][0-9]{6,10}$/,
                     message: "Please enter a valid phone number",
@@ -236,7 +232,15 @@ export default function FormMerchant({ isEditing = false, defaultValues }) {
               />
             </div>
             <div className="col-span-3">
-              <InputGroup label="Alamat" id="alamat" name="alamat" type="text" register={register} errors={errors} />
+              <InputGroup
+                label="Alamat"
+                id="alamat"
+                name="alamat"
+                type="text"
+                register={register}
+                validation={{ required: "This field is required" }}
+                errors={errors}
+              />
             </div>
             <div className="col-span-3">
               <MultipleSelect

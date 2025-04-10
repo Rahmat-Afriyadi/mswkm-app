@@ -1,10 +1,11 @@
 "use client";
 
+import dynamic from "next/dynamic";
+const FormOutlet = dynamic(() => import("@/components/form/form-outlet"), { ssr: false });
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { OutletDetail } from "@/server/admin/outlet/outlet-detail";
-import FormOutlet from "@/components/form/form-outlet";
 import { ClipLoader } from "react-spinners";
 // import { ReadVacancy } from "@/server/vacancy/read-vacancy";
 // import FormVacancy from "@/app/ui/form-vacancy";

@@ -1,15 +1,17 @@
 "use client";
 
+import dynamic from "next/dynamic";
+import InputGroup from "@/components/organism/input/input-group";
+import Datepicker from "react-tailwindcss-datepicker";
+// const InputGroup = dynamic(import("@/components/organism/input/input-group"), { ssr: false });
+// const Datepicker = dynamic(import("react-tailwindcss-datepicker"), { ssr: false });
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import InputGroup from "@/components/organism/input/input-group";
-import Datepicker from "react-tailwindcss-datepicker";
 import Image from "next/image";
 import { UploadImageProfile } from "@/server/profile/upload-image-profile";
 import { updateProfile } from "@/server/profile/update-profile";
 import Swal from "sweetalert2";
-import Photo from "../../../../public/images/content/profile/Photo.png";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_API;
 

@@ -3,7 +3,7 @@
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { useEffect } from "react";
 import withReactContent from "sweetalert2-react-content";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import { readManyRole } from "@/server/admin/role/read-many-role";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/20/solid";
@@ -13,6 +13,7 @@ import { useSession } from "next-auth/react";
 import Badge from "@/components/atoms/badge";
 import Image from "next/image";
 import { ClipLoader } from "react-spinners";
+import { RoleDelete } from "@/server/admin/role/role-delete";
 
 const MySwal = withReactContent(Swal);
 
@@ -39,6 +40,7 @@ const RolePage = () => {
   const search = searchParams.get("search");
   const pageParams = searchParams.get("pageParams");
 
+  const queryClient = useQueryClient();
   const { data, error, isLoading } = useQuery({
     queryKey: ["roles", limit, search, pageParams],
     queryFn: async () =>
@@ -47,6 +49,9 @@ const RolePage = () => {
         search,
         pageParams,
       }),
+  });
+  const deleteMut = useMutation({
+    mutationFn: RoleDelete,
   });
 
   const columns = [
@@ -75,7 +80,7 @@ const RolePage = () => {
             size="small"
             icon={TrashIcon}
             disabled={!canDeleteRole}
-            onClick={() => handleDelete(row.getValue("id"))}
+            onClick={() => handleDelete(row.original.id)}
           />
         </div>
       ),
@@ -89,7 +94,7 @@ const RolePage = () => {
     return true;
   });
 
-  const handleDelete = async () => {
+  const handleDelete = async (id) => {
     try {
       const result = await MySwal.fire({
         title: "Are you sure?",
@@ -99,12 +104,21 @@ const RolePage = () => {
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
         confirmButtonText: "Yes, delete it!",
+        preConfirm: () => {
+          deleteMut.mutate(id, {
+            onSuccess: (data) => {
+              queryClient.invalidateQueries({ queryKey: ["roles"] });
+              Swal.fire("Success!", `Data berhasil dihapus`, "info").then(() => {
+                router.replace("/admin/role");
+              });
+            },
+            onError: (e) => {
+              console.log("ini error ", e);
+              Swal.fire("Failed!", e.response.data.message, "error");
+            },
+          });
+        },
       });
-
-      if (result.isConfirmed) {
-        await MySwal.fire("Deleted!", "Your file has been deleted.", "success");
-        setShow(true);
-      }
     } catch (error) {
       console.error("Error:", error);
     }

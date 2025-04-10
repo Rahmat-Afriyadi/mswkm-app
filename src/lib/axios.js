@@ -2,7 +2,6 @@ import axios from "axios";
 import { getSession } from "next-auth/react";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_API;
-console.log("ENV BASE API", process.env.NEXT_PUBLIC_BASE_API, "BASE_URL", BASE_URL);
 
 export default axios.create({
   baseURL: BASE_URL,

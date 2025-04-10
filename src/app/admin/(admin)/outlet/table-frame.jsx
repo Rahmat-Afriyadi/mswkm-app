@@ -3,7 +3,7 @@
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { useEffect } from "react";
 import withReactContent from "sweetalert2-react-content";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import { readManyOutlet } from "@/server/admin/outlet/read-many-outlet";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/20/solid";
@@ -13,6 +13,7 @@ import { useSession } from "next-auth/react";
 import Badge from "@/components/atoms/badge";
 import Image from "next/image";
 import { ClipLoader } from "react-spinners";
+import { OutletDelete } from "@/server/admin/outlet/outlet-delete";
 
 const MySwal = withReactContent(Swal);
 
@@ -39,6 +40,7 @@ const OutletPage = () => {
   const search = searchParams.get("search");
   const pageParams = searchParams.get("pageParams");
 
+  const queryClient = useQueryClient();
   const { data, error, isLoading } = useQuery({
     queryKey: ["outlets", limit, search, pageParams],
     queryFn: async () =>
@@ -48,11 +50,20 @@ const OutletPage = () => {
         pageParams,
       }),
   });
+  const deleteMut = useMutation({
+    mutationFn: OutletDelete,
+  });
+
+  console.log("ini data outlet", data);
 
   const columns = [
     {
       header: "Nama Outlet",
       accessorKey: "nama",
+    },
+    {
+      header: "Nama Merchant",
+      accessorKey: "merchant.nama",
     },
     {
       header: "Nama PIC",
@@ -67,6 +78,7 @@ const OutletPage = () => {
       accessorKey: "map",
       cell: ({ row }) => (
         <a
+          target="_blank"
           className="-ml-3 cursor-pointer"
           href={`https://www.google.com/maps?q=${row.original.latitude},${row.original.longitude}`}
         >
@@ -117,7 +129,7 @@ const OutletPage = () => {
             size="small"
             icon={TrashIcon}
             disabled={!canDeleteOutlet}
-            onClick={() => handleDelete(row.getValue("id"))}
+            onClick={() => handleDelete(row.original.id)}
           />
         </div>
       ),
@@ -131,7 +143,7 @@ const OutletPage = () => {
     return true;
   });
 
-  const handleDelete = async () => {
+  const handleDelete = async (id) => {
     try {
       const result = await MySwal.fire({
         title: "Are you sure?",
@@ -141,12 +153,21 @@ const OutletPage = () => {
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
         confirmButtonText: "Yes, delete it!",
+        preConfirm: () => {
+          deleteMut.mutate(id, {
+            onSuccess: (data) => {
+              queryClient.invalidateQueries({ queryKey: ["outlets"] });
+              Swal.fire("Success!", `Data berhasil dihapus`, "info").then(() => {
+                router.replace("/admin/outlet");
+              });
+            },
+            onError: (e) => {
+              console.log("ini error ", e);
+              Swal.fire("Failed!", e.response.data.message, "error");
+            },
+          });
+        },
       });
-
-      if (result.isConfirmed) {
-        await MySwal.fire("Deleted!", "Your file has been deleted.", "success");
-        setShow(true);
-      }
     } catch (error) {
       console.error("Error:", error);
     }

@@ -32,7 +32,7 @@ export default function Page() {
         </div>
       </div>
       <br />
-      <Search id="search" name={"search"} placeholder={"Search for outlet..."} />
+      <Search id="search" name={"search"} placeholder={"Search for ..."} />
       <TableFrame />
     </>
   );
