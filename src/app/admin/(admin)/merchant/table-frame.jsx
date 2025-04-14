@@ -23,7 +23,6 @@ const MerchantPage = () => {
   const { replace } = useRouter();
 
   const { data: session } = useSession();
-  const role = session?.user?.role;
   const canEditMerchant = true;
   const canDeleteMerchant = true;
 
@@ -111,13 +110,6 @@ const MerchantPage = () => {
     },
   ];
 
-  const columnByRole = columns.filter((col) => {
-    if (col.accessorKey === "actions" && role?.name === "Manager") {
-      return false; // Hilangkan kolom 'Action' untuk manager
-    }
-    return true;
-  });
-
   const handleDelete = async (id) => {
     try {
       const result = await MySwal.fire({
@@ -162,7 +154,7 @@ const MerchantPage = () => {
   return (
     <>
       <div className="px-4 sm:px-0 lg:px-0">
-        <DataTable columns={columnByRole} data={data} />
+        <DataTable columns={columns} data={data} />
       </div>
     </>
   );

@@ -65,17 +65,15 @@ export default function FormOutlet({ isEditing = false, defaultValues }) {
 
   useEffect(() => {
     if (!defaultValues) return; // Early return jika defaultValues tidak ada
-
-    const isDataReady = [mstPromosi].every(Boolean);
-    if (!isDataReady) return; // Early return jika ada data yang belum siap
-
-    const fields = ["media_promosi"];
-
-    fields.forEach((field) => {
-      if (defaultValues?.[field]) {
-        setValue(field, defaultValues[field]);
+    let finalValue = [];
+    if (defaultValues?.media_promosi && mstPromosi[0]?.id !== "") {
+      finalValue = defaultValues?.media_promosi.filter((perm) => mstPromosi.map((item) => item.id).includes(perm.id));
+      if (finalValue.length > 0) {
+        defaultValues.media_promosi = finalValue;
+      } else {
+        defaultValues.media_promosi = null;
       }
-    });
+    }
   }, [defaultValues, mstPromosi]); // eslint-disable-line
 
   useEffect(() => {
@@ -102,7 +100,6 @@ export default function FormOutlet({ isEditing = false, defaultValues }) {
   }, [selectedMerchant]); // eslint-disable-line
 
   const onSubmit = async (values) => {
-    console.log("ini values ", values);
     if (values.media_promosi < 1 || !values.hasOwnProperty("media_promosi")) {
       return Swal.fire("Failed!", "mohon pilih satu atau lebih media promosi", "error");
     }

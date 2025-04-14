@@ -50,7 +50,6 @@ export default function FormRole({ isEditing = false, defaultValues }) {
     values.permissions = values.permissions.map((perm) => {
       return { name: perm.id };
     });
-    console.log("ini values yaa ", values);
     Swal.fire({
       title: "Apakah data yang dimasukan sudah benar",
       icon: "question",
@@ -68,7 +67,6 @@ export default function FormRole({ isEditing = false, defaultValues }) {
             });
           },
           onError: (e) => {
-            console.log("ini error ", e);
             Swal.fire("Failed!", e.response.data.message, "error");
           },
         });

@@ -37,7 +37,6 @@ export default function Page() {
   });
 
   const onSubmit = async (values) => {
-    console.log("ini values yaa ", values);
     Swal.fire({
       title: "Apakah data yang dimasukan sudah benar",
       icon: "question",

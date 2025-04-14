@@ -29,7 +29,6 @@ export default function FormMediaPromosi({ isEditing = false, defaultValues }) {
   });
 
   const onSubmit = async (values) => {
-    console.log("ini values yaa ", values);
     Swal.fire({
       title: "Apakah data yang dimasukan sudah benar",
       icon: "question",

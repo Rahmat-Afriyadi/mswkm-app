@@ -2,7 +2,7 @@
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination } from "swiper/modules";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
 
 // Import Swiper styles
 import "swiper/css";
@@ -19,9 +19,11 @@ export default function SwiperComponent({ sWidth, banners }) {
       slidesPerView={1}
       grabCursor={true}
       loop={true}
-      // onSlideChange={() => console.log("slide change")}
-      // onSwiper={(swiper) => console.log(swiper)}
-      modules={[Navigation, Pagination]}
+      autoplay={{
+        delay: 3000, // 3 seconds
+        disableOnInteraction: false,
+      }}
+      modules={[Navigation, Pagination, Autoplay]}
       pagination={{ el: ".swiper-pagination", clickable: true }}
       navigation={{
         nextEl: ".swiper-button-next",

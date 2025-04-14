@@ -10,7 +10,7 @@ const FormFileBanner = dynamic(() => import("./input/input-file-banner"), { ssr:
 const FormFile = dynamic(() => import("./input/input-file"), { ssr: false });
 
 import { useForm } from "react-hook-form";
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import RichTextEditor from "./input/rich-text-editor";
 import { useQueryClient, useQuery, useMutation } from "@tanstack/react-query";
 import { MasterKategori } from "@/server/admin/master/mst-kategori";
@@ -30,6 +30,7 @@ export default function FormMerchant({ isEditing = false, defaultValues }) {
     handleSubmit,
     setValue,
     reset,
+    watch,
     formState: { errors },
   } = useForm({
     defaultValues: isEditing
@@ -61,17 +62,40 @@ export default function FormMerchant({ isEditing = false, defaultValues }) {
   });
 
   useEffect(() => {
-    if (!isEditing) {
-      reset({}); // Mengosongkan form ketika membuka form Add
-    } else if (defaultValues && mstKategori && mstPIC && mstPromosi) {
-      reset(defaultValues); // Set nilai default ketika dalam mode edit
+    if (!defaultValues) return; // Early return jika defaultValues tidak ada
+    let finalValue = [];
+    if (defaultValues?.kategori && mstKategori[0]?.id !== "") {
+      finalValue = defaultValues?.kategori.filter((perm) => mstKategori.map((item) => item.id).includes(perm.id));
+      if (finalValue.length > 0) {
+        defaultValues.kategori = finalValue;
+      } else {
+        defaultValues.kategori = null;
+      }
     }
-  }, [mstKategori, mstPIC, mstPromosi, reset]); // eslint-disable-line
+
+    if (defaultValues?.nama_pic_mro && mstPIC[0]?.id !== "") {
+      finalValue = defaultValues?.nama_pic_mro.filter((perm) => mstPIC.map((item) => item.id).includes(perm.id));
+      if (finalValue.length > 0) {
+        defaultValues.nama_pic_mro = finalValue;
+      } else {
+        defaultValues.nama_pic_mro = null;
+      }
+    }
+
+    if (defaultValues?.media_promosi && mstPromosi[0]?.id !== "") {
+      console.log("ini all promosis ", defaultValues?.media_promosi);
+      finalValue = defaultValues?.media_promosi.filter((perm) => mstPromosi.map((item) => item.id).includes(perm.id));
+      if (finalValue.length > 0) {
+        defaultValues.media_promosi = finalValue;
+      } else {
+        defaultValues.media_promosi = null;
+      }
+    }
+  }, [defaultValues, mstKategori, mstPIC, mstPromosi]); // eslint-disable-line
 
   const onSubmit = async (values) => {
     values.valid_from = new Date(values.valid_from);
     values.valid_thru = new Date(values.valid_thru);
-    console.log("ini values ", values);
     if (values.kategori < 1 || !values.hasOwnProperty("kategori")) {
       return Swal.fire("Failed!", "mohon pilih satu atau lebih kategori merchant", "error");
     }
@@ -182,14 +206,10 @@ export default function FormMerchant({ isEditing = false, defaultValues }) {
                 errors={errors}
               />
             </div>
-            <div className="col-span-6 sm:col-span-1 flex items-end">
+            <div className="col-span-6 sm:col-span-2 flex justify-between items-end">
               <Checkbox label="Aktif" id="is-active" name="is_active" register={register} errors={errors} />
-            </div>
-            <div className="col-span-6 sm:col-span-1 flex items-end">
               <Checkbox label="Pin" id="pin" name="pin" register={register} errors={errors} />
-            </div>
-            <div className="col-span-6 sm:col-span-3">
-              <InputGroup label="Website" id="website" name="website" type="text" register={register} errors={errors} />
+              <Checkbox label="Home Pin" id="home-pin" name="home_pin" register={register} errors={errors} />
             </div>
 
             <div className="col-span-6 sm:col-span-3">
@@ -248,8 +268,8 @@ export default function FormMerchant({ isEditing = false, defaultValues }) {
                 id={"Kategori"}
                 optionsList={mstKategori}
                 placeholder={"Kategori"}
+                defaultValues={isEditing ? defaultValues?.kategori : null}
                 name={"kategori"}
-                defaultValues={isEditing ? defaultValues.kategori : null}
                 setValue={setValue}
               />
             </div>
@@ -259,8 +279,8 @@ export default function FormMerchant({ isEditing = false, defaultValues }) {
                 id={"media-promosi"}
                 optionsList={mstPromosi}
                 placeholder={"Media Promosi"}
+                defaultValues={isEditing ? defaultValues?.media_promosi : null}
                 name={"media_promosi"}
-                defaultValues={isEditing ? defaultValues.media_promosi : null}
                 setValue={setValue}
               />
             </div>
@@ -270,8 +290,8 @@ export default function FormMerchant({ isEditing = false, defaultValues }) {
                 id={"nama-pic-mro"}
                 optionsList={mstPIC}
                 placeholder={"Nama PIC MRO"}
+                defaultValues={isEditing ? defaultValues?.nama_pic_mro : null}
                 name={"nama_pic_mro"}
-                defaultValues={isEditing ? defaultValues.nama_pic_mro : null}
                 setValue={setValue}
               />
             </div>

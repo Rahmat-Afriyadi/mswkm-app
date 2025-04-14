@@ -4,15 +4,17 @@ import InputGroup from "@/components/form/input/input-group";
 import Button from "./input/button";
 import { useForm } from "react-hook-form";
 import { useQueryClient, useQuery, useMutation } from "@tanstack/react-query";
-import { KategoriAdd } from "@/server/admin/kategori/kategori-add";
+import { PicMroAdd } from "@/server/admin/pic-mro/pic-mro-add";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
-import { KategoriUpdate } from "@/server/admin/kategori/kategori-update";
+import { PicMroUpdate } from "@/server/admin/pic-mro/pic-mro-update";
 
-export default function FormKategori({ isEditing = false, defaultValues }) {
+export default function FormPicMro({ isEditing = false, defaultValues }) {
   const {
     register,
     handleSubmit,
+    setValue,
+    reset,
     formState: { errors },
   } = useForm({
     defaultValues: isEditing ? defaultValues : { media_promosi: [] },
@@ -22,8 +24,8 @@ export default function FormKategori({ isEditing = false, defaultValues }) {
   const router = useRouter();
 
   const queryClient = useQueryClient();
-  const kategoriMut = useMutation({
-    mutationFn: isEditing ? KategoriUpdate : KategoriAdd,
+  const mediaPromosiMut = useMutation({
+    mutationFn: isEditing ? PicMroUpdate : PicMroAdd,
   });
 
   const onSubmit = async (values) => {
@@ -36,11 +38,11 @@ export default function FormKategori({ isEditing = false, defaultValues }) {
       confirmButtonText: "Save",
       showLoaderOnConfirm: true,
       preConfirm: () => {
-        kategoriMut.mutate(values, {
+        mediaPromosiMut.mutate(values, {
           onSuccess: (data) => {
-            queryClient.invalidateQueries({ queryKey: ["kategoris"] });
-            Swal.fire("Success!", `Kategori berhasil ${isEditing ? "diperbarui" : "ditambahkan"}`, "info").then(() => {
-              router.replace("/admin/merchant-category");
+            queryClient.invalidateQueries({ queryKey: ["pic-mros"] });
+            Swal.fire("Success!", `PicMro berhasil ${isEditing ? "diperbarui" : "ditambahkan"}`, "info").then(() => {
+              router.replace("/admin/pic-mro");
             });
           },
           onError: (e) => {
@@ -57,13 +59,13 @@ export default function FormKategori({ isEditing = false, defaultValues }) {
     <form onSubmit={handleSubmit(onSubmit)} method="POST">
       <div className="space-y-12">
         <div className="pb-12 border-b border-gray-900/10">
-          <h2 className="text-base font-semibold leading-7 text-gray-900">Kategori Information Information</h2>
+          <h2 className="text-base font-semibold leading-7 text-gray-900">PicMro Information Information</h2>
           <p className="mt-1 text-sm leading-6 text-gray-600">Use a permanent address where you can receive mail.</p>
 
           <div className="grid grid-cols-1 mt-10 gap-x-6 gap-y-8 sm:grid-cols-6">
             <div className="sm:col-span-3">
               <InputGroup
-                label="Nama Kategori"
+                label="Nama PicMro"
                 id="nama"
                 name="name"
                 type="text"
@@ -77,12 +79,7 @@ export default function FormKategori({ isEditing = false, defaultValues }) {
       </div>
 
       <div className="flex items-center justify-end mt-6 gap-x-6">
-        <Button
-          label="Cancel"
-          type="button"
-          theme="secondary"
-          onClick={() => router.replace("/admin/merchant-category")}
-        />
+        <Button label="Cancel" type="button" theme="secondary" onClick={() => router.replace("/admin/pic-mro")} />
         <Button label="Save" type="submit" theme="primary" />
       </div>
     </form>

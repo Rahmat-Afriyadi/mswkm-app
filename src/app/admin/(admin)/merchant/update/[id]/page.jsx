@@ -8,8 +8,6 @@ import { MerchantDetail } from "@/server/admin/merchant/merchant-detail";
 const FormMerchant = dynamic(() => import("@/components/form/form-merchant"), { ssr: false });
 import { ClipLoader } from "react-spinners";
 import { formatDate } from "@/lib/utils";
-// import { ReadVacancy } from "@/server/vacancy/read-vacancy";
-// import FormVacancy from "@/app/ui/form-vacancy";
 
 function EditVacanciesPage({ params }) {
   const router = useRouter();

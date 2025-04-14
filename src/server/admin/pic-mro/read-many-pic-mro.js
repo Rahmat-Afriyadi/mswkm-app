@@ -2,8 +2,8 @@
 import { axiosAuth } from "@/lib/axios";
 
 export const readManyPicMro = async (query) => {
-  const { pageParams, limit, search, pic-mro } = query;
-  const data = await axiosAuth.get("/pic-mros/master-data", { params: { search, pic-mro, pageParams, limit } });
+  const { pageParams, limit, search } = query;
+  const data = await axiosAuth.get("/pic-mros/master-data", { params: { search, pageParams, limit } });
   const count = await axiosAuth.get("/pic-mros/master-data/count", { params: { search, pageParams, limit } });
   const res = { data: [], count: 0 };
 

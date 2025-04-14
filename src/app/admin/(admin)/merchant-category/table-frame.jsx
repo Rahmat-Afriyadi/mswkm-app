@@ -87,13 +87,6 @@ const KategoriPage = () => {
     },
   ];
 
-  const columnByKategori = columns.filter((col) => {
-    if (col.accessorKey === "actions" && kategori?.name === "Manager") {
-      return false; // Hilangkan kolom 'Action' untuk manager
-    }
-    return true;
-  });
-
   const handleDelete = async (id) => {
     try {
       const result = await MySwal.fire({
@@ -109,7 +102,7 @@ const KategoriPage = () => {
             onSuccess: (data) => {
               queryClient.invalidateQueries({ queryKey: ["kategoris"] });
               Swal.fire("Success!", `Data berhasil dihapus`, "info").then(() => {
-                router.replace("/admin/kategori");
+                router.replace("/admin/merchant-category");
               });
             },
             onError: (e) => {
@@ -138,7 +131,7 @@ const KategoriPage = () => {
   return (
     <>
       <div className="px-4 sm:px-0 lg:px-0">
-        <DataTable columns={columnByKategori} data={data} />
+        <DataTable columns={columns} data={data} />
       </div>
     </>
   );

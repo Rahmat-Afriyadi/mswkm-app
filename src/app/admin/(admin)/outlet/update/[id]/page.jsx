@@ -7,8 +7,6 @@ import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { OutletDetail } from "@/server/admin/outlet/outlet-detail";
 import { ClipLoader } from "react-spinners";
-// import { ReadVacancy } from "@/server/vacancy/read-vacancy";
-// import FormVacancy from "@/app/ui/form-vacancy";
 
 function EditVacanciesPage({ params }) {
   const router = useRouter();

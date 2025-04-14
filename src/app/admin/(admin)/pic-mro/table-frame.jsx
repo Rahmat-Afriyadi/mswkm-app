@@ -5,26 +5,25 @@ import { useEffect } from "react";
 import withReactContent from "sweetalert2-react-content";
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import Swal from "sweetalert2";
-import { readManyMediaPromosi } from "@/server/admin/media-promosi/read-many-media-promosi";
+import { readManyPicMro } from "@/server/admin/pic-mro/read-many-pic-mro";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/20/solid";
 import DataTable from "@/components/organism/table/data-table";
 import ActionButton from "@/components/form/input/action-button";
 import { useSession } from "next-auth/react";
 import { ClipLoader } from "react-spinners";
-import { MediaPromosiDelete } from "@/server/admin/media-promosi/media-promosi-delete";
+import { PicMroDelete } from "@/server/admin/pic-mro/pic-mro-delete";
 
 const MySwal = withReactContent(Swal);
 
-const MediaPromosiPage = () => {
+const PicMroPage = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
 
   const { data: session } = useSession();
-  const mediaPromosi = session?.user?.mediaPromosi;
-  const canEditMediaPromosi = true;
-  const canDeleteMediaPromosi = true;
+  const canEditPicMro = true;
+  const canDeletePicMro = true;
 
   useEffect(() => {
     const params = new URLSearchParams(searchParams);
@@ -40,16 +39,16 @@ const MediaPromosiPage = () => {
 
   const queryClient = useQueryClient();
   const { data, error, isLoading } = useQuery({
-    queryKey: ["media-promosis", limit, search, pageParams],
+    queryKey: ["pic-mros", limit, search, pageParams],
     queryFn: async () =>
-      await readManyMediaPromosi({
+      await readManyPicMro({
         limit,
         search,
         pageParams,
       }),
   });
   const deleteMut = useMutation({
-    mutationFn: MediaPromosiDelete,
+    mutationFn: PicMroDelete,
   });
 
   const columns = [
@@ -67,9 +66,9 @@ const MediaPromosiPage = () => {
             theme="primary"
             size="small"
             icon={PencilSquareIcon}
-            disabled={!canEditMediaPromosi}
+            disabled={!canEditPicMro}
             onClick={() => {
-              router.push("/admin/media-promosi/update/" + row.original.id);
+              router.push("/admin/pic-mro/update/" + row.original.id);
             }}
           />
           {/* Delete Button */}
@@ -77,7 +76,7 @@ const MediaPromosiPage = () => {
             theme="danger"
             size="small"
             icon={TrashIcon}
-            disabled={!canDeleteMediaPromosi}
+            disabled={!canDeletePicMro}
             onClick={() => handleDelete(row.original.id)}
           />
         </div>
@@ -98,9 +97,9 @@ const MediaPromosiPage = () => {
         preConfirm: () => {
           deleteMut.mutate(id, {
             onSuccess: (data) => {
-              queryClient.invalidateQueries({ queryKey: ["media-promosis"] });
+              queryClient.invalidateQueries({ queryKey: ["pic-mros"] });
               Swal.fire("Success!", `Data berhasil dihapus`, "info").then(() => {
-                router.replace("/admin/media-promosi");
+                router.replace("/admin/pic-mro");
               });
             },
             onError: (e) => {
@@ -135,4 +134,4 @@ const MediaPromosiPage = () => {
   );
 };
 
-export default MediaPromosiPage;
+export default PicMroPage;

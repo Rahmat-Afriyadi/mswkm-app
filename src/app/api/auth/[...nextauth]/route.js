@@ -92,6 +92,7 @@ export const authOptions = {
           is_admin: credentials?.isAdmin == "true" ? true : false,
           accessToken: resResult.access_token,
           refreshToken: resResult.refresh_token,
+          role: credentials?.isAdmin ? resResult.role_name : "User",
           permissions: credentials?.isAdmin == "true" ? resResult.permissions : undefined,
           // accessToken: resResult.access_token,
           // refreshToken: resResult.refresh_token,

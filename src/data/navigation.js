@@ -47,7 +47,7 @@ const navigation = [
   },
   {
     name: "Kategori Merchant",
-    href: "/admin/kategori",
+    href: "/admin/merchant-category",
     icon: DocumentCheckIcon,
     privilege: "merchant-category",
     roles: ["Manager", "Admin-Project", "Superadmin", "PIC-HR", "Assessor"],

@@ -185,6 +185,7 @@ export default function Page() {
       isActivation: false,
     });
     if (!result?.ok) {
+      console.log("ini result ", result);
       if (result?.error == "inactive") {
         // akun anda belum aktif, apakah anda ingin mengulang OTP?
         Swal.fire({
@@ -202,6 +203,9 @@ export default function Page() {
         });
         return;
       } else if (result?.error == "fail") {
+        setMessage(result?.error);
+        return;
+      } else {
         setMessage(result?.error);
         return;
       }

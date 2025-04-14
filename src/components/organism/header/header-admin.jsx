@@ -87,7 +87,7 @@ export default function Header({ setSidebarOpen }) {
               >
                 <div className="px-3 py-1">
                   <div className="flex-wrap text-sm leading-6 text-gray-900">{session?.user?.email}</div>
-                  <div className="text-sm text-gray-500">{session?.user?.is_admin ? "Administrator" : "User"}</div>
+                  <div className="text-sm text-gray-500">{session?.user?.role}</div>
                 </div>
                 <hr />
                 {userNavigation.map((item) => (

@@ -3,8 +3,8 @@
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
-import { UserDetail } from "@/server/admin/user/user-detail";
-import FormUser from "@/components/form/form-user";
+import { PicMroDetail } from "@/server/admin/pic-mro/pic-mro-detail";
+import FormPicMro from "@/components/form/form-pic-mro";
 import { ClipLoader } from "react-spinners";
 
 function EditVacanciesPage({ params }) {
@@ -13,7 +13,7 @@ function EditVacanciesPage({ params }) {
   const { id } = params;
   const { data, isLoading } = useQuery({
     queryKey: ["read-vacancy"],
-    queryFn: async () => await UserDetail(id),
+    queryFn: async () => await PicMroDetail(id),
   });
   if (isLoading) {
     return (
@@ -24,6 +24,7 @@ function EditVacanciesPage({ params }) {
       </div>
     );
   }
+
   return (
     <>
       <div className="flex justify-start mb-3">
@@ -37,7 +38,7 @@ function EditVacanciesPage({ params }) {
       <div className="overflow-hidden bg-white shadow sm:rounded-lg">
         <div className="px-4 py-5 sm:p-6">
           {/* Content goes here */}
-          <FormUser defaultValues={data.data} isEditing={true} />
+          <FormPicMro defaultValues={data.data} isEditing={true} />
         </div>
       </div>
     </>

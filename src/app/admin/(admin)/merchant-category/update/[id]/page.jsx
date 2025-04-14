@@ -6,15 +6,13 @@ import { useQuery } from "@tanstack/react-query";
 import { KategoriDetail } from "@/server/admin/kategori/kategori-detail";
 import FormKategori from "@/components/form/form-kategori";
 import { ClipLoader } from "react-spinners";
-// import { ReadVacancy } from "@/server/vacancy/read-vacancy";
-// import FormVacancy from "@/app/ui/form-vacancy";
 
 function EditVacanciesPage({ params }) {
   const router = useRouter();
 
   const { id } = params;
   const { data, isLoading } = useQuery({
-    queryKey: ["read-vacancy"],
+    queryKey: ["kategori-detail"],
     queryFn: async () => await KategoriDetail(id),
   });
   if (isLoading) {
@@ -27,9 +25,6 @@ function EditVacanciesPage({ params }) {
     );
   }
 
-  data.data.permissions = data.data.permissions.map((item) => {
-    return { id: item.name };
-  });
   return (
     <>
       <div className="flex justify-start mb-3">

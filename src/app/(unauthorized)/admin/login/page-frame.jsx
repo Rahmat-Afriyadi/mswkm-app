@@ -74,6 +74,9 @@ export default function Page() {
       } else if (result?.error == "fail") {
         setMessage(result?.error);
         return;
+      } else {
+        setMessage(result?.error);
+        return;
       }
       return;
     }

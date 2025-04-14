@@ -3,11 +3,9 @@
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
-import { MediaPromosiDetail } from "@/server/admin/media-promosi-detail";
+import { MediaPromosiDetail } from "@/server/admin/media-promosi/media-promosi-detail";
 import FormMediaPromosi from "@/components/form/form-media-promosi";
 import { ClipLoader } from "react-spinners";
-// import { ReadVacancy } from "@/server/vacancy/read-vacancy";
-// import FormVacancy from "@/app/ui/form-vacancy";
 
 function EditVacanciesPage({ params }) {
   const router = useRouter();
@@ -27,9 +25,6 @@ function EditVacanciesPage({ params }) {
     );
   }
 
-  data.data.permissions = data.data.permissions.map((item) => {
-    return { id: item.name };
-  });
   return (
     <>
       <div className="flex justify-start mb-3">
