@@ -22,8 +22,6 @@ import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 // import CustomEditor from "./input/custom-rich";
 
-const CustomEditor = dynamic(() => import("@/components/form/input/custom-rich"), { ssr: false });
-
 export default function FormMerchant({ isEditing = false, defaultValues }) {
   const {
     register,
@@ -83,7 +81,6 @@ export default function FormMerchant({ isEditing = false, defaultValues }) {
     }
 
     if (defaultValues?.media_promosi && mstPromosi[0]?.id !== "") {
-      console.log("ini all promosis ", defaultValues?.media_promosi);
       finalValue = defaultValues?.media_promosi.filter((perm) => mstPromosi.map((item) => item.id).includes(perm.id));
       if (finalValue.length > 0) {
         defaultValues.media_promosi = finalValue;

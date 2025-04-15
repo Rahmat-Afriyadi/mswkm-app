@@ -23,7 +23,6 @@ import { useSearchParams } from "next/navigation";
 const DataTable = ({ columns, data }) => {
   const searchParams = useSearchParams();
 
-  console.log("ini data yaa ", data);
   // Konfigurasi tabel
   const table = useReactTable({
     columns,

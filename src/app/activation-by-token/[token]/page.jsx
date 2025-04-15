@@ -10,7 +10,6 @@ export default async function Page({ params }) {
   if (data.data.no_hp != "") {
     await axiosAuth.post("/auth/generate-new-otp", { no_hp: data.data.no_hp });
   }
-  console.log("ini data yaa ", data.data);
 
   return (
     <Suspense>

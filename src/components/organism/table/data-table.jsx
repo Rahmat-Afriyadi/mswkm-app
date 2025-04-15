@@ -12,7 +12,6 @@ const DataTable = ({ columns, data }) => {
   const limit = searchParams.get("limit") || 10;
   const pageParams = searchParams.get("pageParams") || 1;
 
-  console.log("ini data yaa ", data);
   // Konfigurasi tabel
   const table = useReactTable({
     columns,

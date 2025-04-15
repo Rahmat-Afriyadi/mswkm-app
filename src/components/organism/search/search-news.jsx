@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { merchantSearch } from "@/server/admin/merchant/merchant-search";
+import { newsSearch } from "@/server/admin/news/news-search";
 import { useRouter } from "next/navigation";
 
 export default function Search() {
@@ -10,11 +10,11 @@ export default function Search() {
   const [seearchBox, setSearchBox] = useState(false);
   const router = useRouter();
 
-  const { data: merchant, isLoading } = useQuery({
-    queryKey: ["master-merchant-search", searchInput],
+  const { data: news, isLoading } = useQuery({
+    queryKey: ["master-news-search", searchInput],
     refetchOnWindowFocus: false,
     queryFn: async () =>
-      await merchantSearch({
+      await newsSearch({
         search: searchInput,
       }),
     initialData: { data: [{ id: "start-search", nama: "" }] },
@@ -41,23 +41,23 @@ export default function Search() {
         </div>
         <div className="h-auto">
           <div className="mx-auto w-3/4 max-h-72 z-0 bg-slate-100 -mt-3 rounded-b-xl pt-2 pr-5">
-            {!isLoading && searchInput.length > 0 && merchant && (
+            {!isLoading && searchInput.length > 0 && news && (
               <p
-                onClick={() => router.push("/merchant/detail/" + merchant.data[0]?.id)}
+                onClick={() => router.push("/news/detail/" + news.data[0]?.id)}
                 className="bg-slate-300 cursor-pointer text-lg py-2 px-5 hover:bg-slate-300 rounded-r-full border-l-4 border-l-cyan-400"
               >
-                {merchant.data[0]?.nama}
+                {news.data[0]?.nama}
               </p>
             )}
             {!isLoading &&
               searchInput.length > 0 &&
-              merchant &&
-              merchant.data.slice(1).map((e) => {
+              news &&
+              news.data.slice(1).map((e) => {
                 return (
                   <>
                     <p
                       key={e.id + " search"}
-                      onClick={() => router.push("/merchant/detail/" + e.id)}
+                      onClick={() => router.push("/news/detail/" + e.id)}
                       className="text-lg py-1 px-5 hover:bg-slate-300 rounded-r-full cursor-pointer"
                     >
                       {e.nama}

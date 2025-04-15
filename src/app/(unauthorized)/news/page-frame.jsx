@@ -1,34 +1,37 @@
 "use client";
 
 import dynamic from "next/dynamic";
-const Card = dynamic(() => import("@/components/ui/merchant/card"), { ssr: false });
-const Search = dynamic(() => import("@/components/organism/search/search-merchant"), { ssr: false });
-import { MerchantFilter } from "@/server/admin/merchant/merchant-filter";
+const Card = dynamic(() => import("@/components/ui/news/card"), { ssr: false });
+const Search = dynamic(() => import("@/components/organism/search/search-news"), { ssr: false });
+import { NewsFilter } from "@/server/admin/news/news-filter";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { AdjustmentsVerticalIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import Drawer from "@/components/drawer/drawer";
-import FilterMerchant from "@/components/ui/merchant/filter-merchant";
+import FilterNews from "@/components/ui/news/filter-news";
 import { ClipLoader } from "react-spinners";
 import { ArrowLeftCircleIcon, ArrowRightCircleIcon } from "@heroicons/react/24/outline";
+import Image from "next/image";
+
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_API;
 
 export default function PageFrame() {
   const [open, setOpen] = useState(false);
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams);
   const pageParams = searchParams.get("pageParams") || 1;
-  const { data: merchant, isLoading: isLoading } = useQuery({
-    queryKey: ["master-merchant", searchParams.get("kategori"), searchParams.get("lokasi"), pageParams],
+  const { data: news, isLoading: isLoading } = useQuery({
+    queryKey: ["master-news", searchParams.get("kategori"), searchParams.get("lokasi"), pageParams],
     queryFn: async () =>
-      await MerchantFilter({
+      await NewsFilter({
         pageParams: pageParams,
         search: "",
         kategori: searchParams.get("kategori"),
         lokasi: searchParams.get("lokasi"),
         limit: 18,
       }),
-    initialData: { data: [{ id: "start-merchant", nama: "", logo: "" }] },
+    initialData: { data: [{ id: "start-news", nama: "", logo: "" }] },
     refetchOnWindowFocus: false,
   });
 
@@ -73,16 +76,39 @@ export default function PageFrame() {
         </button>
 
         {/* Grid Isi */}
-        <div className="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-6 gap-5 md:gap-10 w-10/12 lg:w-3/4">
-          {!isLoading && merchant.data[0]?.logo != "" ? (
-            merchant.data.map((e) => {
+        <div className="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-5 md:gap-10 w-10/12 lg:w-3/4">
+          {!isLoading && news.data[0]?.logo != "" ? (
+            news.data.map((e) => {
               return (
                 <a
-                  href={"/merchant/detail/" + e.id + `?${params.toString()}`}
-                  className="col-span-1 rounded-md mb-2"
-                  key={e.id + " merchant-display"}
+                  className="flex items-start justify-center cursor-pointer col-span-1 shadow-md rounded-md h-[35vw] sm:h-[270px] md:h-[300px] xl:h-[375px]"
+                  href={"/news/detail/" + e.id + `?${params.toString()}`}
+                  key={e.id + " news-display"}
                 >
-                  <Card title={e.nama} logo={e.logo} alamat={""} />
+                  <div className="h-[35vw] sm:h-[270px] md:h-[300px] xl:h-[375px] w-full p-1 lg:p-2 rounded-md flex flex-col justify-between">
+                    <div className="w-full">
+                      <div className="w-full aspect-video bg-red-400 rounded-md">
+                        <Image
+                          alt="slide_1"
+                          src={BASE_URL + e.logo}
+                          width={0}
+                          height={0}
+                          sizes="100vh"
+                          style={{ width: "100%" }}
+                          blurDataURL="/images/content/profile/Photo.png"
+                          priority={true}
+                        />
+                      </div>
+                      <div className="w-full text-left mt-2">
+                        <p className="text-[2.1vw] md:text-[16px] lg:text-lg font-bold underline leading-tight">
+                          {e.nama}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="w-full text-left ">
+                      <p className="text-[2.1vw] md:text-[16px] lg:text-lg  text-blue-500">Selengkapnya</p>
+                    </div>
+                  </div>
                 </a>
               );
             })
@@ -97,7 +123,7 @@ export default function PageFrame() {
 
         {/* Tombol Kanan */}
         <button
-          disabled={merchant.data.length < 18}
+          disabled={news.data.length < 18}
           onClick={() => {
             if (pageParams) {
               const params = new URLSearchParams(searchParams);
@@ -115,7 +141,7 @@ export default function PageFrame() {
       </div>
 
       <Drawer open={open} setOpen={setOpen}>
-        <FilterMerchant setOpen={setOpen} />
+        <FilterNews setOpen={setOpen} />
       </Drawer>
     </>
   );
