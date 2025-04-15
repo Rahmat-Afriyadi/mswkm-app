@@ -21,7 +21,7 @@ export default function Navbar() {
   return (
     <div className=" h-6 w-full">
       <div className="grid grid-cols-12 gap-x-1">
-        <div className="col-span-2  flex justify-center">
+        <div className="col-span-2  flex justify-center z-20 z-20">
           <a
             href="/"
             data-tooltip-id="home"
@@ -42,7 +42,7 @@ export default function Navbar() {
         {status == "authenticated" && (
           <>
             {" "}
-            <div className="col-span-2  flex justify-center">
+            <div className="col-span-2  flex justify-center z-20">
               <a
                 href="/profile"
                 data-tooltip-id="profile"
@@ -60,7 +60,7 @@ export default function Navbar() {
               </a>
               <Tooltip id="profile" place="top" effect="solid" className="z-10" />
             </div>
-            <div className="col-span-2  flex justify-center">
+            <div className="col-span-2  flex justify-center z-20">
               <a
                 href="/card"
                 data-tooltip-id="my-tooltip"
@@ -80,7 +80,7 @@ export default function Navbar() {
             </div>{" "}
           </>
         )}
-        <div className="col-span-2  flex justify-center">
+        <div className="col-span-2  flex justify-center z-20">
           <a
             href="/merchant"
             data-tooltip-id="merchant"
@@ -91,7 +91,7 @@ export default function Navbar() {
           </a>
           <Tooltip id="merchant" place="top" effect="solid" className="z-10" />
         </div>
-        <div className="col-span-2  flex justify-center">
+        <div className="col-span-2  flex justify-center z-20">
           <a
             href="/faq"
             data-tooltip-id="faq"

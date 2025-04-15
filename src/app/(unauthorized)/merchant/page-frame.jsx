@@ -53,7 +53,7 @@ export default function PageFrame() {
       <br />
       <br />
       <br />
-      <div className="relative w-full flex justify-center py-8  min-h-[83vh]">
+      <div className="relative w-full flex justify-center py-8 -z-10 min-h-[83vh]">
         {/* Tombol Kiri */}
         <button
           disabled={!pageParams || pageParams == 1}

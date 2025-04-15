@@ -48,7 +48,7 @@ export default function PageFrame() {
           >
             <AdjustmentsVerticalIcon className="h-8 w-8 " />
           </div>
-          <div className="w-full h-auto absolute">
+          <div className="w-full h-auto absolute z-10">
             <Search />
           </div>
         </div>
@@ -56,7 +56,7 @@ export default function PageFrame() {
       <br />
       <br />
       <br />
-      <div className="relative w-full flex justify-center py-8  min-h-[83vh]">
+      <div className="relative w-full flex justify-center py-8  min-h-[83vh] ">
         {/* Tombol Kiri */}
         <button
           disabled={!pageParams || pageParams == 1}
@@ -76,7 +76,7 @@ export default function PageFrame() {
         </button>
 
         {/* Grid Isi */}
-        <div className="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-5 md:gap-10 w-10/12 lg:w-3/4">
+        <div className="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-5 md:gap-10 w-10/12 lg:w-3/4 z-0">
           {!isLoading && news.data[0]?.logo != "" ? (
             news.data.map((e) => {
               return (
@@ -100,9 +100,7 @@ export default function PageFrame() {
                         />
                       </div>
                       <div className="w-full text-left mt-2">
-                        <p className="text-[2.1vw] md:text-[16px] lg:text-lg font-bold underline leading-tight">
-                          {e.nama}
-                        </p>
+                        <p className="text-[2.1vw] md:text-[16px] lg:text-lg font-bold leading-tight">{e.nama}</p>
                       </div>
                     </div>
                     <div className="w-full text-left ">
