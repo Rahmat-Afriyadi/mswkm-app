@@ -66,6 +66,27 @@ const navigation = [
     privilege: "pic-mro",
     roles: ["Manager", "Admin-Project", "Superadmin", "PIC-HR", "Assessor"],
   },
+  {
+    name: "News",
+    href: "/admin/news",
+    icon: DocumentCheckIcon,
+    privilege: "news",
+    roles: ["Manager", "Admin-Project", "Superadmin", "PIC-HR", "Assessor"],
+  },
+  {
+    name: "News Category",
+    href: "/admin/news-category",
+    icon: DocumentCheckIcon,
+    privilege: "news-category",
+    roles: ["Manager", "Admin-Project", "Superadmin", "PIC-HR", "Assessor"],
+  },
+  {
+    name: "Banner",
+    href: "/admin/banner",
+    icon: DocumentCheckIcon,
+    privilege: "banner",
+    roles: ["Manager", "Admin-Project", "Superadmin", "PIC-HR", "Assessor"],
+  },
 ];
 
 export default navigation;

@@ -65,7 +65,7 @@ export default function Header() {
         sizes="100vw"
         style={{ width: "100%", height: "auto" }}
       />
-      <div className="absolute w-5/12  h-6 top-0 bottom-0  my-auto right-9 flex justify-center">
+      <div className="absolute w-6/12 md:w-5/12  h-6 top-0 bottom-0  my-auto right-9 flex justify-center">
         <Navbar />
         {status == "authenticated" && (
           <button

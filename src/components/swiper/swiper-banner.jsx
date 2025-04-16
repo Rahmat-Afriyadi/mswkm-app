@@ -13,6 +13,8 @@ import "swiper/css/navigation";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_API;
+
 export default function SwiperComponent({ sWidth, banners }) {
   return (
     <Swiper
@@ -33,16 +35,20 @@ export default function SwiperComponent({ sWidth, banners }) {
       className=""
     >
       {banners.map((e, i) => {
+        console.log("ini url yaa ", BASE_URL + e.banner);
         return (
           <SwiperSlide key={e + i}>
-            <div className={`${sWidth > 1023 ? "w-full" : "w-full"} h-auto mx-auto`}>
+            <div
+              className={`${
+                sWidth > 1023 ? "w-full" : "w-full"
+              } aspect-video md:aspect-[21/9] lg:aspect-[28/9] relative mx-auto bg-slate-500`}
+            >
               <Image
-                src={"/images/content/banner/" + e}
+                // src={"/images/content/banner/" + e}
+                src={e.banner != "" && e.banner ? BASE_URL + e.banner : "/images/content/banner/Home Banner.jpg"}
                 alt="illustrasi-1"
-                width={0}
-                height={0}
-                sizes="100vw"
-                style={{ width: "100%", height: "auto" }}
+                fill
+                className="object-cover rounded-lg cursor-pointer"
               />
             </div>
           </SwiperSlide>

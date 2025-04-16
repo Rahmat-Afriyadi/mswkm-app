@@ -11,7 +11,7 @@ import icon3 from "../../../../public/images/content/header/Icon 3.png";
 import icon4Active from "../../../../public/images/content/header/Icon 4 active.png";
 import icon4 from "../../../../public/images/content/header/Icon 4.png";
 import { useSession } from "next-auth/react";
-import { FolderIcon } from "@heroicons/react/24/solid";
+import { FolderIcon, NewspaperIcon } from "@heroicons/react/24/solid";
 import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 
@@ -21,7 +21,7 @@ export default function Navbar() {
   return (
     <div className=" h-6 w-full">
       <div className="grid grid-cols-12 gap-x-1">
-        <div className="col-span-2  flex justify-center z-20 z-20">
+        <div className="col-span-2  flex justify-center z-20">
           <a
             href="/"
             data-tooltip-id="home"
@@ -90,6 +90,17 @@ export default function Navbar() {
             <FolderIcon />
           </a>
           <Tooltip id="merchant" place="top" effect="solid" className="z-10" />
+        </div>
+        <div className="col-span-2  flex justify-center z-20">
+          <a
+            href="/news"
+            data-tooltip-id="news"
+            data-tooltip-content="News"
+            className="h-5 w-5 sm:h-8 sm:w-8 md:h-8 md:w-8 cursor-pointer mt-1"
+          >
+            <NewspaperIcon />
+          </a>
+          <Tooltip id="news" place="top" effect="solid" className="z-10" />
         </div>
         <div className="col-span-2  flex justify-center z-20">
           <a
