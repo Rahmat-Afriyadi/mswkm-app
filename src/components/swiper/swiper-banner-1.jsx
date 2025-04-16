@@ -16,7 +16,7 @@ import { useRouter } from "next/navigation";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_API;
 
-export default function SwiperComponent1({ sWidth, banners }) {
+export default function SwiperComponent1({ sWidth, banners, timeAutoPlay = 1000 }) {
   const router = useRouter();
   return (
     <Swiper
@@ -24,7 +24,7 @@ export default function SwiperComponent1({ sWidth, banners }) {
       grabCursor={true}
       loop={true}
       autoplay={{
-        delay: 3000, // 3 seconds
+        delay: timeAutoPlay, // 3 seconds
         disableOnInteraction: false,
       }}
       modules={[Navigation, Pagination, Autoplay]}

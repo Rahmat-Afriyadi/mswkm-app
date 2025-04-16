@@ -100,9 +100,6 @@ export default function FormOutlet({ isEditing = false, defaultValues }) {
   }, [selectedMerchant]); // eslint-disable-line
 
   const onSubmit = async (values) => {
-    if (values.media_promosi < 1 || !values.hasOwnProperty("media_promosi")) {
-      return Swal.fire("Failed!", "mohon pilih satu atau lebih media promosi", "error");
-    }
     Swal.fire({
       title: "Apakah data yang dimasukan sudah benar",
       icon: "question",

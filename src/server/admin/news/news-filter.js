@@ -2,9 +2,9 @@
 import axios from "@/lib/axios";
 
 export const NewsFilter = async (query) => {
-  const { pageParams, limit, search, kategori, lokasi } = query;
+  const { pageParams, limit, search, kategori } = query;
   const data = await axios.get("/news/master-data/filter", {
-    params: { search, kategori, lokasi, pageParams, limit },
+    params: { search, kategori, pageParams, limit },
   });
   const res = { data: [] };
   if (data.status == 200) {

@@ -96,9 +96,6 @@ export default function FormMerchant({ isEditing = false, defaultValues }) {
     if (values.kategori < 1 || !values.hasOwnProperty("kategori")) {
       return Swal.fire("Failed!", "mohon pilih satu atau lebih kategori merchant", "error");
     }
-    if (values.media_promosi < 1 || !values.hasOwnProperty("media_promosi")) {
-      return Swal.fire("Failed!", "mohon pilih satu atau lebih media promosi", "error");
-    }
     if (values.nama_pic_mro < 1 || !values.hasOwnProperty("nama_pic_mro")) {
       return Swal.fire("Failed!", "mohon pilih satu atau lebih pic mro", "error");
     }
@@ -247,6 +244,9 @@ export default function FormMerchant({ isEditing = false, defaultValues }) {
                 validation={{ required: "This field is required" }}
                 errors={errors}
               />
+            </div>
+            <div className="col-span-6 sm:col-span-3">
+              <InputGroup label="Website" id="website" name="website" type="text" register={register} errors={errors} />
             </div>
             <div className="col-span-3">
               <InputGroup

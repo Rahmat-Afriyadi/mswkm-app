@@ -19,6 +19,9 @@ export default function FormRole({ isEditing = false, defaultValues }) {
     { id: "merchant-category", name: "Merchant Kategori" },
     { id: "media-promosi", name: "Media Promosi" },
     { id: "pic-mro", name: "PIC MRO" },
+    { id: "banner", name: "Banner" },
+    { id: "news", name: "News" },
+    { id: "news-category", name: "News Category" },
   ];
 
   if (isEditing) {

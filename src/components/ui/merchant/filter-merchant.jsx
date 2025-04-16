@@ -14,14 +14,6 @@ const lokasi = [
   { value: "Jakarta Utara" },
 ];
 
-const kategori = [
-  { value: "Perawatan & Perlengkapan Kendaraan" },
-  { value: "Gaya Hidup" },
-  { value: "Pendidikan" },
-  { value: "F & B" },
-  { value: "Hiburan & Rekreasi" },
-];
-
 export default function FilterMerchant({ setOpen }) {
   const [selectedLokasi, setSelectedLokasi] = useState([]);
   const [selectedKategori, setSelectedKategori] = useState([]);

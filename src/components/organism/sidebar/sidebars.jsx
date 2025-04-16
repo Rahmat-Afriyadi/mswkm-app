@@ -50,7 +50,7 @@ export default function Sidebars({ sidebarOpen, setSidebarOpen }) {
             {/* Sidebar component, swap this element with another sidebar if you like */}
             <div className="flex flex-col px-6 pb-4 overflow-y-auto bg-white grow gap-y-5">
               <div className="flex items-center self-center h-16 shrink-0">
-                <span className="text-xl font-bold text-gray-700">HRCM</span>
+                <span className="text-xl font-bold text-gray-700">E-Cardplus Management</span>
               </div>
               <nav className="flex flex-col flex-1">
                 <ul role="list" className="flex flex-col flex-1 gap-y-7">

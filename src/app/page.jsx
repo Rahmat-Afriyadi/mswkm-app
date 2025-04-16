@@ -52,7 +52,7 @@ export default function Page() {
     <>
       <div className="w-full">
         <Header />
-        <SwiperComponent sWidth={windowWidth} banners={banners} />
+        <SwiperComponent sWidth={windowWidth} banners={banners} timeAutoPlay={10000} />
         <div className="w-full h-auto md:h-[515px] lg:h-[600px] xl:h-[700px] 2xl:h-[800px] relative ">
           <Image
             src={bgHome1}
@@ -98,6 +98,7 @@ export default function Page() {
                 <div className="w-9/12 md:w-full mt-2 md:mt-7">
                   <SwiperComponent1
                     sWidth={windowWidth}
+                    timeAutoPlay={5000}
                     banners={merchants.map((e) => {
                       return { ...e, link: "/merchant/detail/" + e.id };
                     })}
@@ -134,6 +135,7 @@ export default function Page() {
                 <div className="w-9/12 md:w-full mt-2 md:mt-7">
                   <SwiperComponent1
                     sWidth={windowWidth}
+                    timeAutoPlay={8000}
                     banners={news.map((e) => {
                       return { ...e, link: "/news/detail/" + e.id };
                     })}

@@ -16,18 +16,10 @@ export default function Header({ setSidebarOpen }) {
   const router = useRouter();
 
   const userNavigation = [
-    // {
-    //   name: "Change Password",
-    //   onClick: function () {
-    //     setOpen(true);
-    //   },
-    // },
     {
       name: "Logout",
       onClick: function () {
-        signOut({ redirect: false }).then(() => {
-          router.push("/admin/login");
-        });
+        signOut({ callbackUrl: "/admin/login" });
       },
     },
   ];

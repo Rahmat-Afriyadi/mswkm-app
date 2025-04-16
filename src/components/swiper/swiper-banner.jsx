@@ -15,14 +15,14 @@ import Image from "next/image";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_API;
 
-export default function SwiperComponent({ sWidth, banners }) {
+export default function SwiperComponent({ sWidth, banners, timeAutoPlay = 1000 }) {
   return (
     <Swiper
       slidesPerView={1}
       grabCursor={true}
       loop={true}
       autoplay={{
-        delay: 3000, // 3 seconds
+        delay: timeAutoPlay, // 3 seconds
         disableOnInteraction: false,
       }}
       modules={[Navigation, Pagination, Autoplay]}

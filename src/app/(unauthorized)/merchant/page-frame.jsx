@@ -41,7 +41,7 @@ export default function PageFrame() {
         <div className="w-10/12 lg:w-3/4 relative">
           <div
             onClick={() => setOpen(true)}
-            className="absolute left-0 w-max h-auto px-3 py-2 z-10 max-h-12 rounded-md bg-slate-100 hover:bg-slate-700 hover:text-red-400 cursor-pointer "
+            className="absolute left-0 w-max h-auto px-3 py-2 z-20 max-h-12 rounded-md bg-slate-100 hover:bg-slate-700 hover:text-red-400 cursor-pointer "
           >
             <AdjustmentsVerticalIcon className="h-8 w-8 " />
           </div>
@@ -55,22 +55,23 @@ export default function PageFrame() {
       <br />
       <div className="relative w-full flex justify-center py-8 min-h-[83vh]">
         {/* Tombol Kiri */}
-        <button
-          disabled={!pageParams || pageParams == 1}
-          onClick={() => {
-            if (pageParams) {
-              const params = new URLSearchParams(searchParams);
-              params.set("pageParams", parseInt(pageParams) - 1); // Set default ke empty string
-              replace(`${pathname}?${params}`);
-            }
-          }}
-          className="disabled:cursor-not-allowed text-slate-800 disabled:text-slate-200 hover:bg-slate-300 disabled:hover:bg-transparent absolute left-1 md:left-4 lg:left-8 top-1/2 -translate-y-1/2 text-3xl font-bold rounded-full z-10"
-        >
-          <ArrowLeftCircleIcon
-            aria-hidden="true"
-            className={" group-hover:text-indigo-600 h-6 md:h-12 w-6 md:w-12 rounded-full shrink-0"}
-          />
-        </button>
+        {pageParams >= 2 && (
+          <button
+            onClick={() => {
+              if (pageParams) {
+                const params = new URLSearchParams(searchParams);
+                params.set("pageParams", parseInt(pageParams) - 1); // Set default ke empty string
+                replace(`${pathname}?${params}`);
+              }
+            }}
+            className="disabled:cursor-not-allowed text-slate-800 disabled:text-slate-200 hover:bg-slate-300 disabled:hover:bg-transparent absolute left-1 md:left-4 lg:left-8 top-1/2 -translate-y-1/2 text-3xl font-bold rounded-full z-10"
+          >
+            <ArrowLeftCircleIcon
+              aria-hidden="true"
+              className={" group-hover:text-indigo-600 h-6 md:h-12 w-6 md:w-12 rounded-full shrink-0"}
+            />
+          </button>
+        )}
 
         {/* Grid Isi */}
         <div className="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-6 gap-5 md:gap-10 w-10/12 lg:w-3/4">
@@ -96,22 +97,23 @@ export default function PageFrame() {
         </div>
 
         {/* Tombol Kanan */}
-        <button
-          disabled={merchant.data.length < 18}
-          onClick={() => {
-            if (pageParams) {
-              const params = new URLSearchParams(searchParams);
-              params.set("pageParams", parseInt(pageParams) + 1); // Set default ke empty string
-              replace(`${pathname}?${params}`);
-            }
-          }}
-          className="disabled:cursor-not-allowed text-slate-800 hover:bg-slate-300 disabled:hover:bg-transparent disabled:text-slate-200 absolute right-1 md:right-4 lg:right-8 top-1/2 -translate-y-1/2 text-3xl font-bold rounded-full z-10"
-        >
-          <ArrowRightCircleIcon
-            aria-hidden="true"
-            className={" group-hover:text-indigo-600 h-6 md:h-12 w-6 md:w-12  rounded-full shrink-0"}
-          />
-        </button>
+        {merchant.data.length > 17 && (
+          <button
+            onClick={() => {
+              if (pageParams) {
+                const params = new URLSearchParams(searchParams);
+                params.set("pageParams", parseInt(pageParams) + 1); // Set default ke empty string
+                replace(`${pathname}?${params}`);
+              }
+            }}
+            className="disabled:cursor-not-allowed text-slate-800 hover:bg-slate-300 disabled:hover:bg-transparent disabled:text-slate-200 absolute right-1 md:right-4 lg:right-8 top-1/2 -translate-y-1/2 text-3xl font-bold rounded-full z-10"
+          >
+            <ArrowRightCircleIcon
+              aria-hidden="true"
+              className={" group-hover:text-indigo-600 h-6 md:h-12 w-6 md:w-12  rounded-full shrink-0"}
+            />
+          </button>
+        )}
       </div>
 
       <Drawer open={open} setOpen={setOpen}>

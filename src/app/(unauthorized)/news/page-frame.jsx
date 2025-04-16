@@ -28,7 +28,6 @@ export default function PageFrame() {
         pageParams: pageParams,
         search: "",
         kategori: searchParams.get("kategori"),
-        lokasi: searchParams.get("lokasi"),
         limit: 18,
       }),
     initialData: { data: [{ id: "start-news", nama: "", logo: "" }] },
@@ -44,7 +43,7 @@ export default function PageFrame() {
         <div className="w-10/12 lg:w-3/4 relative">
           <div
             onClick={() => setOpen(true)}
-            className="absolute left-0 w-max h-auto px-3 py-2 z-10 max-h-12 rounded-md bg-slate-100 hover:bg-slate-700 hover:text-red-400 cursor-pointer "
+            className="absolute left-0 w-max h-auto px-3 py-2 z-20 max-h-12 rounded-md bg-slate-100 hover:bg-slate-700 hover:text-red-400 cursor-pointer "
           >
             <AdjustmentsVerticalIcon className="h-8 w-8 " />
           </div>
